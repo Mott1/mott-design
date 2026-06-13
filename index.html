@@ -60,12 +60,12 @@
   /* ---- hero ---- */
   .hero {
     display: grid; grid-template-columns: 1fr 1fr;
-    min-height: 100vh; border-bottom: 1px solid var(--line);
+    border-bottom: 1px solid var(--line); overflow: hidden;
   }
   .hero-left {
     border-right: 1px solid var(--line);
-    display: flex; align-items: flex-end;
-    padding: 0 56px 64px;
+    display: flex; align-items: center;
+    padding: 88px 56px;
   }
   .hero-content { width: 100%; }
   .eyebrow {
@@ -86,8 +86,8 @@
     padding-top: 24px; border-top: 1px solid var(--line);
   }
   .hero-right {
-    display: flex; align-items: flex-end; justify-content: center;
-    padding: 0 56px 64px;
+    display: flex; align-items: flex-end;
+    padding: 72px 0 0 48px;
   }
   .btn-primary {
     font-family: var(--body); font-weight: 600; font-size: 0.75rem;
@@ -104,16 +104,23 @@
   }
   .btn-ghost:hover { border-color: var(--ink); }
   @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero { grid-template-columns: 1fr; }
     .hero-left { border-right: none; border-bottom: 1px solid var(--line); padding: 80px 28px 56px; align-items: flex-start; }
-    .hero-right { padding: 48px 28px; }
+    .hero-right { padding: 40px 0 0 28px; }
   }
 
   /* ---- terminal ---- */
+  .terminal-wrap { width: 100%; }
+  .terminal-label {
+    font-family: 'SF Mono','Fira Code','Courier New',monospace;
+    font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 12px;
+  }
   .terminal {
-    width: 100%; max-width: 520px;
-    background: rgba(0,0,0,0.28); border: 1px solid var(--line);
-    border-radius: 6px; overflow: hidden;
+    width: calc(100% + 60px);
+    background: rgba(6,14,8,0.88); border: 1px solid var(--line);
+    border-right: none; border-bottom: none;
+    border-radius: 6px 0 0 0; overflow: hidden;
   }
   .terminal-bar {
     display: flex; align-items: center; gap: 7px;
@@ -121,13 +128,17 @@
     background: rgba(0,0,0,0.15);
   }
   .terminal-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(228,234,200,0.2); }
-  .terminal-title { margin-left: 10px; font-family: 'SF Mono','Fira Code','Courier New',monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.05em; }
-  .terminal-body { padding: 28px 28px 32px; min-height: 300px; }
+  .terminal-body { padding: 28px 28px 40px; min-height: 380px; }
   .terminal-code {
     font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
-    font-size: 0.88rem; line-height: 1.75; color: var(--ink);
+    font-size: 0.9rem; line-height: 1.8; color: var(--muted);
     white-space: pre; margin: 0;
   }
+  .tc-cmd { color: var(--ink); }
+  .tc-dim { color: var(--muted); }
+  .tc-val { color: #7ec6a0; }
+  .tc-ok  { color: var(--ink); font-weight: 600; }
+  .tc-cmt { color: var(--muted); opacity: 0.7; font-style: italic; }
   .terminal-cursor {
     display: inline-block; width: 7px; height: 0.9em;
     background: var(--accent); vertical-align: text-bottom;
@@ -302,15 +313,17 @@
     </div>
   </div>
   <div class="hero-right">
-    <div class="terminal">
-      <div class="terminal-bar">
-        <span class="terminal-dot"></span>
-        <span class="terminal-dot"></span>
-        <span class="terminal-dot"></span>
-        <span class="terminal-title" id="terminal-title"></span>
-      </div>
-      <div class="terminal-body">
-        <pre class="terminal-code" id="terminal-output"></pre>
+    <div class="terminal-wrap">
+      <p class="terminal-label" id="terminal-label"></p>
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+        </div>
+        <div class="terminal-body">
+          <pre class="terminal-code" id="terminal-output"></pre>
+        </div>
       </div>
     </div>
   </div>
@@ -566,78 +579,77 @@
   }
 
   // ── 6. Terminal — cycling service typewriter ───────────────────────────────
+  function tokenize(html) {
+    const tokens = [];
+    const re = /<span class="([^"]+)">([^<]*)<\/span>|([^<]+)/g;
+    let m;
+    while ((m = re.exec(html)) !== null) {
+      if (m[3] !== undefined) tokens.push({type:'text', content:m[3]});
+      else tokens.push({type:'span', cls:m[1], content:m[2]});
+    }
+    return tokens;
+  }
+
   const termCycles = [
     {
       label: 'analytics · tracking',
-      lines: [
-        "$ dataLayer.push({",
-        "    event: 'generate_lead',",
-        "    form_id: 'contact-form',",
-        "    page: '/services'",
-        "  });",
-        "",
-        "▶  GA4 — event fired  200 OK"
-      ]
+      html: `<span class="tc-cmd">$ dataLayer.push({</span>
+    <span class="tc-dim">event:</span>   '<span class="tc-val">generate_lead</span>',
+    <span class="tc-dim">form_id:</span> '<span class="tc-val">contact-form</span>',
+    <span class="tc-dim">page:</span>    '<span class="tc-val">/services</span>'
+  });
+
+<span class="tc-ok">▶  GA4 — event fired  200 OK</span>`
     },
     {
       label: 'cookie · consent',
-      lines: [
-        "// Consent Mode v2 · CookieYes",
-        "gtag('consent', 'update', {",
-        "  analytics_storage: 'granted',",
-        "  ad_storage:        'denied'",
-        "});",
-        "",
-        "▶  Consent state applied"
-      ]
+      html: `<span class="tc-cmt">// Consent Mode v2 · CookieYes</span>
+<span class="tc-cmd">gtag</span>('<span class="tc-val">consent</span>', '<span class="tc-val">update</span>', {
+  <span class="tc-dim">analytics_storage:</span> '<span class="tc-val">granted</span>',
+  <span class="tc-dim">ad_storage:</span>        '<span class="tc-val">denied</span>'
+});
+
+<span class="tc-ok">▶  Consent state applied</span>`
     },
     {
       label: 'seo · technical audit',
-      lines: [
-        "$ audit --url mottclient.com",
-        "  Core Web Vitals   pass",
-        "  LCP  1.2s   CLS  0.02",
-        "  Indexed pages   48 / 48",
-        "  Broken links    0",
-        "",
-        "▶  11 issues prioritized"
-      ]
+      html: `<span class="tc-cmd">$ audit --url</span> <span class="tc-val">mottclient.com</span>
+  <span class="tc-dim">Core Web Vitals</span>   <span class="tc-ok">pass</span>
+  <span class="tc-dim">LCP</span>  <span class="tc-val">1.2s</span>   <span class="tc-dim">CLS</span>  <span class="tc-val">0.02</span>
+  <span class="tc-dim">Indexed pages</span>   <span class="tc-val">48 / 48</span>
+  <span class="tc-dim">Broken links</span>    <span class="tc-val">0</span>
+
+<span class="tc-ok">▶  11 issues prioritized</span>`
     },
     {
       label: 'webflow · wordpress',
-      lines: [
-        "$ webflow deploy --prod",
-        "  ✓ Assets published",
-        "  ✓ CMS synced  (247 items)",
-        "  ✓ SSL certificate active",
-        "",
-        "▶  Live at your-domain.com"
-      ]
+      html: `<span class="tc-cmd">$ webflow deploy --prod</span>
+  <span class="tc-ok">✓</span> <span class="tc-dim">Assets published</span>
+  <span class="tc-ok">✓</span> <span class="tc-dim">CMS synced</span>  (<span class="tc-val">247 items</span>)
+  <span class="tc-ok">✓</span> <span class="tc-dim">SSL certificate active</span>
+
+<span class="tc-ok">▶  Live at</span> <span class="tc-val">your-domain.com</span>`
     },
     {
       label: 'hubspot · martech',
-      lines: [
-        "$ hubspot.forms.create({",
-        "    portalId: '23847610',",
-        "    formId:   'contact-us',",
-        "    target:   '#hs-form'",
-        "  });",
-        "",
-        "▶  HubSpot form embedded"
-      ]
+      html: `<span class="tc-cmd">$ hubspot.forms.create({</span>
+    <span class="tc-dim">portalId:</span> '<span class="tc-val">23847610</span>',
+    <span class="tc-dim">formId:</span>   '<span class="tc-val">contact-us</span>',
+    <span class="tc-dim">target:</span>   '<span class="tc-val">#hs-form</span>'
+  });
+
+<span class="tc-ok">▶  HubSpot form embedded</span>`
     },
     {
       label: 'email · automation',
-      lines: [
-        "// Trigger: form_submit",
-        "{",
-        "  workflow: 'nurture-seq',",
-        "  contact:  { stage: 'lead' },",
-        "  delay:    '3 days'",
-        "}",
-        "",
-        "▶  Email 1 of 4 queued"
-      ]
+      html: `<span class="tc-cmt">// Trigger: form_submit</span>
+{
+  <span class="tc-dim">workflow:</span> '<span class="tc-val">nurture-seq</span>',
+  <span class="tc-dim">contact:</span>  { <span class="tc-dim">stage:</span> '<span class="tc-val">lead</span>' },
+  <span class="tc-dim">delay:</span>    '<span class="tc-val">3 days</span>'
+}
+
+<span class="tc-ok">▶  Email 1 of 4 queued</span>`
     }
   ];
 
@@ -645,13 +657,13 @@
 
   function runTermCycle() {
     const output = document.getElementById('terminal-output');
-    const titleEl = document.getElementById('terminal-title');
+    const labelEl = document.getElementById('terminal-label');
     if (!output) return;
 
     const cycle = termCycles[termIdx % termCycles.length];
     termIdx++;
 
-    if (titleEl) titleEl.textContent = cycle.label;
+    if (labelEl) labelEl.textContent = cycle.label;
 
     output.style.transition = 'opacity 0.3s ease';
     output.style.opacity = '0';
@@ -659,21 +671,35 @@
     setTimeout(() => {
       const cursor = document.createElement('span');
       cursor.className = 'terminal-cursor';
-      output.textContent = '';
+      output.innerHTML = '';
       output.appendChild(cursor);
       output.style.opacity = '1';
 
-      const text = cycle.lines.join('\n');
-      let i = 0;
-      const tick = () => {
-        if (i < text.length) {
-          output.insertBefore(document.createTextNode(text[i]), cursor);
-          i++;
-          setTimeout(tick, text[i - 1] === '\n' ? 85 : 28);
+      const tokens = tokenize(cycle.html);
+      let ti = 0, ci = 0, currentSpan = null;
+
+      function tick() {
+        if (ti >= tokens.length) { setTimeout(runTermCycle, 2800); return; }
+        const tok = tokens[ti];
+        if (tok.type === 'text') {
+          const ch = tok.content[ci];
+          output.insertBefore(document.createTextNode(ch), cursor);
+          ci++;
+          if (ci >= tok.content.length) { ti++; ci = 0; }
+          setTimeout(tick, ch === '\n' ? 80 : 22);
         } else {
-          setTimeout(runTermCycle, 2800);
+          if (!currentSpan) {
+            currentSpan = document.createElement('span');
+            currentSpan.className = tok.cls;
+            output.insertBefore(currentSpan, cursor);
+          }
+          const ch = tok.content[ci];
+          currentSpan.textContent += ch;
+          ci++;
+          if (ci >= tok.content.length) { ti++; ci = 0; currentSpan = null; }
+          setTimeout(tick, ch === '\n' ? 80 : 22);
         }
-      };
+      }
       tick();
     }, 350);
   }
@@ -682,9 +708,9 @@
     runTermCycle();
   } else {
     const output = document.getElementById('terminal-output');
-    const titleEl = document.getElementById('terminal-title');
-    if (output) output.textContent = termCycles[0].lines.join('\n');
-    if (titleEl) titleEl.textContent = termCycles[0].label;
+    const labelEl = document.getElementById('terminal-label');
+    if (output) output.innerHTML = termCycles[0].html;
+    if (labelEl) labelEl.textContent = termCycles[0].label;
   }
 </script>
 
