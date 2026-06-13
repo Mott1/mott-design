@@ -31,7 +31,7 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+  .wrap { max-width: 100%; margin: 0 auto; padding: 0 56px; }
 
   /* ---- nav ---- */
   nav {
@@ -55,7 +55,7 @@
     transition: background 0.2s; text-transform: uppercase; letter-spacing: 0.08em;
   }
   .nav-cta:hover { background: var(--accent); }
-  @media (max-width: 720px) { .nav-links { display: none; } }
+  @media (max-width: 720px) { .nav-links { display: none; } .wrap { padding: 0 24px; } }
 
   /* ---- hero ---- */
   .hero {
@@ -81,12 +81,15 @@
   .hero h1 em { font-style: normal; color: var(--accent); }
   .hero p { font-size: 1.05rem; color: var(--muted); max-width: 46ch; margin-bottom: 36px; }
   .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 48px; }
-  .hero-built {
-    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-    padding-top: 24px; border-top: 1px solid var(--line);
-  }
   .hero-right {
     position: relative;
+  }
+  .terminal-area {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    right: 0;
+    bottom: 0;
   }
   .btn-primary {
     font-family: var(--body); font-weight: 600; font-size: 0.75rem;
@@ -192,10 +195,34 @@
   }
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-  /* ---- built-with ---- */
-  .strip-label { font-family: var(--display); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-  .chips { display: flex; gap: 10px; flex-wrap: wrap; }
-  .chip { font-size: 0.85rem; font-weight: 500; padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--ink); }
+  /* ---- tools ---- */
+  #tools { border-bottom: 1px solid var(--line); padding: 44px 0; }
+  .tools-label {
+    font-family: var(--display); font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .tools-grid {
+    display: flex; flex-wrap: wrap; gap: 24px 32px; align-items: flex-start;
+  }
+  .tool-item {
+    display: flex; flex-direction: column; align-items: center; gap: 7px;
+    cursor: default;
+  }
+  .tool-item img {
+    width: 36px; height: 36px; object-fit: contain;
+    filter: brightness(0) invert(1) opacity(0.4);
+    transition: filter 0.15s ease;
+  }
+  .tool-item:hover img { filter: none; }
+  .tool-item span {
+    font-size: 0.7rem; font-weight: 500; color: var(--muted);
+    letter-spacing: 0.02em; white-space: nowrap;
+  }
+  @media (max-width: 720px) {
+    .tools-grid { gap: 20px 24px; }
+    .tool-item img { width: 30px; height: 30px; }
+  }
 
   /* ---- section base ---- */
   section { padding: 88px 0; }
@@ -340,52 +367,98 @@
     <div class="hero-content">
       <p class="eyebrow">Web development &amp; marketing technology</p>
       <h1>Sites that ship, and the <em>tracking</em> to prove they work.</h1>
-      <p>Mott Design is a one-person studio that builds, migrates, and instruments websites for medical device, genomics, and healthcare-tech companies — then wires up the analytics, consent, and martech behind them.</p>
+      <p>Most sites launch with broken tracking, misfiring consent, and deprecated scripts no one has touched. Mott Design builds and instruments websites for medical device, genomics, and healthcare-tech companies — and ships the analytics and martech stack right the first time, so there's nothing to clean up after go-live.</p>
       <div class="hero-actions">
         <a href="#contact" class="btn-primary">Start a project</a>
         <a href="#services" class="btn-ghost">See what I do</a>
       </div>
-      <div class="hero-built">
-        <span class="strip-label">Built with</span>
-        <div class="chips">
-          <span class="chip">WordPress</span>
-          <span class="chip">Webflow</span>
-          <span class="chip">Elementor</span>
-          <span class="chip">GA4</span>
-          <span class="chip">Google Tag Manager</span>
-          <span class="chip">HubSpot</span>
-        </div>
-      </div>
     </div>
   </div>
   <div class="hero-right">
-    <!-- Background: error stream -->
-    <div class="terminal-bg">
-      <div class="terminal-bar">
-        <span class="terminal-dot"></span>
-        <span class="terminal-dot"></span>
-        <span class="terminal-dot"></span>
+    <div class="terminal-area" id="terminal-area">
+      <!-- Background: error stream -->
+      <div class="terminal-bg">
+        <div class="terminal-bar">
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+        </div>
+        <div class="terminal-bg-body">
+          <div class="terminal-bg-code" id="terminal-errors"></div>
+        </div>
       </div>
-      <div class="terminal-bg-body">
-        <div class="terminal-bg-code" id="terminal-errors"></div>
-      </div>
-    </div>
-    <!-- Foreground: clean solution -->
-    <div class="terminal-clean" id="terminal-clean">
-      <div class="terminal-bar">
-        <span class="terminal-dot"></span>
-        <span class="terminal-dot"></span>
-        <span class="terminal-dot"></span>
-        <span class="svc-badge" id="svc-badge"></span>
-        <span class="svc-check" id="svc-check">✓</span>
-      </div>
-      <div class="terminal-body">
-        <pre class="terminal-code" id="terminal-output"></pre>
+      <!-- Foreground: clean solution -->
+      <div class="terminal-clean" id="terminal-clean">
+        <div class="terminal-bar">
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+          <span class="svc-badge" id="svc-badge"></span>
+          <span class="svc-check" id="svc-check">✓</span>
+        </div>
+        <div class="terminal-body">
+          <pre class="terminal-code" id="terminal-output"></pre>
+        </div>
       </div>
     </div>
   </div>
 </header>
 
+<section id="tools">
+  <div class="wrap">
+    <p class="tools-label">Tools I use</p>
+    <div class="tools-grid">
+      <div class="tool-item" title="Webflow">
+        <img src="https://cdn.simpleicons.org/webflow" alt="Webflow" width="36" height="36">
+        <span>Webflow</span>
+      </div>
+      <div class="tool-item" title="WordPress">
+        <img src="https://cdn.simpleicons.org/wordpress" alt="WordPress" width="36" height="36">
+        <span>WordPress</span>
+      </div>
+      <div class="tool-item" title="Elementor">
+        <img src="https://cdn.simpleicons.org/elementor" alt="Elementor" width="36" height="36">
+        <span>Elementor</span>
+      </div>
+      <div class="tool-item" title="WooCommerce">
+        <img src="https://cdn.simpleicons.org/woocommerce" alt="WooCommerce" width="36" height="36">
+        <span>WooCommerce</span>
+      </div>
+      <div class="tool-item" title="Google Tag Manager">
+        <img src="https://cdn.simpleicons.org/googletagmanager" alt="Google Tag Manager" width="36" height="36">
+        <span>Tag Manager</span>
+      </div>
+      <div class="tool-item" title="Google Analytics">
+        <img src="https://cdn.simpleicons.org/googleanalytics" alt="Google Analytics" width="36" height="36">
+        <span>GA4</span>
+      </div>
+      <div class="tool-item" title="HubSpot">
+        <img src="https://cdn.simpleicons.org/hubspot" alt="HubSpot" width="36" height="36">
+        <span>HubSpot</span>
+      </div>
+      <div class="tool-item" title="Salesforce">
+        <img src="https://cdn.simpleicons.org/salesforce" alt="Salesforce" width="36" height="36">
+        <span>Salesforce</span>
+      </div>
+      <div class="tool-item" title="Stripe">
+        <img src="https://cdn.simpleicons.org/stripe" alt="Stripe" width="36" height="36">
+        <span>Stripe</span>
+      </div>
+      <div class="tool-item" title="Zoho">
+        <img src="https://cdn.simpleicons.org/zoho" alt="Zoho" width="36" height="36">
+        <span>Zoho</span>
+      </div>
+      <div class="tool-item" title="Figma">
+        <img src="https://cdn.simpleicons.org/figma" alt="Figma" width="36" height="36">
+        <span>Figma</span>
+      </div>
+      <div class="tool-item" title="Claude">
+        <img src="https://cdn.simpleicons.org/claude" alt="Claude" width="36" height="36">
+        <span>Claude</span>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section id="services">
   <div class="wrap">
@@ -582,21 +655,19 @@
     );
   }
 
-  // ── 2. Hero sub-text, CTA, and built-with appear after headline ────────────
+  // ── 2. Hero sub-text and CTA appear after headline ───────────────────────
   if (!reduced) {
     const heroP   = document.querySelector('.hero p');
     const heroAct = document.querySelector('.hero-actions');
-    const heroBuilt = document.querySelector('.hero-built');
-    [heroP, heroAct, heroBuilt].forEach(el => {
+    [heroP, heroAct].forEach(el => {
       if (!el) return;
       el.style.opacity = '0';
       el.style.transform = 'translateY(12px)';
       el.style.transition = 'opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)';
     });
     const revealAt = 60 + wordCount * 50 + 160;
-    setTimeout(() => { if (heroP)     { heroP.style.opacity     = '1'; heroP.style.transform     = 'none'; } }, revealAt);
-    setTimeout(() => { if (heroAct)   { heroAct.style.opacity   = '1'; heroAct.style.transform   = 'none'; } }, revealAt + 110);
-    setTimeout(() => { if (heroBuilt) { heroBuilt.style.opacity = '1'; heroBuilt.style.transform = 'none'; } }, revealAt + 220);
+    setTimeout(() => { if (heroP)   { heroP.style.opacity   = '1'; heroP.style.transform   = 'none'; } }, revealAt);
+    setTimeout(() => { if (heroAct) { heroAct.style.opacity = '1'; heroAct.style.transform = 'none'; } }, revealAt + 110);
   }
 
   // ── 3. Scroll fade-in observer ─────────────────────────────────────────────
@@ -608,7 +679,7 @@
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.sec-head, .about-body, .contact-grid').forEach(el => {
+  document.querySelectorAll('.sec-head, .about-body, .contact-grid, .tools-grid').forEach(el => {
     el.setAttribute('data-animate', '');
     fadeObs.observe(el);
   });
@@ -635,7 +706,20 @@
     factsObs.observe(factsDl);
   }
 
-  // ── 6. Terminal — error stream + clean solution ──────────────────────────────
+  // ── 6. Terminal positioning — top edge aligns with hero H1 ─────────────────
+  function positionTerminal() {
+    const h1 = document.querySelector('.hero h1');
+    const heroRight = document.querySelector('.hero-right');
+    const termArea = document.getElementById('terminal-area');
+    if (!h1 || !heroRight || !termArea) return;
+    const offset = h1.getBoundingClientRect().top - heroRight.getBoundingClientRect().top;
+    termArea.style.top = Math.max(0, offset) + 'px';
+  }
+  positionTerminal();
+  window.addEventListener('load', positionTerminal);
+  window.addEventListener('resize', positionTerminal);
+
+  // ── 7. Terminal — error stream + clean solution ──────────────────────────────
 
   function tokenize(html) {
     const tokens = [];
