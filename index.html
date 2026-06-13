@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mott Design — Web development & marketing technology</title>
+<meta name="description" content="Mott Design is a one-person studio building and instrumenting websites for medical device, genomics, and healthcare-tech companies. Web development, analytics, SEO, consent compliance, and martech.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #15171c;
+    --paper: #f7f5f0;
+    --paper-2: #eeebe3;
+    --line: #d8d4c8;
+    --muted: #6b6f76;
+    --accent: #2f5d50;
+    --accent-bright: #3f8f78;
+    --warn: #c4622d;
+    --display: 'Space Grotesk', system-ui, sans-serif;
+    --body: 'Inter', system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---- nav ---- */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(247,245,240,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .brand { font-family: var(--display); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; }
+  .brand span { color: var(--accent); }
+  .nav-links { display: flex; gap: 30px; }
+  .nav-links a { color: var(--ink); text-decoration: none; font-size: 0.92rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    font-family: var(--body); font-weight: 600; font-size: 0.9rem;
+    background: var(--ink); color: var(--paper);
+    padding: 9px 18px; border-radius: 2px; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--accent); }
+  @media (max-width: 720px) { .nav-links { display: none; } }
+
+  /* ---- hero ---- */
+  .hero { padding: 96px 0 80px; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    font-family: var(--display); font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(2.4rem, 6vw, 4.2rem); line-height: 1.02;
+    letter-spacing: -0.03em; max-width: 16ch; margin-bottom: 28px;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero p { font-size: 1.18rem; color: var(--muted); max-width: 52ch; margin-bottom: 36px; }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    font-family: var(--body); font-weight: 600; font-size: 0.98rem;
+    background: var(--ink); color: var(--paper); padding: 14px 28px;
+    border-radius: 2px; text-decoration: none; transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--accent); }
+  .btn-ghost {
+    font-family: var(--body); font-weight: 600; font-size: 0.98rem;
+    color: var(--ink); padding: 14px 24px; border-radius: 2px;
+    text-decoration: none; border: 1px solid var(--line); transition: border-color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--ink); }
+
+  /* ---- stack strip ---- */
+  .strip { padding: 28px 0; border-bottom: 1px solid var(--line); background: var(--paper-2); }
+  .strip-inner { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .strip-label { font-family: var(--display); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .chips { display: flex; gap: 10px; flex-wrap: wrap; }
+  .chip { font-size: 0.85rem; font-weight: 500; padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); color: var(--ink); }
+
+  /* ---- section base ---- */
+  section { padding: 88px 0; }
+  .sec-head { margin-bottom: 52px; max-width: 60ch; }
+  .sec-num { font-family: var(--display); font-size: 0.8rem; font-weight: 600; color: var(--accent); letter-spacing: 0.1em; }
+  .sec-head h2 { font-family: var(--display); font-weight: 700; font-size: clamp(1.8rem, 4vw, 2.6rem); letter-spacing: -0.02em; margin: 12px 0 16px; }
+  .sec-head p { color: var(--muted); font-size: 1.08rem; }
+
+  /* ---- services ---- */
+  #services { border-bottom: 1px solid var(--line); }
+  .svc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border: 1px solid var(--line); }
+  .svc {
+    padding: 32px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    background: var(--paper); transition: background 0.2s;
+  }
+  .svc:hover { background: var(--paper-2); }
+  .svc-grid .svc:nth-child(2n) { border-right: none; }
+  .svc-key { font-family: var(--display); font-size: 0.82rem; font-weight: 600; color: var(--accent); letter-spacing: 0.08em; }
+  .svc h3 { font-family: var(--display); font-weight: 600; font-size: 1.22rem; margin: 10px 0 10px; letter-spacing: -0.01em; }
+  .svc p { color: var(--muted); font-size: 0.98rem; }
+  @media (max-width: 720px) {
+    .svc-grid { grid-template-columns: 1fr; }
+    .svc { border-right: none; }
+  }
+
+  /* ---- about ---- */
+  #about { background: var(--ink); color: var(--paper); }
+  #about .sec-head h2 { color: var(--paper); }
+  #about .sec-num { color: var(--accent-bright); }
+  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px; }
+  .about-body p { color: #c8cbd0; font-size: 1.08rem; margin-bottom: 20px; max-width: 56ch; }
+  .about-body strong { color: var(--paper); font-weight: 600; }
+  .facts { border-top: 1px solid #2c2f37; }
+  .fact { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid #2c2f37; }
+  .fact dt { font-size: 0.92rem; color: #8b8f97; }
+  .fact dd { font-family: var(--display); font-size: 0.92rem; font-weight: 500; color: var(--paper); text-align: right; }
+  @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; gap: 36px; } }
+
+  /* ---- contact ---- */
+  #contact { border-bottom: 1px solid var(--line); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+  .contact-side h3 { font-family: var(--display); font-size: 1.15rem; font-weight: 600; margin-bottom: 8px; }
+  .contact-side p { color: var(--muted); margin-bottom: 28px; }
+  .contact-link { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); font-weight: 500; transition: color 0.2s; }
+  .contact-link:last-child { border-bottom: 1px solid var(--line); }
+  .contact-link:hover { color: var(--accent); }
+  .contact-link .k { font-family: var(--display); font-size: 0.76rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); width: 70px; }
+  form { display: flex; flex-direction: column; gap: 18px; }
+  .field label { display: block; font-family: var(--display); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+  .field input, .field textarea {
+    width: 100%; font-family: var(--body); font-size: 1rem; color: var(--ink);
+    background: var(--paper); border: 1px solid var(--line); border-radius: 2px;
+    padding: 12px 14px; transition: border-color 0.2s;
+  }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--accent); }
+  .field textarea { resize: vertical; min-height: 120px; }
+  button[type=submit] {
+    font-family: var(--body); font-weight: 600; font-size: 1rem; cursor: pointer;
+    background: var(--ink); color: var(--paper); border: none; border-radius: 2px;
+    padding: 14px; transition: background 0.2s;
+  }
+  button[type=submit]:hover { background: var(--accent); }
+  .form-note { font-size: 0.85rem; color: var(--muted); }
+  @media (max-width: 720px) { .contact-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+  /* ---- footer ---- */
+  footer { padding: 40px 0; }
+  .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .foot-inner p { font-size: 0.88rem; color: var(--muted); }
+  .foot-inner .brand { font-size: 1rem; }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <div class="brand">Mott<span>.</span>Design</div>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Web development &amp; marketing technology</p>
+    <h1>Sites that ship, and the <em>tracking</em> to prove they work.</h1>
+    <p>Mott Design is a one-person studio that builds, migrates, and instruments websites for medical device, genomics, and healthcare-tech companies — then wires up the analytics, consent, and martech behind them.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Start a project</a>
+      <a href="#services" class="btn-ghost">See what I do</a>
+    </div>
+  </div>
+</header>
+
+<div class="strip">
+  <div class="wrap strip-inner">
+    <span class="strip-label">Built with</span>
+    <div class="chips">
+      <span class="chip">WordPress</span>
+      <span class="chip">Webflow</span>
+      <span class="chip">Elementor</span>
+      <span class="chip">GA4</span>
+      <span class="chip">Google Tag Manager</span>
+      <span class="chip">HubSpot</span>
+    </div>
+  </div>
+</div>
+
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">01 / Services</span>
+      <h2>What I take on</h2>
+      <p>Most engagements start with a build or a migration and grow into the measurement work that keeps a site honest. Pick one piece or hand me the whole stack.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc">
+        <span class="svc-key">build</span>
+        <h3>Web design &amp; development</h3>
+        <p>Marketing sites and landing pages designed and built to spec — clean, fast, and ready for the people who have to update them after launch.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-key">platform</span>
+        <h3>Webflow &amp; WordPress builds</h3>
+        <p>Production sites on the platform that fits your team — visual CMS in Webflow, or WordPress and Elementor when you need it.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-key">migrate</span>
+        <h3>Site migrations &amp; rebuilds</h3>
+        <p>Platform moves and full rebuilds with redirects, content, and tracking carried over intact — handed back to you with ownership clean.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-key">measure</span>
+        <h3>Analytics &amp; tracking</h3>
+        <p>GA4 and Google Tag Manager set up properly: events that map to real goals, cross-domain tracking, and filtering that keeps the data trustworthy.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-key">rank</span>
+        <h3>SEO &amp; technical audits</h3>
+        <p>Indexing, structure, and performance audits that turn into a prioritized list of fixes — not a 60-page PDF nobody reads.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-key">consent</span>
+        <h3>Cookie &amp; consent compliance</h3>
+        <p>Consent-mode setups that actually gate your tags — CookieYes, Cookiebot, and GTM wired so nothing fires before opt-in.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-key">martech</span>
+        <h3>HubSpot &amp; martech setup</h3>
+        <p>Forms, contact properties, and the plumbing between your site and the tools your marketing team lives in.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-key">email</span>
+        <h3>Email marketing automation</h3>
+        <p>Lifecycle and nurture flows connected to your forms and CRM, with the tracking to see what converts.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-key">retainer</span>
+        <h3>Ongoing maintenance</h3>
+        <p>A standing arrangement for updates, fixes, and the small things that pile up — so your site doesn't quietly rot between projects.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">02 / About</span>
+      <h2>One person, the whole pipeline</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-body">
+        <p>Mott Design is a freelance studio working with <strong>medical device, genomics, and healthcare-technology</strong> companies — the kind of clients where a marketing site has to be fast, compliant, and measurable, not just pretty.</p>
+        <p>Because it's one person from kickoff to launch, the build and the tracking are never someone else's problem. The site gets designed, developed, migrated, instrumented, and handed back to you with the analytics and consent already working — and documentation so your team isn't stuck.</p>
+        <p>The work spans the full marketing-technology stack: <strong>design and development, GA4 and Tag Manager, SEO, consent compliance, HubSpot, and email automation.</strong> One point of contact, no handoffs between agencies.</p>
+      </div>
+      <dl class="facts">
+        <div class="fact"><dt>Based in</dt><dd>Monterey, CA</dd></div>
+        <div class="fact"><dt>Model</dt><dd>Solo studio</dd></div>
+        <div class="fact"><dt>Billing</dt><dd>Hourly · monthly</dd></div>
+        <div class="fact"><dt>Industries</dt><dd>Med device · biotech</dd></div>
+        <div class="fact"><dt>Platforms</dt><dd>Webflow · WordPress</dd></div>
+        <div class="fact"><dt>Availability</dt><dd>Taking projects</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">03 / Contact</span>
+      <h2>Tell me about the project</h2>
+      <p>Send a few lines on what you're building or what's broken, and you'll get a real reply with a scope and a quote — not a sales sequence.</p>
+    </div>
+    <div class="contact-grid">
+      <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="message">What do you need?</label>
+          <textarea id="message" name="message" required placeholder="A new build, a migration, tracking that's misfiring…"></textarea>
+        </div>
+        <button type="submit">Send it over</button>
+        <p class="form-note">Replace the form action with your Formspree (or similar) endpoint before launch — see the deploy notes.</p>
+      </form>
+      <div class="contact-side">
+        <h3>Or reach me directly</h3>
+        <p>Prefer email or LinkedIn? Both work.</p>
+        <a class="contact-link" href="mailto:mpmott@gmail.com"><span class="k">Email</span><span>mpmott@gmail.com</span></a>
+        <a class="contact-link" href="https://www.linkedin.com/in/michaelmott1/" target="_blank" rel="noopener"><span class="k">LinkedIn</span><span>Connect &rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="brand">Mott<span>.</span>Design</div>
+    <p>&copy; <span id="yr"></span> Mott Design LLC · Monterey, California</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  // Progressive enhancement: graceful form feedback if using a JSON endpoint.
+  const form = document.getElementById('contact-form');
+  form.addEventListener('submit', function(e) {
+    if (form.action.includes('YOUR_FORM_ID')) {
+      e.preventDefault();
+      alert('Form endpoint not set yet. Add your Formspree ID to the form action — see deploy notes.');
+    }
+  });
+</script>
+
+</body>
+</html>
