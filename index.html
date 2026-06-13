@@ -121,13 +121,13 @@
   .terminal-bg-code {
     position: absolute; bottom: 14px; left: 20px; right: 20px;
     font-family: 'SF Mono','Fira Code','Courier New',monospace;
-    font-size: 0.78rem; line-height: 1.62;
+    font-size: 0.8rem; line-height: 1.65; font-weight: 500;
   }
-  .terminal-bg-code div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .tc-err    { color: #D05050; }
-  .tc-warn   { color: #B8902E; }
-  .tc-dep    { color: #7A6E88; }
-  .tc-dim-bg { color: rgba(130,170,130,0.28); }
+  .terminal-bg-code div { white-space: normal; word-break: break-word; }
+  .tc-err    { color: #E05555; }
+  .tc-warn   { color: #C89A2E; }
+  .tc-dep    { color: #9A8AAA; }
+  .tc-dim-bg { color: rgba(160,200,160,0.48); }
 
   /* ---- terminal: clean solution card ---- */
   .terminal-clean {
@@ -155,6 +155,14 @@
   .terminal-dot:nth-child(1) { background: #FF5F56; }
   .terminal-dot:nth-child(2) { background: #FFBD2E; }
   .terminal-dot:nth-child(3) { background: #27C93F; }
+  .svc-badge {
+    margin-left: 10px;
+    background: #CECBF6; color: #26215C;
+    font-family: 'SF Mono','Fira Code','Courier New',monospace;
+    font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.09em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 4px;
+  }
 
   /* ---- clean code syntax ---- */
   .terminal-code {
@@ -358,6 +366,7 @@
         <span class="terminal-dot"></span>
         <span class="terminal-dot"></span>
         <span class="terminal-dot"></span>
+        <span class="svc-badge" id="svc-badge"></span>
       </div>
       <div class="terminal-body">
         <pre class="terminal-code" id="terminal-output"></pre>
@@ -719,6 +728,7 @@
   // Clean solution snippets (per-service)
   const termCycles = [
     {
+      label: 'Analytics & Tracking',
       html: `<span class="tc-cmt">// GTM workspace: prod-v47  ·  mottclient.com</span>
 
 <span class="tc-dim">window</span>.dataLayer = <span class="tc-dim">window</span>.dataLayer || [];
@@ -745,6 +755,7 @@
 <span class="tc-ok">✓  Audience: warm-leads updated</span>`
     },
     {
+      label: 'Cookie & Consent',
       html: `<span class="tc-cmt">// Consent Mode v2  ·  CookieYes</span>
 <span class="tc-cmt">// Region: EU, CA  ·  Default: denied</span>
 
@@ -771,6 +782,7 @@
 <span class="tc-ok">✓  GTM fired: analytics-on-consent</span>`
     },
     {
+      label: 'SEO & Technical',
       html: `<span class="tc-cmd">$ audit --url</span> <span class="tc-val">mottclient.com</span> <span class="tc-dim">--full</span>
 
   Crawling <span class="tc-val">48</span> pages...
@@ -793,6 +805,7 @@
 <span class="tc-ok">✓  Report: audit-2024-11.pdf</span>`
     },
     {
+      label: 'Webflow & WordPress',
       html: `<span class="tc-cmd">$ webflow deploy</span> <span class="tc-dim">--env</span>=<span class="tc-val">production</span>
 
   Validating build...
@@ -816,6 +829,7 @@
 <span class="tc-ok">▶  Live at your-domain.com</span>`
     },
     {
+      label: 'HubSpot & Martech',
       html: `<span class="tc-cmt">// HubSpot CRM  ·  Portal 23847610</span>
 <span class="tc-cmt">// Embedding forms + workflow triggers</span>
 
@@ -841,6 +855,7 @@
 <span class="tc-ok">✓  CRM sync: contact created</span>`
     },
     {
+      label: 'Email & Automation',
       html: `<span class="tc-cmt">// Klaviyo  ·  flow: post-inquiry nurture</span>
 <span class="tc-cmt">// Trigger: form_submit  ·  Segment: leads</span>
 
@@ -942,8 +957,10 @@
     const cycle  = termCycles[svcIdx];
     const errContainer = document.getElementById('terminal-errors');
     const cleanEl = document.getElementById('terminal-clean');
+    const badgeEl = document.getElementById('svc-badge');
     if (!errContainer || !cleanEl) return;
 
+    if (badgeEl) badgeEl.textContent = cycle.label;
     stopBg();
     cleanEl.classList.remove('visible');
 
@@ -980,8 +997,10 @@
     const output = document.getElementById('terminal-output');
     const errContainer = document.getElementById('terminal-errors');
     const cleanEl = document.getElementById('terminal-clean');
+    const badgeEl = document.getElementById('svc-badge');
     if (output) output.innerHTML = termCycles[0].html;
     if (cleanEl) cleanEl.classList.add('visible');
+    if (badgeEl) badgeEl.textContent = termCycles[0].label;
     if (errContainer) errorSets[0].forEach(l => addErrLine(errContainer, l));
   }
 </script>
