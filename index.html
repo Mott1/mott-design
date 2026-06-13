@@ -122,11 +122,12 @@
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
     font-size: 0.8rem; line-height: 1.65; font-weight: 500;
   }
-  .terminal-bg-code div { white-space: normal; word-break: break-word; }
-  .tc-err    { color: #E05555; }
-  .tc-warn   { color: #C89A2E; }
-  .tc-dep    { color: #9A8AAA; }
-  .tc-dim-bg { color: rgba(160,200,160,0.48); }
+  .terminal-bg-code div { display: flex; white-space: nowrap; overflow: hidden; }
+  .err-fill { flex: 1; overflow: hidden; white-space: nowrap; color: rgba(228,234,200,0.07); padding-left: 6px; }
+  .tc-err    { color: #E05555; flex-shrink: 0; }
+  .tc-warn   { color: #C89A2E; flex-shrink: 0; }
+  .tc-dep    { color: #9A8AAA; flex-shrink: 0; }
+  .tc-dim-bg { color: rgba(228,234,200,0.38); flex-shrink: 0; }
 
   /* ---- terminal: clean solution card ---- */
   .terminal-clean {
@@ -139,7 +140,12 @@
     display: flex; flex-direction: column;
   }
   .terminal-clean .terminal-bar { background: #E8E4DC; border-bottom: 1px solid rgba(0,0,0,0.1); }
-  .terminal-clean .terminal-body { flex: 1; padding: 14px 18px 0; overflow: hidden; }
+  .terminal-clean .terminal-body { flex: 1; padding: 14px 18px 0; overflow: hidden; position: relative; }
+  .terminal-clean .terminal-body::after {
+    content: '';
+    position: absolute; top: 0; right: 0; bottom: 0;
+    width: 1px; background: rgba(42,38,32,0.1);
+  }
 
   /* ---- shared terminal chrome ---- */
   .terminal-bar {
@@ -194,8 +200,9 @@
     margin-bottom: 14px;
   }
   .tools-grid {
-    display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: flex-start;
+    display: grid; grid-template-columns: repeat(8, 1fr); width: 100%;
   }
+  @media (max-width: 720px) { .tools-grid { grid-template-columns: repeat(4, 1fr); gap: 16px 0; } }
   .tool-item {
     display: flex; flex-direction: column; align-items: center; gap: 6px;
     cursor: default;
@@ -670,32 +677,35 @@
 
   // ── 6. Terminal — error stream + clean solution ──────────────────────────────
 
+  function decodeEnt(s) {
+    return s.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
+  }
   function tokenize(html) {
     const tokens = [];
     const re = /<span class="([^"]+)">([^<]*)<\/span>|([^<]+)/g;
     let m;
     while ((m = re.exec(html)) !== null) {
-      if (m[3] !== undefined) tokens.push({type:'text', content:m[3]});
-      else tokens.push({type:'span', cls:m[1], content:m[2]});
+      if (m[3] !== undefined) tokens.push({type:'text', content:decodeEnt(m[3])});
+      else tokens.push({type:'span', cls:m[1], content:decodeEnt(m[2])});
     }
     return tokens;
   }
 
   // Per-service error lines (fast scroll = atmosphere, not readability)
   const errorSets = [
-    [ // analytics
-      {t:'dep', s:'[DEPRECATED] UA-12345 — Universal Analytics ended July 2023'},
-      {t:'err', s:'TypeError: gtag is not a function'},
-      {t:'err', s:'403 /collect?v=2&tid=UA-12345'},
-      {t:'dim', s:'Warning: dataLayer not initialized before GTM loads'},
-      {t:'err', s:'console.error: Measurement ID missing — no config called'},
-      {t:'err', s:'ERROR: conversion tag fires before consent update'},
-      {t:'dep', s:"[DEPRECATED] ga('send','pageview') — replaced by gtag"},
-      {t:'err', s:'Uncaught ReferenceError: ga is not defined'},
-      {t:'dim', s:'dataLayer.push: no active GTM container found'},
-      {t:'err', s:'ERROR: send_page_view fires on every layout shift'},
-      {t:'dep', s:"[DEPRECATED] trackingId: 'UA-XXXX' — use measurementId"},
-      {t:'err', s:'TypeError: Cannot read properties of undefined (reading push)'},
+    [ // html / web build
+      {t:'err', s:'Error: <div> nested inside <p> — invalid HTML structure'},
+      {t:'warn', s:'WARN: 6 <img> elements missing alt="" attribute'},
+      {t:'err', s:'Error: Unclosed <section> tag on line 247'},
+      {t:'dep', s:'[DEPRECATED] <center> tag — use CSS text-align'},
+      {t:'err', s:'Error: <meta name="viewport"> not found — mobile broken'},
+      {t:'err', s:'Error: duplicate id="hero" found on 3 elements'},
+      {t:'warn', s:'WARN: 14 inline style= attributes — move to stylesheet'},
+      {t:'err', s:'Error: <a href="#"> empty anchor — not keyboard accessible'},
+      {t:'dep', s:'[DEPRECATED] <font size="4"> — use CSS font-size'},
+      {t:'err', s:'Error: <img> missing width/height — causes layout shift'},
+      {t:'warn', s:'WARN: <h3> before <h2> — heading order broken'},
+      {t:'err', s:'Error: render-blocking <script> in <head> — add defer'},
     ],
     [ // consent
       {t:'err', s:'ERROR: Consent Mode v2 not configured'},
@@ -772,31 +782,24 @@
   // Clean solution snippets (per-service)
   const termCycles = [
     {
-      label: 'Analytics & Tracking',
-      html: `<span class="tc-cmt">// GTM workspace: prod-v47  ·  mottclient.com</span>
+      label: 'Web Build',
+      html: `<span class="tc-cmt">// mott-design · index.html</span>
 
-<span class="tc-dim">window</span>.dataLayer = <span class="tc-dim">window</span>.dataLayer || [];
+<span class="tc-dim">&lt;header</span> <span class="tc-val">class</span>=<span class="tc-ok">"hero"</span><span class="tc-dim">&gt;</span>
+  <span class="tc-dim">&lt;div</span> <span class="tc-val">class</span>=<span class="tc-ok">"hero-left"</span><span class="tc-dim">&gt;</span>
+    <span class="tc-dim">&lt;p</span> <span class="tc-val">class</span>=<span class="tc-ok">"eyebrow"</span><span class="tc-dim">&gt;</span>Web dev &amp; martech<span class="tc-dim">&lt;/p&gt;</span>
+    <span class="tc-dim">&lt;h1&gt;</span>Sites that ship, and the
+      <span class="tc-dim">&lt;em&gt;</span><span class="tc-ok">tracking</span><span class="tc-dim">&lt;/em&gt;</span>
+      to prove they work.<span class="tc-dim">&lt;/h1&gt;</span>
+    <span class="tc-dim">&lt;a</span> <span class="tc-val">href</span>=<span class="tc-ok">"#contact"</span>
+       <span class="tc-val">class</span>=<span class="tc-ok">"btn-primary"</span><span class="tc-dim">&gt;</span>
+      Start a project
+    <span class="tc-dim">&lt;/a&gt;</span>
+  <span class="tc-dim">&lt;/div&gt;</span>
+<span class="tc-dim">&lt;/header&gt;</span>
 
-<span class="tc-cmd">gtag</span>('<span class="tc-val">config</span>', '<span class="tc-val">G-XXX4M8D2</span>', {
-  <span class="tc-dim">send_page_view:</span> <span class="tc-val">false</span>,
-  <span class="tc-dim">cookie_flags:</span>   '<span class="tc-val">SameSite=None;Secure</span>'
-});
-
-<span class="tc-cmt">// Lead capture event</span>
-<span class="tc-dim">dataLayer</span>.push({
-  <span class="tc-dim">event:</span>   '<span class="tc-val">generate_lead</span>',
-  <span class="tc-dim">form_id:</span> '<span class="tc-val">contact-form</span>',
-  <span class="tc-dim">page:</span>    '<span class="tc-val">/services</span>',
-  <span class="tc-dim">value:</span>   <span class="tc-val">1</span>
-});
-
-<span class="tc-dim">gtag</span>('<span class="tc-val">set</span>', '<span class="tc-val">user_properties</span>', {
-  <span class="tc-dim">industry:</span> '<span class="tc-val">healthcare</span>',
-  <span class="tc-dim">stage:</span>    '<span class="tc-val">evaluation</span>'
-});
-
-<span class="tc-ok">▶  GA4 — event fired  200 OK</span>
-<span class="tc-ok">✓  Audience: warm-leads updated</span>`
+<span class="tc-ok">▶  0 errors · W3C valid</span>
+<span class="tc-ok">✓  Live: mottdesign.com</span>`
     },
     {
       label: 'Cookie & Consent',
@@ -936,8 +939,14 @@
 
   function addErrLine(container, line) {
     const div = document.createElement('div');
-    div.className = errClass(line.t);
-    div.textContent = line.s;
+    const text = document.createElement('span');
+    text.className = errClass(line.t);
+    text.textContent = line.s;
+    const fill = document.createElement('span');
+    fill.className = 'err-fill';
+    fill.textContent = ' ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░';
+    div.appendChild(text);
+    div.appendChild(fill);
     container.appendChild(div);
     while (container.children.length > 60) container.removeChild(container.firstChild);
   }
