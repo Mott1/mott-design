@@ -86,8 +86,8 @@
     padding-top: 24px; border-top: 1px solid var(--line);
   }
   .hero-right {
-    display: flex; align-items: center; justify-content: center;
-    padding: 56px;
+    display: flex; align-items: flex-end; justify-content: center;
+    padding: 0 56px 64px;
   }
   .btn-primary {
     font-family: var(--body); font-weight: 600; font-size: 0.75rem;
@@ -111,7 +111,7 @@
 
   /* ---- terminal ---- */
   .terminal {
-    width: 100%; max-width: 460px;
+    width: 100%; max-width: 520px;
     background: rgba(0,0,0,0.28); border: 1px solid var(--line);
     border-radius: 6px; overflow: hidden;
   }
@@ -121,7 +121,8 @@
     background: rgba(0,0,0,0.15);
   }
   .terminal-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(228,234,200,0.2); }
-  .terminal-body { padding: 28px 28px 32px; min-height: 230px; }
+  .terminal-title { margin-left: 10px; font-family: 'SF Mono','Fira Code','Courier New',monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.05em; }
+  .terminal-body { padding: 28px 28px 32px; min-height: 300px; }
   .terminal-code {
     font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
     font-size: 0.88rem; line-height: 1.75; color: var(--ink);
@@ -306,6 +307,7 @@
         <span class="terminal-dot"></span>
         <span class="terminal-dot"></span>
         <span class="terminal-dot"></span>
+        <span class="terminal-title" id="terminal-title"></span>
       </div>
       <div class="terminal-body">
         <pre class="terminal-code" id="terminal-output"></pre>
@@ -563,42 +565,126 @@
     factsObs.observe(factsDl);
   }
 
-  // ── 6. Terminal typewriter ─────────────────────────────────────────────────
-  function startTypewriter() {
+  // ── 6. Terminal — cycling service typewriter ───────────────────────────────
+  const termCycles = [
+    {
+      label: 'analytics · tracking',
+      lines: [
+        "$ dataLayer.push({",
+        "    event: 'generate_lead',",
+        "    form_id: 'contact-form',",
+        "    page: '/services'",
+        "  });",
+        "",
+        "▶  GA4 — event fired  200 OK"
+      ]
+    },
+    {
+      label: 'cookie · consent',
+      lines: [
+        "// Consent Mode v2 · CookieYes",
+        "gtag('consent', 'update', {",
+        "  analytics_storage: 'granted',",
+        "  ad_storage:        'denied'",
+        "});",
+        "",
+        "▶  Consent state applied"
+      ]
+    },
+    {
+      label: 'seo · technical audit',
+      lines: [
+        "$ audit --url mottclient.com",
+        "  Core Web Vitals   pass",
+        "  LCP  1.2s   CLS  0.02",
+        "  Indexed pages   48 / 48",
+        "  Broken links    0",
+        "",
+        "▶  11 issues prioritized"
+      ]
+    },
+    {
+      label: 'webflow · wordpress',
+      lines: [
+        "$ webflow deploy --prod",
+        "  ✓ Assets published",
+        "  ✓ CMS synced  (247 items)",
+        "  ✓ SSL certificate active",
+        "",
+        "▶  Live at your-domain.com"
+      ]
+    },
+    {
+      label: 'hubspot · martech',
+      lines: [
+        "$ hubspot.forms.create({",
+        "    portalId: '23847610',",
+        "    formId:   'contact-us',",
+        "    target:   '#hs-form'",
+        "  });",
+        "",
+        "▶  HubSpot form embedded"
+      ]
+    },
+    {
+      label: 'email · automation',
+      lines: [
+        "// Trigger: form_submit",
+        "{",
+        "  workflow: 'nurture-seq',",
+        "  contact:  { stage: 'lead' },",
+        "  delay:    '3 days'",
+        "}",
+        "",
+        "▶  Email 1 of 4 queued"
+      ]
+    }
+  ];
+
+  let termIdx = 0;
+
+  function runTermCycle() {
     const output = document.getElementById('terminal-output');
+    const titleEl = document.getElementById('terminal-title');
     if (!output) return;
-    const text = [
-      "$ dataLayer.push({",
-      "    event: 'generate_lead',",
-      "    form_id: 'contact-form',",
-      "    page: '/services'",
-      "  });",
-      "",
-      "▶  GA4 — event fired  200 OK"
-    ].join('\n');
 
-    const cursor = document.createElement('span');
-    cursor.className = 'terminal-cursor';
-    output.textContent = '';
-    output.appendChild(cursor);
+    const cycle = termCycles[termIdx % termCycles.length];
+    termIdx++;
 
-    let i = 0;
-    const tick = () => {
-      if (i < text.length) {
-        output.insertBefore(document.createTextNode(text[i]), cursor);
-        i++;
-        setTimeout(tick, text[i - 1] === '\n' ? 90 : 30);
-      } else {
-        setTimeout(startTypewriter, 3200);
-      }
-    };
-    setTimeout(tick, 600);
+    if (titleEl) titleEl.textContent = cycle.label;
+
+    output.style.transition = 'opacity 0.3s ease';
+    output.style.opacity = '0';
+
+    setTimeout(() => {
+      const cursor = document.createElement('span');
+      cursor.className = 'terminal-cursor';
+      output.textContent = '';
+      output.appendChild(cursor);
+      output.style.opacity = '1';
+
+      const text = cycle.lines.join('\n');
+      let i = 0;
+      const tick = () => {
+        if (i < text.length) {
+          output.insertBefore(document.createTextNode(text[i]), cursor);
+          i++;
+          setTimeout(tick, text[i - 1] === '\n' ? 85 : 28);
+        } else {
+          setTimeout(runTermCycle, 2800);
+        }
+      };
+      tick();
+    }, 350);
   }
 
-  if (!reduced) startTypewriter();
-  else {
+  if (!reduced) {
+    runTermCycle();
+  } else {
     const output = document.getElementById('terminal-output');
-    if (output) output.textContent = "$ dataLayer.push({\n    event: 'generate_lead',\n    form_id: 'contact-form',\n    page: '/services'\n  });\n\n▶  GA4 — event fired  200 OK";
+    const titleEl = document.getElementById('terminal-title');
+    if (output) output.textContent = termCycles[0].lines.join('\n');
+    if (titleEl) titleEl.textContent = termCycles[0].label;
   }
 </script>
 
