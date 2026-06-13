@@ -119,8 +119,8 @@
     position: relative;
   }
   .terminal-bg-code {
-    position: absolute; bottom: 14px; left: 20px; right: 20px;
-    font-family: 'SF Mono','Fira Code','Courier New',monospace;
+    position: absolute; bottom: 14px; left: 20px; right: 4px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
     font-size: 0.8rem; line-height: 1.65; font-weight: 500;
   }
   .terminal-bg-code div { white-space: normal; word-break: break-word; }
@@ -133,7 +133,7 @@
   .terminal-clean {
     position: absolute; top: 24%; left: 28%; right: 0; bottom: 0;
     background: #F0EDE6;
-    border: 1px solid rgba(44,59,44,0.18);
+    border: 1px solid rgba(0,0,0,0.3);
     border-right: none; border-bottom: none;
     border-radius: 6px 0 0 0;
     box-shadow: -10px -10px 52px rgba(0,0,0,0.38);
@@ -142,8 +142,9 @@
     transition: opacity 0.5s ease, transform 0.5s ease;
   }
   .terminal-clean.visible { opacity: 1; transform: translateY(0); }
-  .terminal-clean .terminal-bar { background: #E6E0D8; border-bottom: 1px solid rgba(44,59,44,0.12); }
-  .terminal-clean .terminal-body { flex: 1; padding: 20px 24px 0; overflow: hidden; }
+  .terminal-clean .terminal-dot { display: none; }
+  .terminal-clean .terminal-bar { background: #E8E4DC; border-bottom: 1px solid rgba(0,0,0,0.1); }
+  .terminal-clean .terminal-body { flex: 1; padding: 14px 18px 0; overflow: hidden; }
 
   /* ---- shared terminal chrome ---- */
   .terminal-bar {
@@ -156,28 +157,37 @@
   .terminal-dot:nth-child(2) { background: #FFBD2E; }
   .terminal-dot:nth-child(3) { background: #27C93F; }
   .svc-badge {
-    margin-left: 10px;
     background: #CECBF6; color: #26215C;
-    font-family: 'SF Mono','Fira Code','Courier New',monospace;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
     font-size: 0.68rem; font-weight: 700;
     letter-spacing: 0.09em; text-transform: uppercase;
     padding: 3px 10px; border-radius: 4px;
   }
+  .svc-check {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #27C93F; color: #fff;
+    font-size: 0.65rem; font-weight: 800; line-height: 1;
+    margin-left: 6px;
+    opacity: 0; transform: scale(0.2);
+    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .svc-check.pop { opacity: 1; transform: scale(1); }
 
-  /* ---- clean code syntax ---- */
+  /* ---- clean code syntax (from tp-terminal) ---- */
   .terminal-code {
-    font-family: 'SF Mono','Fira Code','Courier New',monospace;
-    font-size: 0.85rem; line-height: 1.8; color: #4A5C4A;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    font-size: 14px; line-height: 1.55; color: #2A2620;
     white-space: pre; margin: 0;
   }
-  .tc-cmd { color: #1C2E1C; }
+  .tc-cmd { color: #2A2620; }
   .tc-dim { color: #7A8E7A; }
-  .tc-val { color: #295D32; font-weight: 500; }
-  .tc-ok  { color: #1C4A1C; font-weight: 600; }
+  .tc-val { color: #3B6D11; font-weight: 500; }
+  .tc-ok  { color: #1A1714; font-weight: 600; }
   .tc-cmt { color: #8EA08E; font-style: italic; }
   .terminal-cursor {
     display: inline-block; width: 7px; height: 0.9em;
-    background: #295D32; vertical-align: text-bottom;
+    background: #3B6D11; vertical-align: text-bottom;
     animation: blink 1s step-end infinite;
   }
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
@@ -367,6 +377,7 @@
         <span class="terminal-dot"></span>
         <span class="terminal-dot"></span>
         <span class="svc-badge" id="svc-badge"></span>
+        <span class="svc-check" id="svc-check">✓</span>
       </div>
       <div class="terminal-body">
         <pre class="terminal-code" id="terminal-output"></pre>
@@ -958,9 +969,11 @@
     const errContainer = document.getElementById('terminal-errors');
     const cleanEl = document.getElementById('terminal-clean');
     const badgeEl = document.getElementById('svc-badge');
+    const checkEl = document.getElementById('svc-check');
     if (!errContainer || !cleanEl) return;
 
     if (badgeEl) badgeEl.textContent = cycle.label;
+    if (checkEl) checkEl.classList.remove('pop');
     stopBg();
     cleanEl.classList.remove('visible');
 
@@ -974,11 +987,16 @@
           cleanEl.classList.add('visible');
           // Phase 3: type clean code
           typeClean(cycle.html, () => {
+            // Checkmark pops in when typing is done
+            if (checkEl) checkEl.classList.add('pop');
             // Phase 4: dwell 3s, then reset
             setTimeout(() => {
-              cleanEl.classList.remove('visible');
-              stopBg();
-              setTimeout(runTermCycle, 700);
+              if (checkEl) checkEl.classList.remove('pop');
+              setTimeout(() => {
+                cleanEl.classList.remove('visible');
+                stopBg();
+                setTimeout(runTermCycle, 700);
+              }, 300);
             }, 3000);
           });
         }, 220);
@@ -998,9 +1016,11 @@
     const errContainer = document.getElementById('terminal-errors');
     const cleanEl = document.getElementById('terminal-clean');
     const badgeEl = document.getElementById('svc-badge');
+    const checkEl = document.getElementById('svc-check');
     if (output) output.innerHTML = termCycles[0].html;
     if (cleanEl) cleanEl.classList.add('visible');
     if (badgeEl) badgeEl.textContent = termCycles[0].label;
+    if (checkEl) checkEl.classList.add('pop');
     if (errContainer) errorSets[0].forEach(l => addErrLine(errContainer, l));
   }
 </script>
