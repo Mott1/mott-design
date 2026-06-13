@@ -58,7 +58,16 @@
   @media (max-width: 720px) { .nav-links { display: none; } }
 
   /* ---- hero ---- */
-  .hero { padding: 96px 0 80px; border-bottom: 1px solid var(--line); }
+  .hero {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 100vh; border-bottom: 1px solid var(--line);
+  }
+  .hero-left {
+    border-right: 1px solid var(--line);
+    display: flex; align-items: flex-end;
+    padding: 0 56px 64px;
+  }
+  .hero-content { width: 100%; }
   .eyebrow {
     font-family: var(--display); font-size: 0.8rem; font-weight: 600;
     letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
@@ -66,12 +75,20 @@
   }
   .hero h1 {
     font-family: var(--display); font-weight: 500;
-    font-size: clamp(2.5rem, 6vw, 3.375rem); line-height: 1.0;
+    font-size: clamp(2.2rem, 4vw, 3.375rem); line-height: 1.0;
     letter-spacing: -0.03em; max-width: 16ch; margin-bottom: 28px;
   }
   .hero h1 em { font-style: normal; color: var(--accent); }
-  .hero p { font-size: 1.18rem; color: var(--muted); max-width: 52ch; margin-bottom: 36px; }
-  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .hero p { font-size: 1.05rem; color: var(--muted); max-width: 46ch; margin-bottom: 36px; }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 48px; }
+  .hero-built {
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding-top: 24px; border-top: 1px solid var(--line);
+  }
+  .hero-right {
+    display: flex; align-items: center; justify-content: center;
+    padding: 56px;
+  }
   .btn-primary {
     font-family: var(--body); font-weight: 600; font-size: 0.75rem;
     background: var(--ink); color: var(--paper); padding: 14px 28px;
@@ -86,10 +103,38 @@
     text-transform: uppercase; letter-spacing: 0.08em;
   }
   .btn-ghost:hover { border-color: var(--ink); }
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { border-right: none; border-bottom: 1px solid var(--line); padding: 80px 28px 56px; align-items: flex-start; }
+    .hero-right { padding: 48px 28px; }
+  }
 
-  /* ---- stack strip ---- */
-  .strip { padding: 28px 0; border-bottom: 1px solid var(--line); background: var(--paper-2); }
-  .strip-inner { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  /* ---- terminal ---- */
+  .terminal {
+    width: 100%; max-width: 460px;
+    background: rgba(0,0,0,0.28); border: 1px solid var(--line);
+    border-radius: 6px; overflow: hidden;
+  }
+  .terminal-bar {
+    display: flex; align-items: center; gap: 7px;
+    padding: 10px 16px; border-bottom: 1px solid var(--line);
+    background: rgba(0,0,0,0.15);
+  }
+  .terminal-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(228,234,200,0.2); }
+  .terminal-body { padding: 28px 28px 32px; min-height: 230px; }
+  .terminal-code {
+    font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: 0.88rem; line-height: 1.75; color: var(--ink);
+    white-space: pre; margin: 0;
+  }
+  .terminal-cursor {
+    display: inline-block; width: 7px; height: 0.9em;
+    background: var(--accent); vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* ---- built-with ---- */
   .strip-label { font-family: var(--display); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
   .chips { display: flex; gap: 10px; flex-wrap: wrap; }
   .chip { font-size: 0.85rem; font-weight: 500; padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--ink); }
@@ -233,30 +278,42 @@
 </nav>
 
 <header class="hero">
-  <div class="wrap">
-    <p class="eyebrow">Web development &amp; marketing technology</p>
-    <h1>Sites that ship, and the <em>tracking</em> to prove they work.</h1>
-    <p>Mott Design is a one-person studio that builds, migrates, and instruments websites for medical device, genomics, and healthcare-tech companies — then wires up the analytics, consent, and martech behind them.</p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn-primary">Start a project</a>
-      <a href="#services" class="btn-ghost">See what I do</a>
+  <div class="hero-left">
+    <div class="hero-content">
+      <p class="eyebrow">Web development &amp; marketing technology</p>
+      <h1>Sites that ship, and the <em>tracking</em> to prove they work.</h1>
+      <p>Mott Design is a one-person studio that builds, migrates, and instruments websites for medical device, genomics, and healthcare-tech companies — then wires up the analytics, consent, and martech behind them.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Start a project</a>
+        <a href="#services" class="btn-ghost">See what I do</a>
+      </div>
+      <div class="hero-built">
+        <span class="strip-label">Built with</span>
+        <div class="chips">
+          <span class="chip">WordPress</span>
+          <span class="chip">Webflow</span>
+          <span class="chip">Elementor</span>
+          <span class="chip">GA4</span>
+          <span class="chip">Google Tag Manager</span>
+          <span class="chip">HubSpot</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+      </div>
+      <div class="terminal-body">
+        <pre class="terminal-code" id="terminal-output"></pre>
+      </div>
     </div>
   </div>
 </header>
 
-<div class="strip">
-  <div class="wrap strip-inner">
-    <span class="strip-label">Built with</span>
-    <div class="chips">
-      <span class="chip">WordPress</span>
-      <span class="chip">Webflow</span>
-      <span class="chip">Elementor</span>
-      <span class="chip">GA4</span>
-      <span class="chip">Google Tag Manager</span>
-      <span class="chip">HubSpot</span>
-    </div>
-  </div>
-</div>
 
 <section id="services">
   <div class="wrap">
@@ -453,19 +510,21 @@
     );
   }
 
-  // ── 2. Hero sub-text and CTA appear after headline finishes ────────────────
+  // ── 2. Hero sub-text, CTA, and built-with appear after headline ────────────
   if (!reduced) {
-    const heroP = document.querySelector('.hero p');
+    const heroP   = document.querySelector('.hero p');
     const heroAct = document.querySelector('.hero-actions');
-    [heroP, heroAct].forEach(el => {
+    const heroBuilt = document.querySelector('.hero-built');
+    [heroP, heroAct, heroBuilt].forEach(el => {
       if (!el) return;
       el.style.opacity = '0';
       el.style.transform = 'translateY(12px)';
       el.style.transition = 'opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)';
     });
     const revealAt = 60 + wordCount * 50 + 160;
-    setTimeout(() => { if (heroP)  { heroP.style.opacity  = '1'; heroP.style.transform  = 'none'; } }, revealAt);
-    setTimeout(() => { if (heroAct){ heroAct.style.opacity = '1'; heroAct.style.transform = 'none'; } }, revealAt + 110);
+    setTimeout(() => { if (heroP)     { heroP.style.opacity     = '1'; heroP.style.transform     = 'none'; } }, revealAt);
+    setTimeout(() => { if (heroAct)   { heroAct.style.opacity   = '1'; heroAct.style.transform   = 'none'; } }, revealAt + 110);
+    setTimeout(() => { if (heroBuilt) { heroBuilt.style.opacity = '1'; heroBuilt.style.transform = 'none'; } }, revealAt + 220);
   }
 
   // ── 3. Scroll fade-in observer ─────────────────────────────────────────────
@@ -477,7 +536,7 @@
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.sec-head, .strip-inner, .about-body, .contact-grid').forEach(el => {
+  document.querySelectorAll('.sec-head, .about-body, .contact-grid').forEach(el => {
     el.setAttribute('data-animate', '');
     fadeObs.observe(el);
   });
@@ -502,6 +561,44 @@
       factsObs.disconnect();
     }, { threshold: 0.15 });
     factsObs.observe(factsDl);
+  }
+
+  // ── 6. Terminal typewriter ─────────────────────────────────────────────────
+  function startTypewriter() {
+    const output = document.getElementById('terminal-output');
+    if (!output) return;
+    const text = [
+      "$ dataLayer.push({",
+      "    event: 'generate_lead',",
+      "    form_id: 'contact-form',",
+      "    page: '/services'",
+      "  });",
+      "",
+      "▶  GA4 — event fired  200 OK"
+    ].join('\n');
+
+    const cursor = document.createElement('span');
+    cursor.className = 'terminal-cursor';
+    output.textContent = '';
+    output.appendChild(cursor);
+
+    let i = 0;
+    const tick = () => {
+      if (i < text.length) {
+        output.insertBefore(document.createTextNode(text[i]), cursor);
+        i++;
+        setTimeout(tick, text[i - 1] === '\n' ? 90 : 30);
+      } else {
+        setTimeout(startTypewriter, 3200);
+      }
+    };
+    setTimeout(tick, 600);
+  }
+
+  if (!reduced) startTypewriter();
+  else {
+    const output = document.getElementById('terminal-output');
+    if (output) output.textContent = "$ dataLayer.push({\n    event: 'generate_lead',\n    form_id: 'contact-form',\n    page: '/services'\n  });\n\n▶  GA4 — event fired  200 OK";
   }
 </script>
 
