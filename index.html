@@ -69,7 +69,7 @@
   }
   .hero-content { width: 100%; }
   .eyebrow {
-    font-family: var(--display); font-size: 0.8rem; font-weight: 600;
+    font-family: var(--display); font-size: 0.68rem; font-weight: 600;
     letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
     margin-bottom: 24px;
   }
@@ -80,16 +80,12 @@
   }
   .hero h1 em { font-style: normal; color: var(--accent); }
   .hero p { font-size: 1.05rem; color: var(--muted); max-width: 46ch; margin-bottom: 36px; }
-  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 48px; }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; }
+  .hero-tools {
+    padding-top: 24px; border-top: 1px solid var(--line);
+  }
   .hero-right {
     position: relative;
-  }
-  .terminal-area {
-    position: absolute;
-    top: 0;
-    left: 40px;
-    right: 0;
-    bottom: 0;
   }
   .btn-primary {
     font-family: var(--body); font-weight: 600; font-size: 0.75rem;
@@ -115,7 +111,7 @@
   /* ---- terminal: background error stream ---- */
   .terminal-bg {
     position: absolute; inset: 0;
-    background: #080C08; display: flex; flex-direction: column;
+    background: var(--paper); display: flex; flex-direction: column;
   }
   .terminal-bg-body {
     flex: 1; overflow: hidden; padding: 14px 20px;
@@ -138,14 +134,10 @@
     background: #F0EDE6;
     border: 1px solid rgba(0,0,0,0.3);
     border-right: none; border-bottom: none;
-    border-radius: 6px 0 0 0;
+    border-radius: 10px 0 0 0;
     box-shadow: -10px -10px 52px rgba(0,0,0,0.38);
     display: flex; flex-direction: column;
-    opacity: 0; transform: translateY(18px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
   }
-  .terminal-clean.visible { opacity: 1; transform: translateY(0); }
-  .terminal-clean .terminal-dot { display: none; }
   .terminal-clean .terminal-bar { background: #E8E4DC; border-bottom: 1px solid rgba(0,0,0,0.1); }
   .terminal-clean .terminal-body { flex: 1; padding: 14px 18px 0; overflow: hidden; }
 
@@ -154,7 +146,7 @@
     display: flex; align-items: center; gap: 7px; flex-shrink: 0;
     padding: 10px 16px;
   }
-  .terminal-bg .terminal-bar { background: #0D110D; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .terminal-bg .terminal-bar { background: var(--paper); border-bottom: 1px solid var(--line); }
   .terminal-dot { width: 11px; height: 11px; border-radius: 50%; }
   .terminal-dot:nth-child(1) { background: #FF5F56; }
   .terminal-dot:nth-child(2) { background: #FFBD2E; }
@@ -195,33 +187,28 @@
   }
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-  /* ---- tools ---- */
-  #tools { border-bottom: 1px solid var(--line); padding: 44px 0; }
+  /* ---- tools strip (in hero) ---- */
   .tools-label {
-    font-family: var(--display); font-size: 0.78rem; font-weight: 600;
+    font-family: var(--display); font-size: 0.68rem; font-weight: 600;
     letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
-    margin-bottom: 24px;
+    margin-bottom: 14px;
   }
   .tools-grid {
-    display: flex; flex-wrap: wrap; gap: 24px 32px; align-items: flex-start;
+    display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: flex-start;
   }
   .tool-item {
-    display: flex; flex-direction: column; align-items: center; gap: 7px;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
     cursor: default;
   }
   .tool-item img {
-    width: 36px; height: 36px; object-fit: contain;
+    width: 26px; height: 26px; object-fit: contain;
     filter: brightness(0) invert(1) opacity(0.4);
     transition: filter 0.15s ease;
   }
   .tool-item:hover img { filter: none; }
   .tool-item span {
-    font-size: 0.7rem; font-weight: 500; color: var(--muted);
+    font-size: 0.65rem; font-weight: 500; color: var(--muted);
     letter-spacing: 0.02em; white-space: nowrap;
-  }
-  @media (max-width: 720px) {
-    .tools-grid { gap: 20px 24px; }
-    .tool-item img { width: 30px; height: 30px; }
   }
 
   /* ---- section base ---- */
@@ -367,98 +354,73 @@
     <div class="hero-content">
       <p class="eyebrow">Web development &amp; marketing technology</p>
       <h1>Sites that ship, and the <em>tracking</em> to prove they work.</h1>
-      <p>Most sites launch with broken tracking, misfiring consent, and deprecated scripts no one has touched. Mott Design builds and instruments websites for medical device, genomics, and healthcare-tech companies — and ships the analytics and martech stack right the first time, so there's nothing to clean up after go-live.</p>
+      <p>Most sites launch with broken tracking, misfiring consent, and deprecated scripts no one has touched. Mott Design builds, designs, and instruments websites — and ships the analytics and martech stack right the first time, so there's nothing to clean up after go-live.</p>
       <div class="hero-actions">
         <a href="#contact" class="btn-primary">Start a project</a>
         <a href="#services" class="btn-ghost">See what I do</a>
       </div>
+      <div class="hero-tools">
+        <p class="tools-label">Some of the tools I use</p>
+        <div class="tools-grid">
+          <div class="tool-item" title="Webflow">
+            <img src="https://cdn.simpleicons.org/webflow" alt="Webflow" width="26" height="26">
+            <span>Webflow</span>
+          </div>
+          <div class="tool-item" title="WordPress">
+            <img src="https://cdn.simpleicons.org/wordpress" alt="WordPress" width="26" height="26">
+            <span>WordPress</span>
+          </div>
+          <div class="tool-item" title="Google Tag Manager">
+            <img src="https://cdn.simpleicons.org/googletagmanager" alt="Google Tag Manager" width="26" height="26">
+            <span>Tag Manager</span>
+          </div>
+          <div class="tool-item" title="Google Analytics">
+            <img src="https://cdn.simpleicons.org/googleanalytics" alt="Google Analytics" width="26" height="26">
+            <span>GA4</span>
+          </div>
+          <div class="tool-item" title="HubSpot">
+            <img src="https://cdn.simpleicons.org/hubspot" alt="HubSpot" width="26" height="26">
+            <span>HubSpot</span>
+          </div>
+          <div class="tool-item" title="SEMrush">
+            <img src="https://cdn.simpleicons.org/semrush" alt="SEMrush" width="26" height="26">
+            <span>SEMrush</span>
+          </div>
+          <div class="tool-item" title="Figma">
+            <img src="https://cdn.simpleicons.org/figma" alt="Figma" width="26" height="26">
+            <span>Figma</span>
+          </div>
+          <div class="tool-item" title="Claude">
+            <img src="https://cdn.simpleicons.org/claude" alt="Claude" width="26" height="26">
+            <span>Claude</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="hero-right">
-    <div class="terminal-area" id="terminal-area">
-      <!-- Background: error stream -->
-      <div class="terminal-bg">
-        <div class="terminal-bar">
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-        </div>
-        <div class="terminal-bg-body">
-          <div class="terminal-bg-code" id="terminal-errors"></div>
-        </div>
+    <!-- Background: error stream -->
+    <div class="terminal-bg">
+      <div class="terminal-bar"></div>
+      <div class="terminal-bg-body">
+        <div class="terminal-bg-code" id="terminal-errors"></div>
       </div>
-      <!-- Foreground: clean solution -->
-      <div class="terminal-clean" id="terminal-clean">
-        <div class="terminal-bar">
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="svc-badge" id="svc-badge"></span>
-          <span class="svc-check" id="svc-check">✓</span>
-        </div>
-        <div class="terminal-body">
-          <pre class="terminal-code" id="terminal-output"></pre>
-        </div>
+    </div>
+    <!-- Foreground: clean solution -->
+    <div class="terminal-clean" id="terminal-clean">
+      <div class="terminal-bar">
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="svc-badge" id="svc-badge"></span>
+        <span class="svc-check" id="svc-check">✓</span>
+      </div>
+      <div class="terminal-body">
+        <pre class="terminal-code" id="terminal-output"></pre>
       </div>
     </div>
   </div>
 </header>
-
-<section id="tools">
-  <div class="wrap">
-    <p class="tools-label">Tools I use</p>
-    <div class="tools-grid">
-      <div class="tool-item" title="Webflow">
-        <img src="https://cdn.simpleicons.org/webflow" alt="Webflow" width="36" height="36">
-        <span>Webflow</span>
-      </div>
-      <div class="tool-item" title="WordPress">
-        <img src="https://cdn.simpleicons.org/wordpress" alt="WordPress" width="36" height="36">
-        <span>WordPress</span>
-      </div>
-      <div class="tool-item" title="Elementor">
-        <img src="https://cdn.simpleicons.org/elementor" alt="Elementor" width="36" height="36">
-        <span>Elementor</span>
-      </div>
-      <div class="tool-item" title="WooCommerce">
-        <img src="https://cdn.simpleicons.org/woocommerce" alt="WooCommerce" width="36" height="36">
-        <span>WooCommerce</span>
-      </div>
-      <div class="tool-item" title="Google Tag Manager">
-        <img src="https://cdn.simpleicons.org/googletagmanager" alt="Google Tag Manager" width="36" height="36">
-        <span>Tag Manager</span>
-      </div>
-      <div class="tool-item" title="Google Analytics">
-        <img src="https://cdn.simpleicons.org/googleanalytics" alt="Google Analytics" width="36" height="36">
-        <span>GA4</span>
-      </div>
-      <div class="tool-item" title="HubSpot">
-        <img src="https://cdn.simpleicons.org/hubspot" alt="HubSpot" width="36" height="36">
-        <span>HubSpot</span>
-      </div>
-      <div class="tool-item" title="Salesforce">
-        <img src="https://cdn.simpleicons.org/salesforce" alt="Salesforce" width="36" height="36">
-        <span>Salesforce</span>
-      </div>
-      <div class="tool-item" title="Stripe">
-        <img src="https://cdn.simpleicons.org/stripe" alt="Stripe" width="36" height="36">
-        <span>Stripe</span>
-      </div>
-      <div class="tool-item" title="Zoho">
-        <img src="https://cdn.simpleicons.org/zoho" alt="Zoho" width="36" height="36">
-        <span>Zoho</span>
-      </div>
-      <div class="tool-item" title="Figma">
-        <img src="https://cdn.simpleicons.org/figma" alt="Figma" width="36" height="36">
-        <span>Figma</span>
-      </div>
-      <div class="tool-item" title="Claude">
-        <img src="https://cdn.simpleicons.org/claude" alt="Claude" width="36" height="36">
-        <span>Claude</span>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section id="services">
   <div class="wrap">
@@ -490,8 +452,8 @@
       </div>
       <div class="svc">
         <span class="svc-key">rank</span>
-        <h3>SEO &amp; technical audits</h3>
-        <p>Indexing, structure, and performance audits that turn into a prioritized list of fixes — not a 60-page PDF nobody reads.</p>
+        <h3>SEO, AEO &amp; technical audits</h3>
+        <p>Indexing, structure, and Core Web Vitals audits with a prioritized fix list — plus Answer Engine Optimization so your content surfaces in AI-generated answers and featured snippets, not just traditional search results.</p>
       </div>
       <div class="svc">
         <span class="svc-key">consent</span>
@@ -679,7 +641,7 @@
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.sec-head, .about-body, .contact-grid, .tools-grid').forEach(el => {
+  document.querySelectorAll('.sec-head, .about-body, .contact-grid').forEach(el => {
     el.setAttribute('data-animate', '');
     fadeObs.observe(el);
   });
@@ -706,20 +668,7 @@
     factsObs.observe(factsDl);
   }
 
-  // ── 6. Terminal positioning — top edge aligns with hero H1 ─────────────────
-  function positionTerminal() {
-    const h1 = document.querySelector('.hero h1');
-    const heroRight = document.querySelector('.hero-right');
-    const termArea = document.getElementById('terminal-area');
-    if (!h1 || !heroRight || !termArea) return;
-    const offset = h1.getBoundingClientRect().top - heroRight.getBoundingClientRect().top;
-    termArea.style.top = Math.max(0, offset) + 'px';
-  }
-  positionTerminal();
-  window.addEventListener('load', positionTerminal);
-  window.addEventListener('resize', positionTerminal);
-
-  // ── 7. Terminal — error stream + clean solution ──────────────────────────────
+  // ── 6. Terminal — error stream + clean solution ──────────────────────────────
 
   function tokenize(html) {
     const tokens = [];
@@ -1059,25 +1008,21 @@
     if (badgeEl) badgeEl.textContent = cycle.label;
     if (checkEl) checkEl.classList.remove('pop');
     stopBg();
-    cleanEl.classList.remove('visible');
 
     // Phase 1: fast error flash (~1.3s for 12 lines)
     let i = 0;
     function fastFlash() {
       if (i >= errors.length) {
-        // Phase 2: show clean terminal + start slow bg
+        // Phase 2: start slow bg, type new code into always-visible clean terminal
         startSlowBg(errors);
         setTimeout(() => {
-          cleanEl.classList.add('visible');
-          // Phase 3: type clean code
           typeClean(cycle.html, () => {
             // Checkmark pops in when typing is done
             if (checkEl) checkEl.classList.add('pop');
-            // Phase 4: dwell 3s, then reset
+            // Phase 3: dwell 3s, then next cycle
             setTimeout(() => {
               if (checkEl) checkEl.classList.remove('pop');
               setTimeout(() => {
-                cleanEl.classList.remove('visible');
                 stopBg();
                 setTimeout(runTermCycle, 700);
               }, 300);
@@ -1102,7 +1047,6 @@
     const badgeEl = document.getElementById('svc-badge');
     const checkEl = document.getElementById('svc-check');
     if (output) output.innerHTML = termCycles[0].html;
-    if (cleanEl) cleanEl.classList.add('visible');
     if (badgeEl) badgeEl.textContent = termCycles[0].label;
     if (checkEl) checkEl.classList.add('pop');
     if (errContainer) errorSets[0].forEach(l => addErrLine(errContainer, l));
