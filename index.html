@@ -86,8 +86,7 @@
     padding-top: 24px; border-top: 1px solid var(--line);
   }
   .hero-right {
-    display: flex; align-items: flex-end;
-    padding: 72px 0 0 48px;
+    display: flex; flex-direction: column; padding: 0;
   }
   .btn-primary {
     font-family: var(--body); font-weight: 600; font-size: 0.75rem;
@@ -106,42 +105,39 @@
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; }
     .hero-left { border-right: none; border-bottom: 1px solid var(--line); padding: 80px 28px 56px; align-items: flex-start; }
-    .hero-right { padding: 40px 0 0 28px; }
+    .hero-right { min-height: 420px; }
   }
 
   /* ---- terminal ---- */
-  .terminal-wrap { width: 100%; }
-  .terminal-label {
-    font-family: 'SF Mono','Fira Code','Courier New',monospace;
-    font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 12px;
-  }
+  .terminal-wrap { flex: 1; display: flex; flex-direction: column; }
   .terminal {
-    width: calc(100% + 60px);
-    background: rgba(6,14,8,0.88); border: 1px solid var(--line);
-    border-right: none; border-bottom: none;
-    border-radius: 6px 0 0 0; overflow: hidden;
+    flex: 1; width: 100%;
+    background: #F0EDE6; border: none; border-radius: 0;
+    display: flex; flex-direction: column; overflow: hidden;
   }
   .terminal-bar {
-    display: flex; align-items: center; gap: 7px;
-    padding: 10px 16px; border-bottom: 1px solid var(--line);
-    background: rgba(0,0,0,0.15);
+    display: flex; align-items: center; gap: 7px; flex-shrink: 0;
+    padding: 10px 16px; border-bottom: 1px solid rgba(44,59,44,0.12);
+    background: #E6E0D8;
   }
-  .terminal-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(228,234,200,0.2); }
-  .terminal-body { padding: 28px 28px 40px; min-height: 380px; }
+  .terminal-dot { width: 11px; height: 11px; border-radius: 50%; }
+  .terminal-dot:nth-child(1) { background: #FF5F56; }
+  .terminal-dot:nth-child(2) { background: #FFBD2E; }
+  .terminal-dot:nth-child(3) { background: #27C93F; }
+  .terminal-body { flex: 1; padding: 28px 32px 40px; overflow: hidden; }
   .terminal-code {
     font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
-    font-size: 0.9rem; line-height: 1.8; color: var(--muted);
+    font-size: 0.88rem; line-height: 1.85; color: #4A5C4A;
     white-space: pre; margin: 0;
   }
-  .tc-cmd { color: var(--ink); }
-  .tc-dim { color: var(--muted); }
-  .tc-val { color: #7ec6a0; }
-  .tc-ok  { color: var(--ink); font-weight: 600; }
-  .tc-cmt { color: var(--muted); opacity: 0.7; font-style: italic; }
+  .tc-cmd { color: #1C2E1C; }
+  .tc-dim { color: #7A8E7A; }
+  .tc-val { color: #295D32; font-weight: 500; }
+  .tc-ok  { color: #1C4A1C; font-weight: 600; }
+  .tc-cmt { color: #8EA08E; font-style: italic; }
   .terminal-cursor {
     display: inline-block; width: 7px; height: 0.9em;
-    background: var(--accent); vertical-align: text-bottom;
+    background: #295D32; vertical-align: text-bottom;
     animation: blink 1s step-end infinite;
   }
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
@@ -314,7 +310,6 @@
   </div>
   <div class="hero-right">
     <div class="terminal-wrap">
-      <p class="terminal-label" id="terminal-label"></p>
       <div class="terminal">
         <div class="terminal-bar">
           <span class="terminal-dot"></span>
@@ -592,64 +587,149 @@
 
   const termCycles = [
     {
-      label: 'analytics · tracking',
-      html: `<span class="tc-cmd">$ dataLayer.push({</span>
-    <span class="tc-dim">event:</span>   '<span class="tc-val">generate_lead</span>',
-    <span class="tc-dim">form_id:</span> '<span class="tc-val">contact-form</span>',
-    <span class="tc-dim">page:</span>    '<span class="tc-val">/services</span>'
-  });
+      html: `<span class="tc-cmt">// GTM workspace: prod-v47  ·  mottclient.com</span>
 
-<span class="tc-ok">▶  GA4 — event fired  200 OK</span>`
-    },
-    {
-      label: 'cookie · consent',
-      html: `<span class="tc-cmt">// Consent Mode v2 · CookieYes</span>
-<span class="tc-cmd">gtag</span>('<span class="tc-val">consent</span>', '<span class="tc-val">update</span>', {
-  <span class="tc-dim">analytics_storage:</span> '<span class="tc-val">granted</span>',
-  <span class="tc-dim">ad_storage:</span>        '<span class="tc-val">denied</span>'
+<span class="tc-dim">window</span>.dataLayer = <span class="tc-dim">window</span>.dataLayer || [];
+
+<span class="tc-cmd">gtag</span>('<span class="tc-val">config</span>', '<span class="tc-val">G-XXX4M8D2</span>', {
+  <span class="tc-dim">send_page_view:</span> <span class="tc-val">false</span>,
+  <span class="tc-dim">cookie_flags:</span>   '<span class="tc-val">SameSite=None;Secure</span>'
 });
 
-<span class="tc-ok">▶  Consent state applied</span>`
-    },
-    {
-      label: 'seo · technical audit',
-      html: `<span class="tc-cmd">$ audit --url</span> <span class="tc-val">mottclient.com</span>
-  <span class="tc-dim">Core Web Vitals</span>   <span class="tc-ok">pass</span>
-  <span class="tc-dim">LCP</span>  <span class="tc-val">1.2s</span>   <span class="tc-dim">CLS</span>  <span class="tc-val">0.02</span>
-  <span class="tc-dim">Indexed pages</span>   <span class="tc-val">48 / 48</span>
-  <span class="tc-dim">Broken links</span>    <span class="tc-val">0</span>
+<span class="tc-cmt">// Lead capture event</span>
+<span class="tc-dim">dataLayer</span>.push({
+  <span class="tc-dim">event:</span>   '<span class="tc-val">generate_lead</span>',
+  <span class="tc-dim">form_id:</span> '<span class="tc-val">contact-form</span>',
+  <span class="tc-dim">page:</span>    '<span class="tc-val">/services</span>',
+  <span class="tc-dim">value:</span>   <span class="tc-val">1</span>
+});
 
-<span class="tc-ok">▶  11 issues prioritized</span>`
-    },
-    {
-      label: 'webflow · wordpress',
-      html: `<span class="tc-cmd">$ webflow deploy --prod</span>
-  <span class="tc-ok">✓</span> <span class="tc-dim">Assets published</span>
-  <span class="tc-ok">✓</span> <span class="tc-dim">CMS synced</span>  (<span class="tc-val">247 items</span>)
-  <span class="tc-ok">✓</span> <span class="tc-dim">SSL certificate active</span>
+<span class="tc-dim">gtag</span>('<span class="tc-val">set</span>', '<span class="tc-val">user_properties</span>', {
+  <span class="tc-dim">industry:</span> '<span class="tc-val">healthcare</span>',
+  <span class="tc-dim">stage:</span>    '<span class="tc-val">evaluation</span>'
+});
 
-<span class="tc-ok">▶  Live at</span> <span class="tc-val">your-domain.com</span>`
+<span class="tc-ok">▶  GA4 — event fired  200 OK</span>
+<span class="tc-ok">✓  Audience: warm-leads updated</span>`
     },
     {
-      label: 'hubspot · martech',
-      html: `<span class="tc-cmd">$ hubspot.forms.create({</span>
-    <span class="tc-dim">portalId:</span> '<span class="tc-val">23847610</span>',
-    <span class="tc-dim">formId:</span>   '<span class="tc-val">contact-us</span>',
-    <span class="tc-dim">target:</span>   '<span class="tc-val">#hs-form</span>'
-  });
+      html: `<span class="tc-cmt">// Consent Mode v2  ·  CookieYes</span>
+<span class="tc-cmt">// Region: EU, CA  ·  Default: denied</span>
 
-<span class="tc-ok">▶  HubSpot form embedded</span>`
+<span class="tc-cmd">gtag</span>('<span class="tc-val">consent</span>', '<span class="tc-val">default</span>', {
+  <span class="tc-dim">analytics_storage:</span>  '<span class="tc-val">denied</span>',
+  <span class="tc-dim">ad_storage:</span>         '<span class="tc-val">denied</span>',
+  <span class="tc-dim">wait_for_update:</span>    <span class="tc-val">500</span>
+});
+
+<span class="tc-cmt">// On user accept:</span>
+<span class="tc-cmd">gtag</span>('<span class="tc-val">consent</span>', '<span class="tc-val">update</span>', {
+  <span class="tc-dim">analytics_storage:</span>     '<span class="tc-val">granted</span>',
+  <span class="tc-dim">ad_storage:</span>            '<span class="tc-val">denied</span>',
+  <span class="tc-dim">functionality_storage:</span> '<span class="tc-val">granted</span>'
+});
+
+<span class="tc-dim">dataLayer</span>.push({
+  <span class="tc-dim">event:</span>          '<span class="tc-val">consent_updated</span>',
+  <span class="tc-dim">consent_region:</span> '<span class="tc-val">EU</span>',
+  <span class="tc-dim">ga_session_id:</span>  '<span class="tc-val">1718291044</span>'
+});
+
+<span class="tc-ok">▶  Consent state applied</span>
+<span class="tc-ok">✓  GTM fired: analytics-on-consent</span>`
     },
     {
-      label: 'email · automation',
-      html: `<span class="tc-cmt">// Trigger: form_submit</span>
+      html: `<span class="tc-cmd">$ audit --url</span> <span class="tc-val">mottclient.com</span> <span class="tc-dim">--full</span>
+
+  Crawling <span class="tc-val">48</span> pages...
+
+  <span class="tc-dim">Core Web Vitals</span>
+  ──────────────────────────────
+  <span class="tc-dim">LCP</span>   <span class="tc-val">1.2s</span>    max 2.5s   <span class="tc-ok">pass</span>
+  <span class="tc-dim">CLS</span>   <span class="tc-val">0.02</span>    max 0.1    <span class="tc-ok">pass</span>
+  <span class="tc-dim">INP</span>   <span class="tc-val">68ms</span>    max 200ms  <span class="tc-ok">pass</span>
+
+  <span class="tc-dim">Technical</span>
+  ──────────────────────────────
+  <span class="tc-dim">Indexed pages</span>    <span class="tc-val">48 / 48</span>
+  <span class="tc-dim">Broken links</span>     <span class="tc-val">0</span>
+  <span class="tc-dim">Missing meta</span>     <span class="tc-val">2</span>
+  <span class="tc-dim">Schema markup</span>    <span class="tc-ok">present</span>
+  <span class="tc-dim">Sitemap</span>          <span class="tc-ok">valid</span>
+
+<span class="tc-ok">▶  11 issues prioritized</span>
+<span class="tc-ok">✓  Report: audit-2024-11.pdf</span>`
+    },
+    {
+      html: `<span class="tc-cmd">$ webflow deploy</span> <span class="tc-dim">--env</span>=<span class="tc-val">production</span>
+
+  Validating build...
+  <span class="tc-ok">✓</span>  Schema check passed
+  <span class="tc-ok">✓</span>  CMS items validated  (<span class="tc-val">247</span>)
+
+  Publishing assets...
+  <span class="tc-ok">✓</span>  Images optimized   (<span class="tc-val">112 files</span>)
+  <span class="tc-ok">✓</span>  CSS bundle         (<span class="tc-val">18.4 kb</span>)
+  <span class="tc-ok">✓</span>  JS bundle          (<span class="tc-val">42.1 kb</span>)
+
+  Configuring CDN...
+  <span class="tc-ok">✓</span>  Edge nodes: <span class="tc-val">35 locations</span>
+  <span class="tc-ok">✓</span>  SSL certificate: <span class="tc-val">active</span>
+  <span class="tc-ok">✓</span>  DNS propagated
+
+  Post-deploy checks...
+  <span class="tc-ok">✓</span>  <span class="tc-dim">Homepage</span>  <span class="tc-val">200 OK</span>
+  <span class="tc-ok">✓</span>  <span class="tc-dim">Forms</span>     accepting
+
+<span class="tc-ok">▶  Live at your-domain.com</span>`
+    },
+    {
+      html: `<span class="tc-cmt">// HubSpot CRM  ·  Portal 23847610</span>
+<span class="tc-cmt">// Embedding forms + workflow triggers</span>
+
+<span class="tc-dim">hubspot.forms</span>.create({
+  <span class="tc-dim">portalId:</span>    '<span class="tc-val">23847610</span>',
+  <span class="tc-dim">formId:</span>      '<span class="tc-val">contact-us</span>',
+  <span class="tc-dim">target:</span>      '<span class="tc-val">#hs-form</span>',
+  <span class="tc-dim">onFormReady:</span> function($form) {
+    $form.find('[name=lifecycle]')
+         .val('<span class="tc-val">lead</span>').change();
+  }
+});
+
+<span class="tc-cmt">// Map UTM params to CRM fields</span>
+<span class="tc-dim">hs_track</span>({
+  <span class="tc-dim">utm_source:</span>   '<span class="tc-val">google</span>',
+  <span class="tc-dim">utm_medium:</span>   '<span class="tc-val">cpc</span>',
+  <span class="tc-dim">utm_campaign:</span> '<span class="tc-val">brand-q4</span>',
+  <span class="tc-dim">hs_page_url:</span>  '<span class="tc-val">/services</span>'
+});
+
+<span class="tc-ok">▶  HubSpot form embedded</span>
+<span class="tc-ok">✓  CRM sync: contact created</span>`
+    },
+    {
+      html: `<span class="tc-cmt">// Klaviyo  ·  flow: post-inquiry nurture</span>
+<span class="tc-cmt">// Trigger: form_submit  ·  Segment: leads</span>
+
 {
-  <span class="tc-dim">workflow:</span> '<span class="tc-val">nurture-seq</span>',
-  <span class="tc-dim">contact:</span>  { <span class="tc-dim">stage:</span> '<span class="tc-val">lead</span>' },
-  <span class="tc-dim">delay:</span>    '<span class="tc-val">3 days</span>'
+  <span class="tc-dim">flow:</span>    '<span class="tc-val">nurture-seq</span>',
+  <span class="tc-dim">contact:</span> {
+    <span class="tc-dim">stage:</span>    '<span class="tc-val">lead</span>',
+    <span class="tc-dim">source:</span>   '<span class="tc-val">organic</span>',
+    <span class="tc-dim">industry:</span> '<span class="tc-val">medtech</span>'
+  },
+
+  <span class="tc-dim">sequence:</span> [
+    { <span class="tc-dim">email:</span> '<span class="tc-val">intro</span>',      <span class="tc-dim">delay:</span> '<span class="tc-val">0h</span>'  },
+    { <span class="tc-dim">email:</span> '<span class="tc-val">case-study</span>', <span class="tc-dim">delay:</span> '<span class="tc-val">2d</span>'  },
+    { <span class="tc-dim">email:</span> '<span class="tc-val">follow-up</span>',  <span class="tc-dim">delay:</span> '<span class="tc-val">5d</span>'  },
+    { <span class="tc-dim">email:</span> '<span class="tc-val">cta</span>',        <span class="tc-dim">delay:</span> '<span class="tc-val">10d</span>' }
+  ]
 }
 
-<span class="tc-ok">▶  Email 1 of 4 queued</span>`
+<span class="tc-ok">▶  Enrolled: nurture-seq</span>
+<span class="tc-ok">✓  Email 1 of 4 queued · sends in 0h</span>`
     }
   ];
 
@@ -657,13 +737,10 @@
 
   function runTermCycle() {
     const output = document.getElementById('terminal-output');
-    const labelEl = document.getElementById('terminal-label');
     if (!output) return;
 
     const cycle = termCycles[termIdx % termCycles.length];
     termIdx++;
-
-    if (labelEl) labelEl.textContent = cycle.label;
 
     output.style.transition = 'opacity 0.3s ease';
     output.style.opacity = '0';
@@ -686,7 +763,7 @@
           output.insertBefore(document.createTextNode(ch), cursor);
           ci++;
           if (ci >= tok.content.length) { ti++; ci = 0; }
-          setTimeout(tick, ch === '\n' ? 80 : 22);
+          setTimeout(tick, ch === '\n' ? 75 : 20);
         } else {
           if (!currentSpan) {
             currentSpan = document.createElement('span');
@@ -697,7 +774,7 @@
           currentSpan.textContent += ch;
           ci++;
           if (ci >= tok.content.length) { ti++; ci = 0; currentSpan = null; }
-          setTimeout(tick, ch === '\n' ? 80 : 22);
+          setTimeout(tick, ch === '\n' ? 75 : 20);
         }
       }
       tick();
@@ -708,9 +785,7 @@
     runTermCycle();
   } else {
     const output = document.getElementById('terminal-output');
-    const labelEl = document.getElementById('terminal-label');
     if (output) output.innerHTML = termCycles[0].html;
-    if (labelEl) labelEl.textContent = termCycles[0].label;
   }
 </script>
 
