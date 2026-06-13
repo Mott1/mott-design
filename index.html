@@ -44,8 +44,10 @@
   .brand { font-family: var(--display); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; }
   .brand span { color: var(--accent); }
   .nav-links { display: flex; gap: 30px; }
-  .nav-links a { color: var(--ink); text-decoration: none; font-size: 0.92rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a { color: var(--ink); text-decoration: none; font-size: 0.92rem; font-weight: 500; transition: color 0.2s; position: relative; }
+  .nav-links a::after { content: ''; position: absolute; left: 0; bottom: -3px; width: 100%; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.28s cubic-bezier(0.16,1,0.3,1); }
   .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { transform: scaleX(1); }
   .nav-cta {
     font-family: var(--body); font-weight: 600; font-size: 0.75rem;
     background: var(--ink); color: var(--paper);
@@ -104,9 +106,9 @@
   .svc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .svc {
     padding: 32px; border-radius: 2px;
-    background: var(--card); transition: background 0.2s;
+    background: var(--card); transition: background 0.2s, transform 0.22s cubic-bezier(0.16,1,0.3,1), box-shadow 0.22s;
   }
-  .svc:hover { background: rgba(84,137,93,0.38); }
+  .svc:hover { background: rgba(84,137,93,0.38); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.22); }
   .svc-key { font-family: var(--display); font-size: 0.82rem; font-weight: 600; color: var(--accent); letter-spacing: 0.08em; }
   .svc h3 { font-family: var(--display); font-weight: 600; font-size: 1.22rem; margin: 10px 0 10px; letter-spacing: -0.01em; }
   .svc p { color: var(--muted); font-size: 0.98rem; }
@@ -119,9 +121,9 @@
   .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .project {
     padding: 32px; border-radius: 2px;
-    background: var(--card); transition: background 0.2s;
+    background: var(--card); transition: background 0.2s, transform 0.22s cubic-bezier(0.16,1,0.3,1), box-shadow 0.22s;
   }
-  .project:hover { background: rgba(84,137,93,0.38); }
+  .project:hover { background: rgba(84,137,93,0.38); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.22); }
   .proj-industry { font-family: var(--display); font-size: 0.82rem; font-weight: 600; color: var(--accent); letter-spacing: 0.08em; }
   .project h3 { font-family: var(--display); font-weight: 600; font-size: 1.22rem; margin: 10px 0 10px; letter-spacing: -0.01em; }
   .project p { color: var(--muted); font-size: 0.98rem; }
@@ -178,11 +180,45 @@
   .foot-inner p { font-size: 0.88rem; color: var(--muted); }
   .foot-inner .brand { font-size: 1rem; }
 
+  /* ---- motion ---- */
+  .shimmer-bg {
+    position: fixed; inset: 0; pointer-events: none; z-index: -1;
+    background: radial-gradient(ellipse 80% 55% at 50% 50%, rgba(60,110,70,0.2) 0%, transparent 62%);
+    animation: shimmer-drift 22s ease-in-out infinite;
+    will-change: transform;
+  }
+  @keyframes shimmer-drift {
+    0%, 100% { transform: translate(-18%, -12%) scale(1.2); }
+    35%       { transform: translate(14%, 16%) scale(1.15); }
+    68%       { transform: translate(4%, -8%) scale(1.1); }
+  }
+  [data-animate] {
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  }
+  [data-animate].in-view { opacity: 1; transform: none; }
+  .hero-word {
+    display: inline-block; opacity: 0; transform: translateY(14px);
+    transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
+  .hero-word.in { opacity: 1; transform: none; }
+  .fact {
+    opacity: 0; transform: translateX(-10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .fact.in-view { opacity: 1; transform: none; }
+
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+    [data-animate], .hero-word, .fact { opacity: 1 !important; transform: none !important; }
+    .shimmer-bg { display: none; }
+  }
 </style>
 </head>
 <body>
+<div class="shimmer-bg" aria-hidden="true"></div>
 
 <nav>
   <div class="wrap nav-inner">
@@ -384,7 +420,89 @@
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
-  // Progressive enhancement: graceful form feedback if using a JSON endpoint.
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ── 1. Hero headline word stagger ──────────────────────────────────────────
+  const heroH1 = document.querySelector('.hero h1');
+  let wordCount = 0;
+  if (heroH1 && !reduced) {
+    const nodes = [...heroH1.childNodes];
+    heroH1.innerHTML = '';
+    nodes.forEach(node => {
+      if (node.nodeType === 3) {
+        node.textContent.split(/(\s+)/).forEach(tok => {
+          if (/^\s+$/.test(tok)) {
+            heroH1.appendChild(document.createTextNode(tok));
+          } else if (tok) {
+            const s = document.createElement('span');
+            s.className = 'hero-word';
+            s.textContent = tok;
+            heroH1.appendChild(s);
+            wordCount++;
+          }
+        });
+      } else if (node.nodeType === 1) {
+        node.classList.add('hero-word');
+        heroH1.appendChild(node);
+        wordCount++;
+      }
+    });
+    heroH1.querySelectorAll('.hero-word').forEach((w, i) =>
+      setTimeout(() => w.classList.add('in'), 60 + i * 50)
+    );
+  }
+
+  // ── 2. Hero sub-text and CTA appear after headline finishes ────────────────
+  if (!reduced) {
+    const heroP = document.querySelector('.hero p');
+    const heroAct = document.querySelector('.hero-actions');
+    [heroP, heroAct].forEach(el => {
+      if (!el) return;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(12px)';
+      el.style.transition = 'opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)';
+    });
+    const revealAt = 60 + wordCount * 50 + 160;
+    setTimeout(() => { if (heroP)  { heroP.style.opacity  = '1'; heroP.style.transform  = 'none'; } }, revealAt);
+    setTimeout(() => { if (heroAct){ heroAct.style.opacity = '1'; heroAct.style.transform = 'none'; } }, revealAt + 110);
+  }
+
+  // ── 3. Scroll fade-in observer ─────────────────────────────────────────────
+  const fadeObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('in-view');
+      fadeObs.unobserve(e.target);
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.sec-head, .strip-inner, .about-body, .contact-grid').forEach(el => {
+    el.setAttribute('data-animate', '');
+    fadeObs.observe(el);
+  });
+
+  // ── 4. Card grid stagger ───────────────────────────────────────────────────
+  document.querySelectorAll('.svc-grid, .work-grid').forEach(grid => {
+    [...grid.children].forEach((card, i) => {
+      card.setAttribute('data-animate', '');
+      card.style.transitionDelay = i * 0.06 + 's';
+      fadeObs.observe(card);
+    });
+  });
+
+  // ── 5. Facts row stagger ───────────────────────────────────────────────────
+  const factsDl = document.querySelector('.facts');
+  if (factsDl) {
+    const factsObs = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      [...e.target.querySelectorAll('.fact')].forEach((f, i) =>
+        setTimeout(() => f.classList.add('in-view'), i * 70)
+      );
+      factsObs.disconnect();
+    }, { threshold: 0.15 });
+    factsObs.observe(factsDl);
+  }
 </script>
 
 </body>
