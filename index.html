@@ -10,14 +10,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #EDE8DC;
-    --paper: #1C2B2A;
-    --paper-2: #152120;
-    --line: rgba(237,232,220,0.15);
-    --muted: #9AA39A;
-    --accent: #E2A65A;
-    --accent-bright: #EDE8DC;
-    --card: rgba(237,232,220,0.06);
+    --ink: #E4EAC8;
+    --paper: #295D32;
+    --paper-2: #284B2F;
+    --line: rgba(228,234,200,0.15);
+    --muted: #989E7B;
+    --accent: #D1DBB9;
+    --accent-bright: #E4EAC8;
+    --card: rgba(84,137,93,0.24);
     --warn: #c4622d;
     --display: 'Space Grotesk', system-ui, sans-serif;
     --body: 'Inter', system-ui, sans-serif;
@@ -36,7 +36,7 @@
   /* ---- nav ---- */
   nav {
     position: sticky; top: 0; z-index: 50;
-    background: rgba(28,43,42,0.92);
+    background: rgba(41,93,50,0.92);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--line);
   }
@@ -106,7 +106,7 @@
     padding: 32px; border-radius: 2px;
     background: var(--card); transition: background 0.2s;
   }
-  .svc:hover { background: rgba(237,232,220,0.10); }
+  .svc:hover { background: rgba(84,137,93,0.38); }
   .svc-key { font-family: var(--display); font-size: 0.82rem; font-weight: 600; color: var(--accent); letter-spacing: 0.08em; }
   .svc h3 { font-family: var(--display); font-weight: 600; font-size: 1.22rem; margin: 10px 0 10px; letter-spacing: -0.01em; }
   .svc p { color: var(--muted); font-size: 0.98rem; }
@@ -121,7 +121,7 @@
     padding: 32px; border-radius: 2px;
     background: var(--card); transition: background 0.2s;
   }
-  .project:hover { background: rgba(237,232,220,0.10); }
+  .project:hover { background: rgba(84,137,93,0.38); }
   .proj-industry { font-family: var(--display); font-size: 0.82rem; font-weight: 600; color: var(--accent); letter-spacing: 0.08em; }
   .project h3 { font-family: var(--display); font-weight: 600; font-size: 1.22rem; margin: 10px 0 10px; letter-spacing: -0.01em; }
   .project p { color: var(--muted); font-size: 0.98rem; }
@@ -136,7 +136,7 @@
   #about .sec-head h2 { color: var(--ink); }
   #about .sec-num { color: var(--accent); }
   .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px; }
-  .about-body p { color: var(--muted); font-size: 1.08rem; margin-bottom: 20px; max-width: 56ch; }
+  .about-body p { color: var(--accent); font-size: 1.08rem; margin-bottom: 20px; max-width: 56ch; }
   .about-body strong { color: var(--ink); font-weight: 600; }
   .facts { border-top: 1px solid var(--line); }
   .fact { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
