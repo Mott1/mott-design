@@ -113,6 +113,26 @@
     .svc { border-right: none; }
   }
 
+  /* ---- selected work ---- */
+  #work { border-bottom: 1px solid var(--line); }
+  .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--line); }
+  .project {
+    padding: 32px; border-right: 1px solid var(--line);
+    background: var(--paper); transition: background 0.2s;
+  }
+  .project:last-child { border-right: none; }
+  .project:hover { background: var(--paper-2); }
+  .proj-industry { font-family: var(--display); font-size: 0.82rem; font-weight: 600; color: var(--accent); letter-spacing: 0.08em; }
+  .project h3 { font-family: var(--display); font-weight: 600; font-size: 1.22rem; margin: 10px 0 10px; letter-spacing: -0.01em; }
+  .project p { color: var(--muted); font-size: 0.98rem; }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .proj-tag { font-size: 0.8rem; font-weight: 500; padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper-2); color: var(--muted); }
+  @media (max-width: 720px) {
+    .work-grid { grid-template-columns: 1fr; }
+    .project { border-right: none; border-bottom: 1px solid var(--line); }
+    .project:last-child { border-bottom: none; }
+  }
+
   /* ---- about ---- */
   #about { background: var(--ink); color: var(--paper); }
   #about .sec-head h2 { color: var(--paper); }
@@ -259,10 +279,49 @@
   </div>
 </section>
 
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">02 / Selected Work</span>
+      <h2>Projects from the field</h2>
+      <p>A sample of recent engagements — anonymized by industry, because the client relationship matters more than the credit.</p>
+    </div>
+    <div class="work-grid">
+      <div class="project">
+        <span class="proj-industry">Medical device</span>
+        <h3>Commercial site rebuild &amp; analytics overhaul</h3>
+        <p>Rebuilt a legacy WordPress site on Elementor, restructured navigation for two buyer personas, and replaced broken UA tracking with a clean GA4 and GTM implementation.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">WordPress · Elementor</span>
+          <span class="proj-tag">GA4 · GTM</span>
+        </div>
+      </div>
+      <div class="project">
+        <span class="proj-industry">Genomics</span>
+        <h3>Platform migration &amp; consent compliance</h3>
+        <p>Migrated a Squarespace site to Webflow, preserved SEO equity across 80+ redirects, then wired up Cookiebot and consent mode so tags gate correctly on opt-in.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Webflow</span>
+          <span class="proj-tag">Cookiebot · Consent Mode</span>
+        </div>
+      </div>
+      <div class="project">
+        <span class="proj-industry">Healthcare tech</span>
+        <h3>New marketing site &amp; HubSpot integration</h3>
+        <p>Designed and built a marketing site for a pre-launch SaaS product, with forms feeding HubSpot directly and lifecycle emails triggered by lead stage.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Webflow</span>
+          <span class="proj-tag">HubSpot · Email automation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="about">
   <div class="wrap">
     <div class="sec-head">
-      <span class="sec-num">02 / About</span>
+      <span class="sec-num">03 / About</span>
       <h2>One person, the whole pipeline</h2>
     </div>
     <div class="about-grid">
@@ -286,7 +345,7 @@
 <section id="contact">
   <div class="wrap">
     <div class="sec-head">
-      <span class="sec-num">03 / Contact</span>
+      <span class="sec-num">04 / Contact</span>
       <h2>Tell me about the project</h2>
       <p>Send a few lines on what you're building or what's broken, and you'll get a real reply with a scope and a quote — not a sales sequence.</p>
     </div>
