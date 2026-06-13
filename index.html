@@ -150,7 +150,6 @@
     padding: 14px; transition: background 0.2s;
   }
   button[type=submit]:hover { background: var(--accent); }
-  .form-note { font-size: 0.85rem; color: var(--muted); }
   @media (max-width: 720px) { .contact-grid { grid-template-columns: 1fr; gap: 40px; } }
 
   /* ---- footer ---- */
@@ -306,7 +305,6 @@
           <textarea id="message" name="message" required placeholder="A new build, a migration, tracking that's misfiring…"></textarea>
         </div>
         <button type="submit">Send it over</button>
-        <p class="form-note">Replace the form action with your Formspree (or similar) endpoint before launch — see the deploy notes.</p>
       </form>
       <div class="contact-side">
         <h3>Or reach me directly</h3>
@@ -328,13 +326,6 @@
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
   // Progressive enhancement: graceful form feedback if using a JSON endpoint.
-  const form = document.getElementById('contact-form');
-  form.addEventListener('submit', function(e) {
-    if (form.action.includes('YOUR_FORM_ID')) {
-      e.preventDefault();
-      alert('Form endpoint not set yet. Add your Formspree ID to the form action — see deploy notes.');
-    }
-  });
 </script>
 
 </body>
