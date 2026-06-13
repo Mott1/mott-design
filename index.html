@@ -86,7 +86,7 @@
     padding-top: 24px; border-top: 1px solid var(--line);
   }
   .hero-right {
-    display: flex; flex-direction: column; padding: 0;
+    position: relative;
   }
   .btn-primary {
     font-family: var(--body); font-weight: 600; font-size: 0.75rem;
@@ -105,29 +105,61 @@
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; }
     .hero-left { border-right: none; border-bottom: 1px solid var(--line); padding: 80px 28px 56px; align-items: flex-start; }
-    .hero-right { min-height: 420px; }
+    .hero-right { min-height: 440px; }
+    .terminal-clean { top: 18%; left: 8%; }
   }
 
-  /* ---- terminal ---- */
-  .terminal-wrap { flex: 1; display: flex; flex-direction: column; }
-  .terminal {
-    flex: 1; width: 100%;
-    background: #F0EDE6; border: none; border-radius: 0;
-    display: flex; flex-direction: column; overflow: hidden;
+  /* ---- terminal: background error stream ---- */
+  .terminal-bg {
+    position: absolute; inset: 0;
+    background: #080C08; display: flex; flex-direction: column;
   }
+  .terminal-bg-body {
+    flex: 1; overflow: hidden; padding: 14px 20px;
+    position: relative;
+  }
+  .terminal-bg-code {
+    position: absolute; bottom: 14px; left: 20px; right: 20px;
+    font-family: 'SF Mono','Fira Code','Courier New',monospace;
+    font-size: 0.78rem; line-height: 1.62;
+  }
+  .terminal-bg-code div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tc-err    { color: #D05050; }
+  .tc-warn   { color: #B8902E; }
+  .tc-dep    { color: #7A6E88; }
+  .tc-dim-bg { color: rgba(130,170,130,0.28); }
+
+  /* ---- terminal: clean solution card ---- */
+  .terminal-clean {
+    position: absolute; top: 24%; left: 28%; right: 0; bottom: 0;
+    background: #F0EDE6;
+    border: 1px solid rgba(44,59,44,0.18);
+    border-right: none; border-bottom: none;
+    border-radius: 6px 0 0 0;
+    box-shadow: -10px -10px 52px rgba(0,0,0,0.38);
+    display: flex; flex-direction: column;
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .terminal-clean.visible { opacity: 1; transform: translateY(0); }
+  .terminal-clean .terminal-bar { background: #E6E0D8; border-bottom: 1px solid rgba(44,59,44,0.12); }
+  .terminal-clean .terminal-body { flex: 1; padding: 20px 24px 0; overflow: hidden; }
+
+  /* ---- shared terminal chrome ---- */
   .terminal-bar {
     display: flex; align-items: center; gap: 7px; flex-shrink: 0;
-    padding: 10px 16px; border-bottom: 1px solid rgba(44,59,44,0.12);
-    background: #E6E0D8;
+    padding: 10px 16px;
   }
+  .terminal-bg .terminal-bar { background: #0D110D; border-bottom: 1px solid rgba(255,255,255,0.05); }
   .terminal-dot { width: 11px; height: 11px; border-radius: 50%; }
   .terminal-dot:nth-child(1) { background: #FF5F56; }
   .terminal-dot:nth-child(2) { background: #FFBD2E; }
   .terminal-dot:nth-child(3) { background: #27C93F; }
-  .terminal-body { flex: 1; padding: 28px 32px 40px; overflow: hidden; }
+
+  /* ---- clean code syntax ---- */
   .terminal-code {
-    font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
-    font-size: 0.88rem; line-height: 1.85; color: #4A5C4A;
+    font-family: 'SF Mono','Fira Code','Courier New',monospace;
+    font-size: 0.85rem; line-height: 1.8; color: #4A5C4A;
     white-space: pre; margin: 0;
   }
   .tc-cmd { color: #1C2E1C; }
@@ -309,16 +341,26 @@
     </div>
   </div>
   <div class="hero-right">
-    <div class="terminal-wrap">
-      <div class="terminal">
-        <div class="terminal-bar">
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-        </div>
-        <div class="terminal-body">
-          <pre class="terminal-code" id="terminal-output"></pre>
-        </div>
+    <!-- Background: error stream -->
+    <div class="terminal-bg">
+      <div class="terminal-bar">
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+      </div>
+      <div class="terminal-bg-body">
+        <div class="terminal-bg-code" id="terminal-errors"></div>
+      </div>
+    </div>
+    <!-- Foreground: clean solution -->
+    <div class="terminal-clean" id="terminal-clean">
+      <div class="terminal-bar">
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+      </div>
+      <div class="terminal-body">
+        <pre class="terminal-code" id="terminal-output"></pre>
       </div>
     </div>
   </div>
@@ -573,7 +615,8 @@
     factsObs.observe(factsDl);
   }
 
-  // ── 6. Terminal — cycling service typewriter ───────────────────────────────
+  // ── 6. Terminal — error stream + clean solution ──────────────────────────────
+
   function tokenize(html) {
     const tokens = [];
     const re = /<span class="([^"]+)">([^<]*)<\/span>|([^<]+)/g;
@@ -585,6 +628,95 @@
     return tokens;
   }
 
+  // Per-service error lines (fast scroll = atmosphere, not readability)
+  const errorSets = [
+    [ // analytics
+      {t:'dep', s:'[DEPRECATED] UA-12345 — Universal Analytics ended July 2023'},
+      {t:'err', s:'TypeError: gtag is not a function'},
+      {t:'err', s:'403 /collect?v=2&tid=UA-12345'},
+      {t:'dim', s:'Warning: dataLayer not initialized before GTM loads'},
+      {t:'err', s:'console.error: Measurement ID missing — no config called'},
+      {t:'err', s:'ERROR: conversion tag fires before consent update'},
+      {t:'dep', s:"[DEPRECATED] ga('send','pageview') — replaced by gtag"},
+      {t:'err', s:'Uncaught ReferenceError: ga is not defined'},
+      {t:'dim', s:'dataLayer.push: no active GTM container found'},
+      {t:'err', s:'ERROR: send_page_view fires on every layout shift'},
+      {t:'dep', s:"[DEPRECATED] trackingId: 'UA-XXXX' — use measurementId"},
+      {t:'err', s:'TypeError: Cannot read properties of undefined (reading push)'},
+    ],
+    [ // consent
+      {t:'err', s:'ERROR: Consent Mode v2 not configured'},
+      {t:'dim', s:'Warning: analytics_storage has no default value'},
+      {t:'dep', s:"[DEPRECATED] cookieDomain: 'auto' — use cookie_domain"},
+      {t:'err', s:'Missing: wait_for_update — hits fire before consent'},
+      {t:'err', s:'ERROR: ad_storage sends data before user consent'},
+      {t:'dim', s:'CookieYes: consent blocked but gtag fires anyway'},
+      {t:'err', s:"TypeError: Cannot read 'granted' of undefined"},
+      {t:'warn',s:'WARN: GDPR — EU visitor tracked without consent'},
+      {t:'err', s:'ERROR: consent update fires after the analytics hit'},
+      {t:'err', s:'403: Google Consent API — invalid consent state'},
+      {t:'dep', s:'[DEPRECATED] Consent Mode v1 — migrate to v2 now'},
+      {t:'warn',s:'WARN: CMP integrated but signals not passed to gtag'},
+    ],
+    [ // seo
+      {t:'err', s:'FAIL  LCP  4.8s     threshold: 2.5s'},
+      {t:'err', s:'FAIL  CLS  0.42     threshold: 0.1'},
+      {t:'err', s:'FAIL  INP  680ms    threshold: 200ms'},
+      {t:'err', s:'ERROR: 0 pages indexed — noindex tag applied globally'},
+      {t:'dim', s:'Missing: meta description (38 of 48 pages)'},
+      {t:'err', s:'ERROR: sitemap.xml returns 404'},
+      {t:'warn',s:'WARN: robots.txt disallows /services /about'},
+      {t:'err', s:'ERROR: canonical tags point to wrong domain'},
+      {t:'warn',s:'WARN: Duplicate h1 found on 12 pages'},
+      {t:'err', s:'ERROR: schema markup — malformed JSON-LD (syntax error)'},
+      {t:'dim', s:'Broken links found: 14 internal, 3 external'},
+      {t:'err', s:'FAIL: Core Web Vitals — all 3 metrics failing'},
+    ],
+    [ // webflow/wp
+      {t:'err', s:'ERROR: Mixed content blocked — http asset on https page'},
+      {t:'dep', s:'[DEPRECATED] jQuery 1.12.4 — 4 known vulnerabilities'},
+      {t:'warn',s:'WARN: 14 plugins have pending security updates'},
+      {t:'err', s:'ERROR: PHP 7.4 end-of-life — no security patches'},
+      {t:'dim', s:'WARN: Render-blocking scripts — 8 found in head'},
+      {t:'err', s:'ERROR: WooCommerce SSL certificate mismatch'},
+      {t:'err', s:'Uncaught TypeError: Cannot set property of null'},
+      {t:'warn',s:'WARN: WordPress DB — 2,847 autoloaded options'},
+      {t:'err', s:'ERROR: Webflow CMS publish limit reached (2,000)'},
+      {t:'err', s:'FAIL: SSL certificate expires in 3 days'},
+      {t:'dep', s:'[DEPRECATED] wp_enqueue_script with no version hash'},
+      {t:'err', s:'ERROR: Elementor widget data corrupted after update'},
+    ],
+    [ // hubspot
+      {t:'err', s:'ERROR: HubSpot form not loading — #hs-form not found'},
+      {t:'err', s:'TypeError: _hsq.push is not a function'},
+      {t:'warn',s:'WARN: HubSpot tracking code loaded 2x (duplicate)'},
+      {t:'dep', s:'[DEPRECATED] HubSpot API v1 — use v3'},
+      {t:'err', s:'ERROR: Contact created but lifecycle stage missing'},
+      {t:'dim', s:"WARN: lifecycle defaults to 'Subscriber', not set"},
+      {t:'err', s:'ERROR: UTM params lost on redirect — source unknown'},
+      {t:'err', s:'404: /hs/hsstatic/bundles/project.js'},
+      {t:'warn',s:'WARN: Form submission fires 3x (race condition)'},
+      {t:'err', s:'ERROR: CORS blocked — portal 23847610 rejected'},
+      {t:'dep', s:'[DEPRECATED] hs-analytics.js v1 — migrate to v2'},
+      {t:'err', s:'TypeError: HubSpot forms not initialized before DOM ready'},
+    ],
+    [ // email
+      {t:'dep', s:'[DEPRECATED] Mailchimp v2 API — sunset Oct 2022'},
+      {t:'err', s:'ERROR: Workflow trigger not firing — condition never met'},
+      {t:'warn',s:'WARN: Bounce rate 34% — sending domain not warmed'},
+      {t:'err', s:'ERROR: SPF record missing for sending domain'},
+      {t:'err', s:'ERROR: DKIM not configured — failing DMARC checks'},
+      {t:'err', s:'ERROR: Unsubscribe link returns 404 (CAN-SPAM violation)'},
+      {t:'err', s:'FAIL: Deliverability score 42/100 — likely spam folder'},
+      {t:'err', s:'TypeError: contact.email is undefined'},
+      {t:'warn',s:'WARN: 3,400 contacts stuck at step 2'},
+      {t:'err', s:'ERROR: Sequence ignores delay — all 4 emails sent at once'},
+      {t:'dep', s:'[DEPRECATED] SendGrid v2 API — responses no longer valid'},
+      {t:'err', s:'ERROR: Klaviyo metric not found — event name mismatch'},
+    ]
+  ];
+
+  // Clean solution snippets (per-service)
   const termCycles = [
     {
       html: `<span class="tc-cmt">// GTM workspace: prod-v47  ·  mottclient.com</span>
@@ -734,58 +866,123 @@
   ];
 
   let termIdx = 0;
+  let bgTimer = null;
 
-  function runTermCycle() {
+  function errClass(t) {
+    if (t === 'err')  return 'tc-err';
+    if (t === 'warn') return 'tc-warn';
+    if (t === 'dep')  return 'tc-dep';
+    return 'tc-dim-bg';
+  }
+
+  function addErrLine(container, line) {
+    const div = document.createElement('div');
+    div.className = errClass(line.t);
+    div.textContent = line.s;
+    container.appendChild(div);
+    while (container.children.length > 60) container.removeChild(container.firstChild);
+  }
+
+  function stopBg() {
+    if (bgTimer) { clearTimeout(bgTimer); bgTimer = null; }
+  }
+
+  function startSlowBg(errors) {
+    let i = 0;
+    function add() {
+      const c = document.getElementById('terminal-errors');
+      if (c) addErrLine(c, errors[i % errors.length]);
+      i++;
+      bgTimer = setTimeout(add, 360);
+    }
+    bgTimer = setTimeout(add, 360);
+  }
+
+  function typeClean(html, onDone) {
     const output = document.getElementById('terminal-output');
     if (!output) return;
+    const cursor = document.createElement('span');
+    cursor.className = 'terminal-cursor';
+    output.innerHTML = '';
+    output.appendChild(cursor);
 
-    const cycle = termCycles[termIdx % termCycles.length];
+    const tokens = tokenize(html);
+    let ti = 0, ci = 0, currentSpan = null;
+
+    function tick() {
+      if (ti >= tokens.length) { onDone(); return; }
+      const tok = tokens[ti];
+      if (tok.type === 'text') {
+        const ch = tok.content[ci];
+        output.insertBefore(document.createTextNode(ch), cursor);
+        ci++;
+        if (ci >= tok.content.length) { ti++; ci = 0; }
+        setTimeout(tick, ch === '\n' ? 72 : 18);
+      } else {
+        if (!currentSpan) {
+          currentSpan = document.createElement('span');
+          currentSpan.className = tok.cls;
+          output.insertBefore(currentSpan, cursor);
+        }
+        const ch = tok.content[ci];
+        currentSpan.textContent += ch;
+        ci++;
+        if (ci >= tok.content.length) { ti++; ci = 0; currentSpan = null; }
+        setTimeout(tick, ch === '\n' ? 72 : 18);
+      }
+    }
+    tick();
+  }
+
+  function runTermCycle() {
+    const svcIdx = termIdx % termCycles.length;
     termIdx++;
 
-    output.style.transition = 'opacity 0.3s ease';
-    output.style.opacity = '0';
+    const errors = errorSets[svcIdx];
+    const cycle  = termCycles[svcIdx];
+    const errContainer = document.getElementById('terminal-errors');
+    const cleanEl = document.getElementById('terminal-clean');
+    if (!errContainer || !cleanEl) return;
 
-    setTimeout(() => {
-      const cursor = document.createElement('span');
-      cursor.className = 'terminal-cursor';
-      output.innerHTML = '';
-      output.appendChild(cursor);
-      output.style.opacity = '1';
+    stopBg();
+    cleanEl.classList.remove('visible');
 
-      const tokens = tokenize(cycle.html);
-      let ti = 0, ci = 0, currentSpan = null;
-
-      function tick() {
-        if (ti >= tokens.length) { setTimeout(runTermCycle, 2800); return; }
-        const tok = tokens[ti];
-        if (tok.type === 'text') {
-          const ch = tok.content[ci];
-          output.insertBefore(document.createTextNode(ch), cursor);
-          ci++;
-          if (ci >= tok.content.length) { ti++; ci = 0; }
-          setTimeout(tick, ch === '\n' ? 75 : 20);
-        } else {
-          if (!currentSpan) {
-            currentSpan = document.createElement('span');
-            currentSpan.className = tok.cls;
-            output.insertBefore(currentSpan, cursor);
-          }
-          const ch = tok.content[ci];
-          currentSpan.textContent += ch;
-          ci++;
-          if (ci >= tok.content.length) { ti++; ci = 0; currentSpan = null; }
-          setTimeout(tick, ch === '\n' ? 75 : 20);
-        }
+    // Phase 1: fast error flash (~1.3s for 12 lines)
+    let i = 0;
+    function fastFlash() {
+      if (i >= errors.length) {
+        // Phase 2: show clean terminal + start slow bg
+        startSlowBg(errors);
+        setTimeout(() => {
+          cleanEl.classList.add('visible');
+          // Phase 3: type clean code
+          typeClean(cycle.html, () => {
+            // Phase 4: dwell 3s, then reset
+            setTimeout(() => {
+              cleanEl.classList.remove('visible');
+              stopBg();
+              setTimeout(runTermCycle, 700);
+            }, 3000);
+          });
+        }, 220);
+        return;
       }
-      tick();
-    }, 350);
+      addErrLine(errContainer, errors[i]);
+      i++;
+      setTimeout(fastFlash, 115);
+    }
+    fastFlash();
   }
 
   if (!reduced) {
     runTermCycle();
   } else {
     const output = document.getElementById('terminal-output');
+    const errContainer = document.getElementById('terminal-errors');
+    const cleanEl = document.getElementById('terminal-clean');
     if (output) output.innerHTML = termCycles[0].html;
+    if (cleanEl) cleanEl.classList.add('visible');
+    if (errContainer) errorSets[0].forEach(l => addErrLine(errContainer, l));
   }
 </script>
 
