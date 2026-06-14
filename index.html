@@ -87,18 +87,18 @@
   .nav-links a:hover::after { transform: scaleX(1); }
   .nav-cta {
     font-family: var(--body); font-weight: 600; font-size: 0.75rem;
-    background: var(--ink); color: var(--paper);
+    color: var(--ink); border: 1px solid var(--accent);
     padding: 9px 18px; border-radius: 4px; text-decoration: none;
-    transition: background 0.2s; text-transform: uppercase; letter-spacing: 0.08em;
+    transition: border-color 0.2s; text-transform: uppercase; letter-spacing: 0.08em;
   }
-  .nav-cta:hover { background: var(--accent); }
+  .nav-cta:hover { border-color: var(--ink); }
   @media (max-width: 720px) { .nav-links { display: none; } .wrap { padding: 0 24px; } }
 
   /* ---- hero ---- */
   .hero {
     display: grid; grid-template-columns: 1fr 1fr;
     border-bottom: 1px solid var(--line); overflow: hidden;
-    align-items: start;
+    align-items: start; position: relative;
   }
   .hero-left {
     border-right: 1px solid var(--line);
@@ -123,9 +123,11 @@
     padding-top: 24px; border-top: 1px solid var(--line);
   }
   .hero-right {
-    position: relative;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 50%;
     overflow: hidden;
-    height: clamp(300px, 32vw, 440px);
   }
   .btn-primary {
     font-family: var(--body); font-weight: 600; font-size: 0.75rem;
@@ -144,7 +146,7 @@
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; }
     .hero-left { border-right: none; border-bottom: 1px solid var(--line); padding: 80px 28px 56px; align-items: flex-start; }
-    .hero-right { min-height: 440px; }
+    .hero-right { position: relative; top: 0 !important; width: 100%; min-height: 440px; }
     .terminal-clean { top: 42%; left: 8%; }
   }
 
@@ -401,7 +403,7 @@
     margin-bottom: 14px;
   }
   .tools-grid {
-    display: grid; grid-template-columns: repeat(8, 1fr); width: 100%; row-gap: 18px;
+    display: grid; grid-template-columns: repeat(7, 1fr); width: 100%; row-gap: 18px;
   }
   @media (max-width: 720px) { .tools-grid { grid-template-columns: repeat(4, 1fr); gap: 18px 0; } }
   .tool-item {
@@ -411,9 +413,7 @@
   .tool-item img {
     width: 26px; height: 26px; object-fit: contain;
     filter: brightness(0) invert(1) opacity(0.4);
-    transition: filter 0.15s ease;
   }
-  .tool-item:hover img { filter: none; }
   .tool-item span {
     font-size: 0.65rem; font-weight: 500; color: var(--muted);
     letter-spacing: 0.02em; white-space: nowrap;
@@ -446,13 +446,13 @@
   .svc-icon.drawn path, .svc-icon.drawn line, .svc-icon.drawn rect,
   .svc-icon.drawn circle, .svc-icon.drawn polyline {
     stroke-dashoffset: 0;
-    transition: stroke-dashoffset 0.85s cubic-bezier(0.16,1,0.3,1);
+    transition: stroke-dashoffset 2.4s cubic-bezier(0.16,1,0.3,1);
   }
-  .svc-icon.drawn > :nth-child(2) { transition-delay: 0.1s; }
-  .svc-icon.drawn > :nth-child(3) { transition-delay: 0.2s; }
-  .svc-icon.drawn > :nth-child(4) { transition-delay: 0.3s; }
-  .svc-icon.drawn > :nth-child(5) { transition-delay: 0.4s; }
-  .svc-icon.drawn > :nth-child(6) { transition-delay: 0.5s; }
+  .svc-icon.drawn > :nth-child(2) { transition-delay: 0.3s; }
+  .svc-icon.drawn > :nth-child(3) { transition-delay: 0.6s; }
+  .svc-icon.drawn > :nth-child(4) { transition-delay: 0.9s; }
+  .svc-icon.drawn > :nth-child(5) { transition-delay: 1.2s; }
+  .svc-icon.drawn > :nth-child(6) { transition-delay: 1.5s; }
   @media (max-width: 720px) {
     .svc-grid { grid-template-columns: 1fr; }
   }
@@ -573,7 +573,7 @@
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </div>
-    <a href="#services" class="nav-cta">See what I do</a>
+    <a href="#contact" class="nav-cta">Get a quote</a>
   </div>
 </nav>
 
@@ -957,6 +957,19 @@
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // ── hero-right: top aligned to h1, bottom to hero section ──────────────────
+  function alignHeroRight() {
+    const hero = document.querySelector('.hero');
+    const h1   = document.querySelector('.hero h1');
+    const right = document.querySelector('.hero-right');
+    if (!hero || !h1 || !right) return;
+    const heroRect = hero.getBoundingClientRect();
+    const h1Rect   = h1.getBoundingClientRect();
+    right.style.top = (h1Rect.top - heroRect.top) + 'px';
+  }
+  alignHeroRight();
+  window.addEventListener('resize', alignHeroRight);
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
