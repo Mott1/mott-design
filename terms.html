@@ -85,7 +85,9 @@
   .cky-btn-accept:hover { opacity: 0.85 !important; }
   .cky-btn-reject:hover, .cky-btn-customize:hover { border-color: var(--paper) !important; }
   .cky-close-btn svg path { stroke: rgba(41,93,50,0.5) !important; }
-  .cky-revisit-btn { background: var(--warn) !important; border-color: var(--warn) !important; box-shadow: 0 2px 16px rgba(196,98,45,0.35) !important; }
+  .cky-revisit-btn,
+  [data-cky-tag="revisit-consent"],
+  .cky-btn-revisit { background: #c4622d !important; background-color: #c4622d !important; border-color: #c4622d !important; box-shadow: 0 2px 16px rgba(196,98,45,0.35) !important; }
 </style>
 </head>
 <body>
@@ -227,6 +229,20 @@
     <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
   </div>
 </footer>
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<script>
+  document.getElementById("yr").textContent = new Date().getFullYear();
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty("background", "#c4622d", "important");
+        el.style.setProperty("background-color", "#c4622d", "important");
+        el.style.setProperty("border-color", "#c4622d", "important");
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["style"] });
+    paintCkyIcon();
+  })();
+</script>
 </body>
 </html>

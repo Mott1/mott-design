@@ -658,7 +658,9 @@
   .cky-btn-accept:hover { opacity: 0.85 !important; }
   .cky-btn-reject:hover, .cky-btn-customize:hover { border-color: var(--paper) !important; }
   .cky-close-btn svg path { stroke: rgba(41,93,50,0.5) !important; }
-  .cky-revisit-btn { background: var(--warn) !important; border-color: var(--warn) !important; box-shadow: 0 2px 16px rgba(196,98,45,0.35) !important; }
+  .cky-revisit-btn,
+  [data-cky-tag="revisit-consent"],
+  .cky-btn-revisit { background: #c4622d !important; background-color: #c4622d !important; border-color: #c4622d !important; box-shadow: 0 2px 16px rgba(196,98,45,0.35) !important; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { transition: none !important; animation: none !important; }
@@ -2086,6 +2088,20 @@
     carousel.addEventListener('mouseleave', function() { isDown = false; carousel.style.scrollBehavior = ''; });
     carousel.addEventListener('mouseup',    function() { isDown = false; carousel.style.scrollBehavior = ''; });
     carousel.addEventListener('mousemove',  function(e) { if (!isDown) return; e.preventDefault(); var x = e.pageX - carousel.offsetLeft; carousel.scrollLeft = startScrollLeft - (x - startX); });
+  })();
+
+  // Force orange on CookieYes floating icon regardless of injected inline styles
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty('background', '#c4622d', 'important');
+        el.style.setProperty('background-color', '#c4622d', 'important');
+        el.style.setProperty('border-color', '#c4622d', 'important');
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    paintCkyIcon();
   })();
 </script>
 
