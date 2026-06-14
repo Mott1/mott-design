@@ -108,26 +108,66 @@
     .terminal-clean { top: 18%; left: 8%; }
   }
 
-  /* ---- terminal: background error stream ---- */
-  .terminal-bg {
-    position: absolute; inset: 0;
-    background: var(--paper); display: flex; flex-direction: column;
+  /* ---- figma design canvas ---- */
+  .figma-bg { position: absolute; inset: 0; display: flex; flex-direction: column; overflow: hidden; }
+  .figma-toolbar {
+    height: 40px; flex-shrink: 0; background: #FFFFFF;
+    border-bottom: 1px solid #E0E0E0;
+    display: flex; align-items: center;
   }
-  .terminal-bg-body {
-    flex: 1; overflow: hidden; padding: 14px 20px;
-    position: relative;
+  .figma-logo-box {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: #1E1E1E; display: flex; align-items: center; justify-content: center;
   }
-  .terminal-bg-code {
-    position: absolute; bottom: 14px; left: 20px; right: 4px;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
-    font-size: 0.8rem; line-height: 1.65; font-weight: 500;
+  .figma-tools {
+    display: flex; align-items: center; gap: 2px;
+    padding: 0 10px; border-right: 1px solid #E8E8E8; height: 100%;
   }
-  .terminal-bg-code div { display: flex; white-space: nowrap; overflow: hidden; }
-  .err-fill { flex: 1; overflow: hidden; white-space: nowrap; color: rgba(228,234,200,0.07); padding-left: 6px; }
-  .tc-err    { color: #E05555; flex-shrink: 0; }
-  .tc-warn   { color: #C89A2E; flex-shrink: 0; }
-  .tc-dep    { color: #9A8AAA; flex-shrink: 0; }
-  .tc-dim-bg { color: rgba(228,234,200,0.38); flex-shrink: 0; }
+  .figma-tool {
+    width: 28px; height: 28px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #666; cursor: default; user-select: none;
+  }
+  .figma-tool.on { background: rgba(0,0,0,0.08); color: #111; }
+  .figma-file {
+    flex: 1; text-align: center;
+    font-family: var(--body); font-size: 11px; font-weight: 500; color: #333;
+  }
+  .figma-zoom {
+    padding: 0 14px; font-family: var(--body); font-size: 11px; color: #999;
+    border-left: 1px solid #E8E8E8; height: 100%; display: flex; align-items: center;
+  }
+  .figma-workspace { flex: 1; display: flex; overflow: hidden; }
+  .figma-layers {
+    width: 152px; flex-shrink: 0;
+    background: #FAFAFA; border-right: 1px solid #E0E0E0;
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .figma-layers-head {
+    padding: 7px 10px 5px; flex-shrink: 0;
+    font-family: var(--body); font-size: 10px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: #AAA;
+    border-bottom: 1px solid #EBEBEB;
+  }
+  .figma-layer-list { flex: 1; overflow: hidden; padding: 4px 0; }
+  .fgl-item {
+    display: flex; align-items: center; gap: 4px; padding: 2px 8px;
+    font-family: var(--body); font-size: 11px; color: #333;
+    white-space: nowrap; overflow: hidden;
+    opacity: 0; transform: translateX(-6px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+  .fgl-item.in { opacity: 1; transform: none; }
+  .fgl-item.is-frame { font-weight: 600; color: #111; }
+  .fgl-item.is-group { color: #555; }
+  .fgl-icon { font-size: 9px; color: #AAAAAA; flex-shrink: 0; }
+  .fgl-name { overflow: hidden; text-overflow: ellipsis; }
+  .figma-canvas-area {
+    flex: 1; background: #E8E8E8;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  #figma-svg { width: 100%; height: 100%; }
 
   /* ---- terminal: clean solution card ---- */
   .terminal-clean {
@@ -152,7 +192,6 @@
     display: flex; align-items: center; gap: 7px; flex-shrink: 0;
     padding: 10px 16px;
   }
-  .terminal-bg .terminal-bar { background: var(--paper); border-bottom: 1px solid var(--line); }
   .terminal-dot { width: 11px; height: 11px; border-radius: 50%; }
   .terminal-dot:nth-child(1) { background: #FF5F56; }
   .terminal-dot:nth-child(2) { background: #FFBD2E; }
@@ -406,11 +445,34 @@
     </div>
   </div>
   <div class="hero-right">
-    <!-- Background: error stream -->
-    <div class="terminal-bg">
-      <div class="terminal-bar"></div>
-      <div class="terminal-bg-body">
-        <div class="terminal-bg-code" id="terminal-errors"></div>
+    <!-- Background: Figma design canvas -->
+    <div class="figma-bg">
+      <div class="figma-toolbar">
+        <div class="figma-logo-box">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="1" y="1" width="6" height="6" rx="1.5" fill="#F24E1E"/>
+            <rect x="9" y="1" width="6" height="6" rx="1.5" fill="#FF7262"/>
+            <rect x="1" y="9" width="6" height="6" rx="1.5" fill="#0ACF83"/>
+            <circle cx="12" cy="12" r="3" fill="#1ABCFE"/>
+          </svg>
+        </div>
+        <div class="figma-tools">
+          <div class="figma-tool on">↖</div>
+          <div class="figma-tool">⬚</div>
+          <div class="figma-tool">□</div>
+          <div class="figma-tool">T</div>
+        </div>
+        <div class="figma-file">mott-design</div>
+        <div class="figma-zoom">100%</div>
+      </div>
+      <div class="figma-workspace">
+        <div class="figma-layers">
+          <div class="figma-layers-head">Layers</div>
+          <div class="figma-layer-list" id="figma-layer-list"></div>
+        </div>
+        <div class="figma-canvas-area">
+          <svg id="figma-svg" viewBox="0 0 520 480" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"></svg>
+        </div>
       </div>
     </div>
     <!-- Foreground: clean solution -->
@@ -691,94 +753,6 @@
     return tokens;
   }
 
-  // Per-service error lines (fast scroll = atmosphere, not readability)
-  const errorSets = [
-    [ // html / web build
-      {t:'err', s:'Error: <div> nested inside <p> — invalid HTML structure'},
-      {t:'warn', s:'WARN: 6 <img> elements missing alt="" attribute'},
-      {t:'err', s:'Error: Unclosed <section> tag on line 247'},
-      {t:'dep', s:'[DEPRECATED] <center> tag — use CSS text-align'},
-      {t:'err', s:'Error: <meta name="viewport"> not found — mobile broken'},
-      {t:'err', s:'Error: duplicate id="hero" found on 3 elements'},
-      {t:'warn', s:'WARN: 14 inline style= attributes — move to stylesheet'},
-      {t:'err', s:'Error: <a href="#"> empty anchor — not keyboard accessible'},
-      {t:'dep', s:'[DEPRECATED] <font size="4"> — use CSS font-size'},
-      {t:'err', s:'Error: <img> missing width/height — causes layout shift'},
-      {t:'warn', s:'WARN: <h3> before <h2> — heading order broken'},
-      {t:'err', s:'Error: render-blocking <script> in <head> — add defer'},
-    ],
-    [ // consent
-      {t:'err', s:'ERROR: Consent Mode v2 not configured'},
-      {t:'dim', s:'Warning: analytics_storage has no default value'},
-      {t:'dep', s:"[DEPRECATED] cookieDomain: 'auto' — use cookie_domain"},
-      {t:'err', s:'Missing: wait_for_update — hits fire before consent'},
-      {t:'err', s:'ERROR: ad_storage sends data before user consent'},
-      {t:'dim', s:'CookieYes: consent blocked but gtag fires anyway'},
-      {t:'err', s:"TypeError: Cannot read 'granted' of undefined"},
-      {t:'warn',s:'WARN: GDPR — EU visitor tracked without consent'},
-      {t:'err', s:'ERROR: consent update fires after the analytics hit'},
-      {t:'err', s:'403: Google Consent API — invalid consent state'},
-      {t:'dep', s:'[DEPRECATED] Consent Mode v1 — migrate to v2 now'},
-      {t:'warn',s:'WARN: CMP integrated but signals not passed to gtag'},
-    ],
-    [ // seo
-      {t:'err', s:'FAIL  LCP  4.8s     threshold: 2.5s'},
-      {t:'err', s:'FAIL  CLS  0.42     threshold: 0.1'},
-      {t:'err', s:'FAIL  INP  680ms    threshold: 200ms'},
-      {t:'err', s:'ERROR: 0 pages indexed — noindex tag applied globally'},
-      {t:'dim', s:'Missing: meta description (38 of 48 pages)'},
-      {t:'err', s:'ERROR: sitemap.xml returns 404'},
-      {t:'warn',s:'WARN: robots.txt disallows /services /about'},
-      {t:'err', s:'ERROR: canonical tags point to wrong domain'},
-      {t:'warn',s:'WARN: Duplicate h1 found on 12 pages'},
-      {t:'err', s:'ERROR: schema markup — malformed JSON-LD (syntax error)'},
-      {t:'dim', s:'Broken links found: 14 internal, 3 external'},
-      {t:'err', s:'FAIL: Core Web Vitals — all 3 metrics failing'},
-    ],
-    [ // webflow/wp
-      {t:'err', s:'ERROR: Mixed content blocked — http asset on https page'},
-      {t:'dep', s:'[DEPRECATED] jQuery 1.12.4 — 4 known vulnerabilities'},
-      {t:'warn',s:'WARN: 14 plugins have pending security updates'},
-      {t:'err', s:'ERROR: PHP 7.4 end-of-life — no security patches'},
-      {t:'dim', s:'WARN: Render-blocking scripts — 8 found in head'},
-      {t:'err', s:'ERROR: WooCommerce SSL certificate mismatch'},
-      {t:'err', s:'Uncaught TypeError: Cannot set property of null'},
-      {t:'warn',s:'WARN: WordPress DB — 2,847 autoloaded options'},
-      {t:'err', s:'ERROR: Webflow CMS publish limit reached (2,000)'},
-      {t:'err', s:'FAIL: SSL certificate expires in 3 days'},
-      {t:'dep', s:'[DEPRECATED] wp_enqueue_script with no version hash'},
-      {t:'err', s:'ERROR: Elementor widget data corrupted after update'},
-    ],
-    [ // hubspot
-      {t:'err', s:'ERROR: HubSpot form not loading — #hs-form not found'},
-      {t:'err', s:'TypeError: _hsq.push is not a function'},
-      {t:'warn',s:'WARN: HubSpot tracking code loaded 2x (duplicate)'},
-      {t:'dep', s:'[DEPRECATED] HubSpot API v1 — use v3'},
-      {t:'err', s:'ERROR: Contact created but lifecycle stage missing'},
-      {t:'dim', s:"WARN: lifecycle defaults to 'Subscriber', not set"},
-      {t:'err', s:'ERROR: UTM params lost on redirect — source unknown'},
-      {t:'err', s:'404: /hs/hsstatic/bundles/project.js'},
-      {t:'warn',s:'WARN: Form submission fires 3x (race condition)'},
-      {t:'err', s:'ERROR: CORS blocked — portal 23847610 rejected'},
-      {t:'dep', s:'[DEPRECATED] hs-analytics.js v1 — migrate to v2'},
-      {t:'err', s:'TypeError: HubSpot forms not initialized before DOM ready'},
-    ],
-    [ // email
-      {t:'dep', s:'[DEPRECATED] Mailchimp v2 API — sunset Oct 2022'},
-      {t:'err', s:'ERROR: Workflow trigger not firing — condition never met'},
-      {t:'warn',s:'WARN: Bounce rate 34% — sending domain not warmed'},
-      {t:'err', s:'ERROR: SPF record missing for sending domain'},
-      {t:'err', s:'ERROR: DKIM not configured — failing DMARC checks'},
-      {t:'err', s:'ERROR: Unsubscribe link returns 404 (CAN-SPAM violation)'},
-      {t:'err', s:'FAIL: Deliverability score 42/100 — likely spam folder'},
-      {t:'err', s:'TypeError: contact.email is undefined'},
-      {t:'warn',s:'WARN: 3,400 contacts stuck at step 2'},
-      {t:'err', s:'ERROR: Sequence ignores delay — all 4 emails sent at once'},
-      {t:'dep', s:'[DEPRECATED] SendGrid v2 API — responses no longer valid'},
-      {t:'err', s:'ERROR: Klaviyo metric not found — event name mismatch'},
-    ]
-  ];
-
   // Clean solution snippets (per-service)
   const termCycles = [
     {
@@ -928,43 +902,6 @@
   ];
 
   let termIdx = 0;
-  let bgTimer = null;
-
-  function errClass(t) {
-    if (t === 'err')  return 'tc-err';
-    if (t === 'warn') return 'tc-warn';
-    if (t === 'dep')  return 'tc-dep';
-    return 'tc-dim-bg';
-  }
-
-  function addErrLine(container, line) {
-    const div = document.createElement('div');
-    const text = document.createElement('span');
-    text.className = errClass(line.t);
-    text.textContent = line.s;
-    const fill = document.createElement('span');
-    fill.className = 'err-fill';
-    fill.textContent = ' ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░';
-    div.appendChild(text);
-    div.appendChild(fill);
-    container.appendChild(div);
-    while (container.children.length > 60) container.removeChild(container.firstChild);
-  }
-
-  function stopBg() {
-    if (bgTimer) { clearTimeout(bgTimer); bgTimer = null; }
-  }
-
-  function startSlowBg(errors) {
-    let i = 0;
-    function add() {
-      const c = document.getElementById('terminal-errors');
-      if (c) addErrLine(c, errors[i % errors.length]);
-      i++;
-      bgTimer = setTimeout(add, 360);
-    }
-    bgTimer = setTimeout(add, 360);
-  }
 
   function typeClean(html, onDone) {
     const output = document.getElementById('terminal-output');
@@ -1005,60 +942,211 @@
   function runTermCycle() {
     const svcIdx = termIdx % termCycles.length;
     termIdx++;
-
-    const errors = errorSets[svcIdx];
-    const cycle  = termCycles[svcIdx];
-    const errContainer = document.getElementById('terminal-errors');
+    const cycle   = termCycles[svcIdx];
     const cleanEl = document.getElementById('terminal-clean');
     const badgeEl = document.getElementById('svc-badge');
     const checkEl = document.getElementById('svc-check');
-    if (!errContainer || !cleanEl) return;
-
+    if (!cleanEl) return;
     if (badgeEl) badgeEl.textContent = cycle.label;
     if (checkEl) checkEl.classList.remove('pop');
-    stopBg();
+    typeClean(cycle.html, () => {
+      if (checkEl) checkEl.classList.add('pop');
+      setTimeout(() => {
+        if (checkEl) checkEl.classList.remove('pop');
+        setTimeout(runTermCycle, 700);
+      }, 3000);
+    });
+  }
 
-    // Phase 1: fast error flash (~1.3s for 12 lines)
-    let i = 0;
-    function fastFlash() {
-      if (i >= errors.length) {
-        // Phase 2: start slow bg, type new code into always-visible clean terminal
-        startSlowBg(errors);
-        setTimeout(() => {
-          typeClean(cycle.html, () => {
-            // Checkmark pops in when typing is done
-            if (checkEl) checkEl.classList.add('pop');
-            // Phase 3: dwell 3s, then next cycle
-            setTimeout(() => {
-              if (checkEl) checkEl.classList.remove('pop');
-              setTimeout(() => {
-                stopBg();
-                setTimeout(runTermCycle, 700);
-              }, 300);
-            }, 3000);
-          });
-        }, 220);
-        return;
-      }
-      addErrLine(errContainer, errors[i]);
-      i++;
-      setTimeout(fastFlash, 115);
-    }
-    fastFlash();
+  // ── Figma design canvas ───────────────────────────────────────────────────
+  const NS = 'http://www.w3.org/2000/svg';
+  let figmaGen = 0, figmaLayoutIdx = 0;
+
+  function figLayer(name, indent, cls, gen) {
+    if (figmaGen !== gen) return;
+    const ll = document.getElementById('figma-layer-list');
+    if (!ll) return;
+    const d = document.createElement('div');
+    d.className = 'fgl-item' + (cls ? ' ' + cls : '');
+    d.style.paddingLeft = (8 + indent * 12) + 'px';
+    const icon = indent === 0 ? '#' : indent === 1 ? '▾' : '□';
+    d.innerHTML = '<span class="fgl-icon">' + icon + '</span><span class="fgl-name">' + name + '</span>';
+    ll.appendChild(d);
+    requestAnimationFrame(() => requestAnimationFrame(() => d.classList.add('in')));
+  }
+
+  function sRect(x, y, w, h, o) {
+    const e = document.createElementNS(NS, 'rect');
+    e.setAttribute('x', x); e.setAttribute('y', y);
+    e.setAttribute('width', w); e.setAttribute('height', h);
+    if (o.rx) e.setAttribute('rx', o.rx);
+    e.setAttribute('fill', o.fill || 'none');
+    e.setAttribute('stroke', o.stroke !== undefined ? o.stroke : '#2C2C2C');
+    e.setAttribute('stroke-width', o.sw || 1.5);
+    const p = 2 * (w + h);
+    e.setAttribute('stroke-dasharray', p);
+    e.setAttribute('stroke-dashoffset', p);
+    return e;
+  }
+
+  function sLine(x1, y1, x2, y2, o) {
+    const e = document.createElementNS(NS, 'line');
+    e.setAttribute('x1', x1); e.setAttribute('y1', y1);
+    e.setAttribute('x2', x2); e.setAttribute('y2', y2);
+    e.setAttribute('stroke', o.stroke || '#AAAAAA');
+    e.setAttribute('stroke-width', o.sw || 1.5);
+    const len = Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
+    e.setAttribute('stroke-dasharray', len);
+    e.setAttribute('stroke-dashoffset', len);
+    return e;
+  }
+
+  function fDraw(el, dur, gen) {
+    const svg = document.getElementById('figma-svg');
+    if (!svg || figmaGen !== gen) return;
+    svg.appendChild(el);
+    setTimeout(() => {
+      if (figmaGen !== gen) return;
+      el.style.transition = 'stroke-dashoffset ' + dur + 's linear';
+      el.setAttribute('stroke-dashoffset', 0);
+    }, 20);
+  }
+
+  function drawLanding(gen, done) {
+    const s = (ms, fn) => setTimeout(() => { if (figmaGen === gen) fn(); }, ms);
+    const D = (el, dur) => fDraw(el, dur, gen);
+    const L = (nm, ind, cl) => figLayer(nm, ind, cl, gen);
+
+    s(0,    () => { L('Landing Page', 0, 'is-frame'); L('Nav', 1, 'is-group'); });
+    s(50,   () => D(sRect(10, 10, 500, 44, {sw:1.5}), 0.45));
+    s(550,  () => { L('Logo', 2); D(sRect(20, 18, 52, 26, {sw:1.2}), 0.26); });
+    s(870,  () => { L('Nav Links', 2); [0,1,2].forEach(i => setTimeout(() => D(sLine(86+i*48, 33, 122+i*48, 33, {sw:2.5, stroke:'#555'}), 0.22), i*130)); });
+    s(1380, () => { L('CTA', 2); D(sRect(444, 18, 56, 26, {sw:1.2, fill:'#E8EEFA', stroke:'#9AB0E8'}), 0.26); });
+
+    s(1650, () => { L('Hero', 1, 'is-group'); D(sRect(10, 66, 500, 168, {sw:1, stroke:'#BBBBBB'}), 0.55); });
+    s(2220, () => { L('Headline', 2); D(sLine(22, 96, 278, 96, {sw:9, stroke:'#E0E0E0'}), 0.34); });
+    s(2560, () => D(sLine(22, 116, 218, 116, {sw:9, stroke:'#E0E0E0'}), 0.26));
+    s(2840, () => { L('Subtext', 2); [0,1,2].forEach(i => setTimeout(() => D(sLine(22, 140+i*14, 22+[316,278,242][i], 140+i*14, {sw:2.5, stroke:'#BBBBBB'}), 0.24), i*110)); });
+    s(3290, () => { L('CTA Button', 2); D(sRect(22, 186, 118, 34, {sw:1.2, fill:'#E8EEFA', stroke:'#9AB0E8'}), 0.28); });
+
+    s(3680, () => L('Cards', 1, 'is-group'));
+    [[10,248],[182,248],[354,248]].forEach(([x,y], i) => {
+      s(3730+i*430, () => { L('Card '+(i+1), 2); D(sRect(x, y, 156, 150, {sw:1.5}), 0.38); });
+      s(4120+i*430, () => {
+        D(sLine(x+12, y+22, x+88, y+22, {sw:5, stroke:'#CCCCCC'}), 0.2);
+        D(sLine(x+12, y+40, x+120, y+40, {sw:2, stroke:'#DDDDDD'}), 0.18);
+        D(sLine(x+12, y+54, x+100, y+54, {sw:2, stroke:'#DDDDDD'}), 0.18);
+      });
+    });
+    s(6100, () => done && done());
+  }
+
+  function drawMobile(gen, done) {
+    const s = (ms, fn) => setTimeout(() => { if (figmaGen === gen) fn(); }, ms);
+    const D = (el, dur) => fDraw(el, dur, gen);
+    const L = (nm, ind, cl) => figLayer(nm, ind, cl, gen);
+
+    s(0,    () => L('Mobile · 390px', 0, 'is-frame'));
+    s(50,   () => D(sRect(150, 8, 220, 452, {sw:2, rx:22}), 0.65));
+    s(710,  () => D(sLine(162, 46, 358, 46, {sw:1, stroke:'#CCCCCC'}), 0.14));
+
+    s(880,  () => { L('Nav', 1, 'is-group'); D(sRect(162, 54, 196, 40, {sw:1.2}), 0.3); });
+    s(1230, () => { L('Logo', 2); D(sRect(172, 62, 44, 24, {sw:1}), 0.2); });
+    s(1460, () => { L('Menu', 2); [0,1,2].forEach(i => D(sLine(334, 70+i*7, 348, 70+i*7, {sw:1.8, stroke:'#555'}), 0.14)); });
+
+    s(1640, () => { L('Hero', 1, 'is-group'); D(sRect(162, 106, 196, 136, {sw:1, stroke:'#BBBBBB'}), 0.42); });
+    s(2080, () => { L('Headline', 2); D(sLine(172, 132, 306, 132, {sw:7, stroke:'#E0E0E0'}), 0.28); });
+    s(2360, () => D(sLine(172, 150, 278, 150, {sw:7, stroke:'#E0E0E0'}), 0.22));
+    s(2590, () => { L('Subtext', 2); [0,1].forEach(i => D(sLine(172, 174+i*14, 172+[180,156][i], 174+i*14, {sw:2, stroke:'#BBBBBB'}), 0.2)); });
+    s(2850, () => { L('Button', 2); D(sRect(172, 202, 100, 30, {sw:1.2, fill:'#E8EEFA', stroke:'#9AB0E8'}), 0.24); });
+
+    s(3110, () => { L('Card 1', 1); D(sRect(162, 252, 196, 80, {sw:1.5}), 0.34); });
+    s(3460, () => { D(sLine(174, 272, 242, 272, {sw:5, stroke:'#CCCCCC'}), 0.2); D(sLine(174, 290, 314, 290, {sw:2, stroke:'#DDDDDD'}), 0.18); });
+    s(3660, () => { L('Card 2', 1); D(sRect(162, 344, 196, 80, {sw:1.5}), 0.34); });
+    s(4010, () => { D(sLine(174, 364, 242, 364, {sw:5, stroke:'#CCCCCC'}), 0.2); D(sLine(174, 382, 314, 382, {sw:2, stroke:'#DDDDDD'}), 0.18); });
+    s(4360, () => done && done());
+  }
+
+  function drawDashboard(gen, done) {
+    const s = (ms, fn) => setTimeout(() => { if (figmaGen === gen) fn(); }, ms);
+    const D = (el, dur) => fDraw(el, dur, gen);
+    const L = (nm, ind, cl) => figLayer(nm, ind, cl, gen);
+
+    s(0,    () => { L('Dashboard', 0, 'is-frame'); L('Sidebar', 1, 'is-group'); });
+    s(50,   () => D(sRect(8, 8, 112, 464, {sw:1.5}), 0.5));
+    s(560,  () => { L('Logo', 2); D(sRect(18, 18, 82, 28, {sw:1}), 0.24); });
+    s(800,  () => D(sLine(18, 58, 110, 58, {sw:1, stroke:'#CCCCCC'}), 0.14));
+    s(950,  () => { L('Nav Items', 2); [0,1,2,3].forEach(i => setTimeout(() => D(sLine(24, 76+i*24, 24+[80,66,72,60][i], 76+i*24, {sw:3, stroke:'#999'}), 0.18), i*150)); });
+
+    s(1660, () => { L('Header', 1, 'is-group'); D(sRect(130, 8, 382, 46, {sw:1.5}), 0.4); });
+    s(2070, () => { L('Page Title', 2); D(sLine(142, 31, 224, 31, {sw:4, stroke:'#555'}), 0.22); });
+    s(2290, () => { L('Search', 2); D(sRect(388, 16, 116, 28, {sw:1, stroke:'#BBBBBB'}), 0.2); });
+
+    s(2510, () => L('Stats', 1, 'is-group'));
+    [[130,64,114],[254,64,114],[378,64,134]].forEach(([x,y,w], i) => {
+      s(2560+i*290, () => { L('Stat '+(i+1), 2); D(sRect(x, y, w, 74, {sw:1.5}), 0.32); });
+      s(2900+i*290, () => { D(sLine(x+10, y+28, x+62, y+28, {sw:6, stroke:'#DDDDDD'}), 0.2); D(sLine(x+10, y+48, x+90, y+48, {sw:2, stroke:'#DDDDDD'}), 0.18); });
+    });
+
+    s(3970, () => { L('Chart', 1); D(sRect(130, 148, 272, 200, {sw:1.5}), 0.5); });
+    s(4480, () => D(sLine(142, 336, 390, 336, {sw:1, stroke:'#AAAAAA'}), 0.2));
+    [[152,236,28,100],[204,268,28,68],[256,216,28,120],[308,280,28,56],[360,250,28,86]].forEach(([x,y,w,h], i) =>
+      s(4700+i*150, () => D(sRect(x, y, w, h, {sw:1, fill:'#DDE8F8', stroke:'#8AAAE8'}), 0.28))
+    );
+    s(5560, () => { L('Table', 1); D(sRect(412, 148, 100, 200, {sw:1.5}), 0.34); });
+    s(5910, () => [0,1,2,3].forEach(i => D(sLine(412, 188+i*36, 512, 188+i*36, {sw:1, stroke:'#DDDDDD'}), 0.14)));
+    s(6250, () => done && done());
+  }
+
+  function drawEmail(gen, done) {
+    const s = (ms, fn) => setTimeout(() => { if (figmaGen === gen) fn(); }, ms);
+    const D = (el, dur) => fDraw(el, dur, gen);
+    const L = (nm, ind, cl) => figLayer(nm, ind, cl, gen);
+
+    s(0,    () => L('Email · 600px', 0, 'is-frame'));
+    s(50,   () => D(sRect(90, 8, 340, 464, {sw:1.5, stroke:'#AAAAAA'}), 0.55));
+    s(600,  () => { L('Header', 1, 'is-group'); D(sRect(90, 8, 340, 80, {sw:1.5}), 0.4); });
+    s(1000, () => { L('Logo', 2); D(sRect(234, 24, 52, 26, {sw:1}), 0.22); });
+    s(1220, () => D(sLine(106, 72, 414, 72, {sw:1, stroke:'#CCCCCC'}), 0.18));
+    s(1400, () => { L('Hero Image', 1); D(sRect(90, 88, 340, 100, {sw:1, stroke:'#BBBBBB'}), 0.4); });
+    s(1800, () => { D(sLine(130, 108, 390, 168, {sw:1, stroke:'#CCCCCC'}), 0.3); D(sLine(390, 108, 130, 168, {sw:1, stroke:'#CCCCCC'}), 0.3); });
+    s(2100, () => { L('Headline', 1); D(sLine(106, 214, 378, 214, {sw:8, stroke:'#E0E0E0'}), 0.32); });
+    s(2420, () => { L('Subhead', 1); D(sLine(106, 234, 342, 234, {sw:4, stroke:'#CCCCCC'}), 0.26); });
+    s(2690, () => { L('Body Copy', 1); [0,1,2,3].forEach(i => setTimeout(() => D(sLine(106, 258+i*18, 106+[308,290,302,270][i], 258+i*18, {sw:2.5, stroke:'#BBBBBB'}), 0.22), i*100)); });
+    s(3190, () => { L('CTA', 1); D(sRect(195, 326, 130, 40, {sw:1.2, fill:'#E8EEFA', stroke:'#9AB0E8'}), 0.3); });
+    s(3490, () => D(sLine(106, 378, 414, 378, {sw:1, stroke:'#CCCCCC'}), 0.2));
+    s(3700, () => { L('Footer', 1); D(sRect(90, 386, 340, 60, {sw:1.5, stroke:'#AAAAAA'}), 0.34); });
+    s(4050, () => { D(sLine(210, 410, 310, 410, {sw:2.5, stroke:'#CCCCCC'}), 0.2); D(sLine(230, 428, 290, 428, {sw:2, stroke:'#CCCCCC'}), 0.16); });
+    s(4400, () => done && done());
+  }
+
+  function runFigmaCanvas() {
+    figmaGen++;
+    const gen = figmaGen;
+    const svg = document.getElementById('figma-svg');
+    const ll  = document.getElementById('figma-layer-list');
+    if (svg) svg.innerHTML = '';
+    if (ll)  ll.innerHTML  = '';
+    const layouts = [drawLanding, drawMobile, drawDashboard, drawEmail];
+    layouts[figmaLayoutIdx % layouts.length](gen, () => {
+      setTimeout(() => {
+        if (figmaGen !== gen) return;
+        figmaLayoutIdx++;
+        runFigmaCanvas();
+      }, 2200);
+    });
   }
 
   if (!reduced) {
     runTermCycle();
+    runFigmaCanvas();
   } else {
-    const output = document.getElementById('terminal-output');
-    const errContainer = document.getElementById('terminal-errors');
-    const cleanEl = document.getElementById('terminal-clean');
+    const output  = document.getElementById('terminal-output');
     const badgeEl = document.getElementById('svc-badge');
     const checkEl = document.getElementById('svc-check');
-    if (output) output.innerHTML = termCycles[0].html;
+    if (output)  output.innerHTML = termCycles[0].html;
     if (badgeEl) badgeEl.textContent = termCycles[0].label;
     if (checkEl) checkEl.classList.add('pop');
-    if (errContainer) errorSets[0].forEach(l => addErrLine(errContainer, l));
   }
 </script>
 
