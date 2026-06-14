@@ -85,10 +85,7 @@
     padding-top: 24px; border-top: 1px solid var(--line);
   }
   .hero-right {
-    display: grid;
-    grid-template-rows: 50% 50%;
-    grid-template-columns: 1fr 1fr;
-    overflow: hidden;
+    position: relative;
   }
   .btn-primary {
     font-family: var(--body); font-weight: 600; font-size: 0.75rem;
@@ -107,11 +104,12 @@
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; }
     .hero-left { border-right: none; border-bottom: 1px solid var(--line); padding: 80px 28px 56px; align-items: flex-start; }
-    .hero-right { min-height: 500px; grid-template-columns: 1fr 1fr; }
+    .hero-right { min-height: 440px; }
+    .terminal-clean { top: 18%; left: 8%; }
   }
 
   /* ---- figma design canvas ---- */
-  .figma-bg { display: flex; flex-direction: column; overflow: hidden; border-right: 1px solid #D8D8D8; }
+  .figma-bg { position: absolute; inset: 0; display: flex; flex-direction: column; overflow: hidden; }
   .figma-toolbar {
     height: 40px; flex-shrink: 0; background: #FFFFFF;
     border-bottom: 1px solid #E0E0E0;
@@ -171,107 +169,22 @@
   }
   #figma-svg { width: 100%; height: 100%; }
 
-  /* ---- webflow designer panel ---- */
-  .webflow-panel {
-    grid-column: 1 / -1;
-    display: flex; flex-direction: column; overflow: hidden;
-    border-bottom: 1px solid #D0D0D0;
+  /* ---- terminal: clean solution card ---- */
+  .terminal-clean {
+    position: absolute; top: 24%; left: 28%; right: 0; bottom: 0;
+    background: #F0EDE6;
+    border: 1px solid rgba(0,0,0,0.3);
+    border-right: none; border-bottom: none;
+    border-radius: 10px 0 0 0;
+    box-shadow: -10px -10px 52px rgba(0,0,0,0.38);
+    display: flex; flex-direction: column;
   }
-  .wf-toolbar {
-    height: 40px; flex-shrink: 0;
-    background: #1A1A1A;
-    display: flex; align-items: center;
-  }
-  .wf-logo-box {
-    width: 40px; height: 40px; flex-shrink: 0;
-    background: #146EF5;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .wf-toolbar-title {
-    flex: 1; text-align: center;
-    font-family: var(--body); font-size: 11px; font-weight: 500; color: #888;
-  }
-  .wf-breakpoints {
-    display: flex; align-items: center; gap: 1px; padding: 0 8px;
-    border-left: 1px solid #2A2A2A; height: 100%;
-  }
-  .wf-bp {
-    width: 22px; height: 22px; border-radius: 3px;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--body); font-size: 10px; font-weight: 700; color: #555;
-    cursor: default; user-select: none;
-  }
-  .wf-bp.active { color: #FFF; background: rgba(255,255,255,0.12); }
-  .wf-publish-btn {
-    margin: 0 8px; padding: 5px 14px; border-radius: 4px;
-    background: #146EF5; color: #FFF;
-    font-family: var(--body); font-size: 10px; font-weight: 600;
-    cursor: default; border: none; white-space: nowrap; flex-shrink: 0;
-  }
-  .wf-workspace { flex: 1; display: flex; overflow: hidden; }
-  .wf-nav-panel {
-    width: 148px; flex-shrink: 0;
-    background: #1F2022;
-    display: flex; flex-direction: column; overflow: hidden;
-  }
-  .wf-nav-head, .wf-style-head {
-    padding: 6px 10px 4px; flex-shrink: 0;
-    font-family: var(--body); font-size: 9px; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase; color: #4A4E52;
-    border-bottom: 1px solid #2C2E30;
-  }
-  .wf-nav-list { flex: 1; overflow: hidden; padding: 3px 0; }
-  .wf-nav-item {
-    display: flex; align-items: center; gap: 3px; padding: 2px 8px;
-    font-family: var(--body); font-size: 10.5px; color: #AAA;
-    white-space: nowrap; overflow: hidden;
-    opacity: 0; transform: translateX(-5px);
-    transition: opacity 0.15s ease, transform 0.15s ease;
-    cursor: default; border-radius: 2px;
-  }
-  .wf-nav-item.in { opacity: 1; transform: none; }
-  .wf-nav-icon { font-size: 8px; color: #444; flex-shrink: 0; }
-  .wf-canvas-area {
-    flex: 1; background: #EBEBEB;
-    display: flex; align-items: flex-start; justify-content: center;
-    padding: 12px 8px; overflow: hidden;
-  }
-  #wf-svg { width: 100%; height: 100%; }
-  .wf-style-panel {
-    width: 130px; flex-shrink: 0;
-    background: #1F2022;
-    display: flex; flex-direction: column; overflow: hidden;
-    border-left: 1px solid #2C2E30;
-  }
-  .wf-style-list { flex: 1; overflow: hidden; padding: 4px 0; }
-  .wf-style-sec {
-    padding: 6px 8px 2px;
-    font-family: var(--body); font-size: 8px; font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase; color: #4A7CFF;
-    opacity: 0; transition: opacity 0.2s ease;
-  }
-  .wf-style-sec.in { opacity: 1; }
-  .wf-style-row {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 2px 8px 2px 10px;
-    opacity: 0; transition: opacity 0.18s ease;
-  }
-  .wf-style-row.in { opacity: 1; }
-  .wf-style-prop { font-family: var(--body); font-size: 9.5px; color: #666; }
-  .wf-style-val { font-family: ui-monospace, monospace; font-size: 9px; color: #8AC; }
-
-  /* ---- terminal: code panel ---- */
-  .terminal-clean { background: #F0EDE6; display: flex; flex-direction: column; overflow: hidden; }
   .terminal-clean .terminal-bar { background: #E8E4DC; border-bottom: 1px solid rgba(0,0,0,0.1); }
-  .terminal-clean .terminal-body { flex: 1; padding: 12px 14px 0; overflow: hidden; position: relative; }
+  .terminal-clean .terminal-body { flex: 1; padding: 14px 18px 0; overflow: hidden; position: relative; }
   .terminal-clean .terminal-body::after {
     content: '';
     position: absolute; top: 0; right: 0; bottom: 0;
     width: 1px; background: rgba(42,38,32,0.1);
-  }
-  .term-phase-label {
-    font-family: var(--body); font-size: 0.65rem; font-weight: 600;
-    color: rgba(42,38,32,0.4); letter-spacing: 0.05em; margin-right: 2px;
   }
 
   /* ---- shared terminal chrome ---- */
@@ -304,7 +217,7 @@
   /* ---- clean code syntax (from tp-terminal) ---- */
   .terminal-code {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
-    font-size: 10.5px; line-height: 1.55; color: #2A2620;
+    font-size: 14px; line-height: 1.55; color: #2A2620;
     white-space: pre; margin: 0;
   }
   .tc-cmd { color: #2A2620; }
@@ -532,37 +445,7 @@
     </div>
   </div>
   <div class="hero-right">
-    <!-- Top row: Webflow designer (full width) -->
-    <div class="webflow-panel" id="webflow-panel">
-      <div class="wf-toolbar">
-        <div class="wf-logo-box">
-          <svg width="17" height="13" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13.1 0L10.4 9.2L8.3 3H5.7L3.6 9.2L0.9 0H0L3 10.8H5.9L7.9 4.5L9.9 10.8H12.8L18 0H13.1Z" fill="white"/>
-          </svg>
-        </div>
-        <div class="wf-toolbar-title">02 · Build — mott-design</div>
-        <div class="wf-breakpoints">
-          <span class="wf-bp active" title="Desktop">D</span>
-          <span class="wf-bp" title="Tablet">T</span>
-          <span class="wf-bp" title="Mobile">M</span>
-        </div>
-        <button class="wf-publish-btn">Publish</button>
-      </div>
-      <div class="wf-workspace">
-        <div class="wf-nav-panel">
-          <div class="wf-nav-head">Navigator</div>
-          <div class="wf-nav-list" id="wf-nav-list"></div>
-        </div>
-        <div class="wf-canvas-area">
-          <svg id="wf-svg" viewBox="0 0 380 190" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"></svg>
-        </div>
-        <div class="wf-style-panel">
-          <div class="wf-style-head">Style</div>
-          <div class="wf-style-list" id="wf-style-list"></div>
-        </div>
-      </div>
-    </div>
-    <!-- Bottom-left: Figma design canvas -->
+    <!-- Background: Figma design canvas -->
     <div class="figma-bg">
       <div class="figma-toolbar">
         <div class="figma-logo-box">
@@ -579,7 +462,7 @@
           <div class="figma-tool">□</div>
           <div class="figma-tool">T</div>
         </div>
-        <div class="figma-file">01 · Design</div>
+        <div class="figma-file">mott-design</div>
         <div class="figma-zoom">100%</div>
       </div>
       <div class="figma-workspace">
@@ -592,13 +475,12 @@
         </div>
       </div>
     </div>
-    <!-- Bottom-right: Code terminal -->
+    <!-- Foreground: clean solution -->
     <div class="terminal-clean" id="terminal-clean">
       <div class="terminal-bar">
         <span class="terminal-dot"></span>
         <span class="terminal-dot"></span>
         <span class="terminal-dot"></span>
-        <span class="term-phase-label">03 · Code</span>
         <span class="svc-badge" id="svc-badge"></span>
         <span class="svc-check" id="svc-check">✓</span>
       </div>
@@ -1079,7 +961,6 @@
   // ── Figma design canvas ───────────────────────────────────────────────────
   const NS = 'http://www.w3.org/2000/svg';
   let figmaGen = 0, figmaLayoutIdx = 0;
-  let wfGen = 0;
 
   function figLayer(name, indent, cls, gen) {
     if (figmaGen !== gen) return;
@@ -1256,208 +1137,9 @@
     });
   }
 
-  function drawWebflow(gen, done) {
-    const s = (ms, fn) => setTimeout(() => { if (wfGen === gen) fn(); }, ms);
-    const svg = document.getElementById('wf-svg');
-    const nl  = document.getElementById('wf-nav-list');
-    const sl  = document.getElementById('wf-style-list');
-
-    function navEl(label, indent) {
-      if (wfGen !== gen || !nl) return;
-      const d = document.createElement('div');
-      d.className = 'wf-nav-item';
-      d.style.paddingLeft = (8 + indent * 9) + 'px';
-      const icon = indent <= 1 ? '▾' : '·';
-      d.innerHTML = `<span class="wf-nav-icon">${icon}</span><span>${label}</span>`;
-      nl.appendChild(d);
-      requestAnimationFrame(() => requestAnimationFrame(() => d.classList.add('in')));
-    }
-
-    function styleSet(rows) {
-      if (wfGen !== gen || !sl) return;
-      sl.innerHTML = '';
-      rows.forEach((r, i) => {
-        const d = document.createElement('div');
-        if (r.sec) {
-          d.className = 'wf-style-sec';
-          d.textContent = r.sec;
-        } else {
-          d.className = 'wf-style-row';
-          d.innerHTML = `<span class="wf-style-prop">${r.p}</span><span class="wf-style-val">${r.v}</span>`;
-        }
-        sl.appendChild(d);
-        setTimeout(() => { if (wfGen === gen) d.classList.add('in'); }, i * 55);
-      });
-    }
-
-    let selG = null;
-    function wfSel(x, y, w, h, label) {
-      if (!svg || wfGen !== gen) return;
-      if (selG && svg.contains(selG)) svg.removeChild(selG);
-      selG = document.createElementNS(NS, 'g');
-      const r = document.createElementNS(NS, 'rect');
-      r.setAttribute('x', x); r.setAttribute('y', y);
-      r.setAttribute('width', w); r.setAttribute('height', h);
-      r.setAttribute('fill', 'none'); r.setAttribute('stroke', '#0067FF'); r.setAttribute('stroke-width', '2');
-      selG.appendChild(r);
-      const lb = label.length * 5.5 + 8;
-      const ly = Math.max(0, y - 14);
-      const bg = document.createElementNS(NS, 'rect');
-      bg.setAttribute('x', x); bg.setAttribute('y', ly);
-      bg.setAttribute('width', lb); bg.setAttribute('height', '14');
-      bg.setAttribute('fill', '#0067FF');
-      selG.appendChild(bg);
-      const t = document.createElementNS(NS, 'text');
-      t.setAttribute('x', x + 3); t.setAttribute('y', ly + 10);
-      t.setAttribute('fill', '#FFF'); t.setAttribute('font-size', '8');
-      t.setAttribute('font-weight', '700');
-      t.setAttribute('font-family', 'ui-sans-serif, system-ui, sans-serif');
-      t.textContent = label;
-      selG.appendChild(t);
-      svg.appendChild(selG);
-    }
-
-    function wfClearSel() {
-      if (selG && svg && svg.contains(selG)) { svg.removeChild(selG); selG = null; }
-    }
-
-    function wfRect(x, y, w, h, fill, rx) {
-      const r = document.createElementNS(NS, 'rect');
-      r.setAttribute('x', x); r.setAttribute('y', y);
-      r.setAttribute('width', w); r.setAttribute('height', h);
-      r.setAttribute('fill', fill);
-      if (rx) r.setAttribute('rx', rx);
-      r.style.opacity = '0';
-      if (svg && wfGen === gen) {
-        svg.appendChild(r);
-        requestAnimationFrame(() => { r.style.transition = 'opacity 0.3s ease'; r.style.opacity = '1'; });
-      }
-      return r;
-    }
-
-    s(0, () => {
-      if (!svg) return;
-      svg.innerHTML = '';
-      const defs = document.createElementNS(NS, 'defs');
-      defs.innerHTML = '<filter id="wf-sh"><feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="rgba(0,0,0,0.12)"/></filter>';
-      svg.appendChild(defs);
-      const pg = document.createElementNS(NS, 'rect');
-      pg.setAttribute('x', '8'); pg.setAttribute('y', '0');
-      pg.setAttribute('width', '364'); pg.setAttribute('height', '190');
-      pg.setAttribute('fill', '#FFFFFF'); pg.setAttribute('filter', 'url(#wf-sh)');
-      svg.appendChild(pg);
-      navEl('Body', 0);
-    });
-
-    s(280, () => {
-      navEl('Navbar', 1);
-      wfRect(8, 0, 364, 32, '#295D32');
-      wfSel(8, 0, 364, 32, 'Navbar');
-      styleSet([{sec:'Layout'},{p:'display',v:'flex'},{p:'width',v:'100%'},{sec:'Background'},{p:'color',v:'#295D32'}]);
-    });
-
-    s(680, () => {
-      navEl('.brand', 2);
-      wfRect(18, 8, 42, 16, 'rgba(228,234,200,0.35)', '2');
-      navEl('.nav-links', 2);
-      [0,1,2].forEach(i => wfRect(130 + i*54, 10, 40, 11, 'rgba(228,234,200,0.18)', '2'));
-    });
-
-    s(1050, () => {
-      navEl('.nav-cta', 2);
-      wfRect(322, 8, 44, 16, 'rgba(228,234,200,0.9)', '3');
-      wfSel(322, 8, 44, 16, '.nav-cta');
-      styleSet([{sec:'Spacing'},{p:'padding',v:'14px 28px'},{sec:'Background'},{p:'color',v:'#E4EAC8'},{sec:'Border'},{p:'radius',v:'4px'}]);
-    });
-
-    s(1500, () => {
-      navEl('Section.hero', 1);
-      wfClearSel();
-      wfRect(8, 32, 364, 110, '#284B2F');
-      wfSel(8, 32, 364, 110, 'Section.hero');
-      styleSet([{sec:'Layout'},{p:'display',v:'grid'},{p:'columns',v:'1fr 1fr'},{sec:'Background'},{p:'color',v:'#284B2F'}]);
-    });
-
-    s(1900, () => {
-      navEl('.hero-left', 2);
-      navEl('h1', 3);
-      wfRect(18, 50, 128, 10, 'rgba(228,234,200,0.8)', '2');
-      wfRect(18, 64, 100, 10, 'rgba(228,234,200,0.8)', '2');
-      wfSel(18, 46, 155, 32, 'h1');
-      styleSet([{sec:'Typography'},{p:'font',v:'Space Grotesk'},{p:'size',v:'3.375rem'},{p:'weight',v:'500'},{p:'color',v:'#E4EAC8'}]);
-    });
-
-    s(2350, () => {
-      navEl('p', 3);
-      [0,1,2].forEach(i => wfRect(18, 83 + i*12, i===2?88:148, 8, 'rgba(152,158,123,0.65)', '2'));
-      wfSel(18, 83, 148, 38, 'p');
-      styleSet([{sec:'Typography'},{p:'font',v:'Inter'},{p:'size',v:'1.08rem'},{p:'color',v:'#989E7B'}]);
-    });
-
-    s(2780, () => {
-      navEl('.hero-actions', 3);
-      wfRect(18, 124, 66, 17, 'rgba(228,234,200,0.9)', '3');
-      const gb = document.createElementNS(NS, 'rect');
-      gb.setAttribute('x', '90'); gb.setAttribute('y', '124');
-      gb.setAttribute('width', '56'); gb.setAttribute('height', '17');
-      gb.setAttribute('fill', 'none'); gb.setAttribute('rx', '3');
-      gb.setAttribute('stroke', 'rgba(228,234,200,0.45)'); gb.setAttribute('stroke-width', '1');
-      gb.style.opacity = '0';
-      if (svg && wfGen === gen) { svg.appendChild(gb); requestAnimationFrame(() => { gb.style.transition='opacity 0.3s ease'; gb.style.opacity='1'; }); }
-      wfSel(18, 124, 66, 17, '.btn-primary');
-      styleSet([{sec:'Layout'},{p:'padding',v:'14px 28px'},{sec:'Background'},{p:'color',v:'#E4EAC8'},{sec:'Typography'},{p:'size',v:'0.75rem'}]);
-    });
-
-    s(3200, () => {
-      navEl('.hero-right', 2);
-      wfRect(190, 32, 182, 110, '#0D1F0F');
-      wfSel(190, 32, 182, 110, '.hero-right');
-      styleSet([{sec:'Layout'},{p:'display',v:'grid'},{p:'rows',v:'50% 50%'},{sec:'Overflow'},{p:'overflow',v:'hidden'}]);
-    });
-
-    s(3700, () => {
-      navEl('Section#services', 1);
-      wfClearSel();
-      wfRect(8, 142, 364, 48, '#295D32');
-      wfSel(8, 142, 364, 48, '#services');
-      styleSet([{sec:'Layout'},{p:'display',v:'grid'},{p:'columns',v:'repeat(2,1fr)'},{p:'gap',v:'12px'}]);
-    });
-
-    s(4150, () => {
-      navEl('.svc-grid', 2);
-      [[0,0],[1,0],[0,1],[1,1]].forEach(([col,row]) => {
-        navEl('.svc', 3);
-        wfRect(16 + col * 185, 150 + row * 19, 177, 14, 'rgba(84,137,93,0.45)', '1');
-      });
-      wfSel(16, 150, 177, 14, '.svc');
-      styleSet([{sec:'Background'},{p:'color',v:'rgba(84,137,93,0.24)'},{sec:'Spacing'},{p:'padding',v:'32px'},{sec:'Border'},{p:'radius',v:'2px'}]);
-    });
-
-    s(5000, () => {
-      wfClearSel();
-      done && done();
-    });
-  }
-
-  function runWebflowCanvas() {
-    wfGen++;
-    const gen = wfGen;
-    const nl = document.getElementById('wf-nav-list');
-    const sl = document.getElementById('wf-style-list');
-    if (nl) nl.innerHTML = '';
-    if (sl) sl.innerHTML = '';
-    drawWebflow(gen, () => {
-      setTimeout(() => {
-        if (wfGen !== gen) return;
-        runWebflowCanvas();
-      }, 2200);
-    });
-  }
-
   if (!reduced) {
     runTermCycle();
     runFigmaCanvas();
-    runWebflowCanvas();
   } else {
     const output  = document.getElementById('terminal-output');
     const badgeEl = document.getElementById('svc-badge');
