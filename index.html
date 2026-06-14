@@ -151,8 +151,8 @@
   }
 
   /* ---- figma design canvas ---- */
-  .figma-bg { position: absolute; inset: 0; display: flex; flex-direction: column; overflow: hidden; transition: transform 0.72s cubic-bezier(0.16,1,0.3,1); }
-  .figma-bg.at-left { transform: translateX(-100%); }
+  .figma-bg { position: absolute; inset: 0; display: flex; flex-direction: column; overflow: hidden; transition: opacity 0.15s ease; }
+  .figma-bg.at-left { opacity: 0; pointer-events: none; }
   .figma-toolbar {
     height: 40px; flex-shrink: 0; background: #FFFFFF;
     border-bottom: 1px solid #E0E0E0;
@@ -215,12 +215,12 @@
   /* ---- webflow designer panel ---- */
   .webflow-panel {
     position: absolute; inset: 0;
-    transform: translateX(100%);
-    transition: transform 0.72s cubic-bezier(0.16,1,0.3,1);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.15s ease;
     display: flex; flex-direction: column; overflow: hidden;
     background: #EBEBEB;
   }
-  .webflow-panel.in-view { transform: translateX(0); }
+  .webflow-panel.in-view { opacity: 1; pointer-events: auto; }
   .wf-toolbar {
     height: 40px; flex-shrink: 0; background: #1A1A1A;
     display: flex; align-items: center; z-index: 1;
@@ -427,7 +427,7 @@
   .sec-head p { color: var(--muted); font-size: 1.08rem; }
 
   /* ---- services ---- */
-  #services { border-bottom: 1px solid var(--line); }
+  #services { border-bottom: 1px solid var(--line); background: var(--paper-2); }
   .svc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .svc {
     padding: 32px; border-radius: 2px;
@@ -720,8 +720,6 @@
         <span class="terminal-dot"></span>
         <span class="terminal-dot"></span>
         <span class="terminal-dot"></span>
-        <span class="svc-badge" id="svc-badge"></span>
-        <span class="svc-check" id="svc-check">✓</span>
       </div>
       <div class="terminal-body">
         <pre class="terminal-code" id="terminal-output"></pre>
@@ -1070,135 +1068,38 @@
     return tokens;
   }
 
-  // Clean solution snippets (per-service)
-  const termCycles = [
-    {
-      label: 'Cookie & Consent',
-      html: `<span class="tc-cmt">// Consent Mode v2  ·  CookieYes</span>
-<span class="tc-cmt">// Region: EU, CA  ·  Default: denied</span>
-
+  // Single combined terminal code view
+  const TERM_HTML = `<span class="tc-cmt">// Consent Mode v2  ·  CookieYes · EU, CA</span>
 <span class="tc-cmd">gtag</span>('<span class="tc-val">consent</span>', '<span class="tc-val">default</span>', {
-  <span class="tc-dim">analytics_storage:</span>  '<span class="tc-val">denied</span>',
-  <span class="tc-dim">ad_storage:</span>         '<span class="tc-val">denied</span>',
-  <span class="tc-dim">wait_for_update:</span>    <span class="tc-val">500</span>
+  <span class="tc-dim">analytics_storage:</span> '<span class="tc-val">denied</span>',
+  <span class="tc-dim">ad_storage:</span>        '<span class="tc-val">denied</span>',
+  <span class="tc-dim">wait_for_update:</span>   <span class="tc-val">500</span>
 });
 
-<span class="tc-cmt">// On user accept:</span>
-<span class="tc-cmd">gtag</span>('<span class="tc-val">consent</span>', '<span class="tc-val">update</span>', {
-  <span class="tc-dim">analytics_storage:</span>     '<span class="tc-val">granted</span>',
-  <span class="tc-dim">ad_storage:</span>            '<span class="tc-val">denied</span>',
-  <span class="tc-dim">functionality_storage:</span> '<span class="tc-val">granted</span>'
-});
+<span class="tc-cmt">// GA4  ·  config + pageview</span>
+<span class="tc-cmd">gtag</span>('<span class="tc-val">config</span>', '<span class="tc-val">G-XXXXXXXX</span>');
 
+<span class="tc-cmt">// GTM dataLayer  ·  form submit</span>
 <span class="tc-dim">dataLayer</span>.push({
-  <span class="tc-dim">event:</span>          '<span class="tc-val">consent_updated</span>',
-  <span class="tc-dim">consent_region:</span> '<span class="tc-val">EU</span>',
-  <span class="tc-dim">ga_session_id:</span>  '<span class="tc-val">1718291044</span>'
+  <span class="tc-dim">event:</span>      '<span class="tc-val">form_submit</span>',
+  <span class="tc-dim">utm_source:</span> '<span class="tc-val">google</span>',
+  <span class="tc-dim">lead_stage:</span> '<span class="tc-val">mql</span>'
 });
 
-<span class="tc-ok">▶  Consent state applied</span>
-<span class="tc-ok">✓  GTM fired: analytics-on-consent</span>`
-    },
-    {
-      label: 'SEO & Technical',
-      html: `<span class="tc-cmd">$ audit --url</span> <span class="tc-val">mottclient.com</span> <span class="tc-dim">--full</span>
-
-  Crawling <span class="tc-val">48</span> pages...
-
-  <span class="tc-dim">Core Web Vitals</span>
-  ──────────────────────────────
-  <span class="tc-dim">LCP</span>   <span class="tc-val">1.2s</span>    max 2.5s   <span class="tc-ok">pass</span>
-  <span class="tc-dim">CLS</span>   <span class="tc-val">0.02</span>    max 0.1    <span class="tc-ok">pass</span>
-  <span class="tc-dim">INP</span>   <span class="tc-val">68ms</span>    max 200ms  <span class="tc-ok">pass</span>
-
-  <span class="tc-dim">Technical</span>
-  ──────────────────────────────
-  <span class="tc-dim">Indexed pages</span>    <span class="tc-val">48 / 48</span>
-  <span class="tc-dim">Broken links</span>     <span class="tc-val">0</span>
-  <span class="tc-dim">Missing meta</span>     <span class="tc-val">2</span>
-  <span class="tc-dim">Schema markup</span>    <span class="tc-ok">present</span>
-  <span class="tc-dim">Sitemap</span>          <span class="tc-ok">valid</span>
-
-<span class="tc-ok">▶  11 issues prioritized</span>
-<span class="tc-ok">✓  Report: audit-2024-11.pdf</span>`
-    },
-    {
-      label: 'Webflow & WordPress',
-      html: `<span class="tc-cmd">$ webflow deploy</span> <span class="tc-dim">--env</span>=<span class="tc-val">production</span>
-
-  Validating build...
-  <span class="tc-ok">✓</span>  Schema check passed
-  <span class="tc-ok">✓</span>  CMS items validated  (<span class="tc-val">247</span>)
-
-  Publishing assets...
-  <span class="tc-ok">✓</span>  Images optimized   (<span class="tc-val">112 files</span>)
-  <span class="tc-ok">✓</span>  CSS bundle         (<span class="tc-val">18.4 kb</span>)
-  <span class="tc-ok">✓</span>  JS bundle          (<span class="tc-val">42.1 kb</span>)
-
-  Configuring CDN...
-  <span class="tc-ok">✓</span>  Edge nodes: <span class="tc-val">35 locations</span>
-  <span class="tc-ok">✓</span>  SSL certificate: <span class="tc-val">active</span>
-  <span class="tc-ok">✓</span>  DNS propagated
-
-  Post-deploy checks...
-  <span class="tc-ok">✓</span>  <span class="tc-dim">Homepage</span>  <span class="tc-val">200 OK</span>
-  <span class="tc-ok">✓</span>  <span class="tc-dim">Forms</span>     accepting
-
-<span class="tc-ok">▶  Live at your-domain.com</span>`
-    },
-    {
-      label: 'HubSpot & Martech',
-      html: `<span class="tc-cmt">// HubSpot CRM  ·  Portal 23847610</span>
-<span class="tc-cmt">// Embedding forms + workflow triggers</span>
-
+<span class="tc-cmt">// HubSpot  ·  Portal 23847610</span>
 <span class="tc-dim">hubspot.forms</span>.create({
-  <span class="tc-dim">portalId:</span>    '<span class="tc-val">23847610</span>',
-  <span class="tc-dim">formId:</span>      '<span class="tc-val">contact-us</span>',
-  <span class="tc-dim">target:</span>      '<span class="tc-val">#hs-form</span>',
-  <span class="tc-dim">onFormReady:</span> function($form) {
-    $form.find('[name=lifecycle]')
-         .val('<span class="tc-val">lead</span>').change();
-  }
+  <span class="tc-dim">formId:</span> '<span class="tc-val">contact-us</span>',
+  <span class="tc-dim">target:</span> '<span class="tc-val">#hs-form</span>'
 });
 
-<span class="tc-cmt">// Map UTM params to CRM fields</span>
-<span class="tc-dim">hs_track</span>({
-  <span class="tc-dim">utm_source:</span>   '<span class="tc-val">google</span>',
-  <span class="tc-dim">utm_medium:</span>   '<span class="tc-val">cpc</span>',
-  <span class="tc-dim">utm_campaign:</span> '<span class="tc-val">brand-q4</span>',
-  <span class="tc-dim">hs_page_url:</span>  '<span class="tc-val">/services</span>'
-});
+<span class="tc-cmt">// Klaviyo  ·  post-inquiry nurture</span>
+{ <span class="tc-dim">flow:</span> '<span class="tc-val">nurture-seq</span>', <span class="tc-dim">emails:</span> <span class="tc-val">4</span>,
+  <span class="tc-dim">delays:</span> [<span class="tc-val">'0h'</span>, <span class="tc-val">'2d'</span>, <span class="tc-val">'5d'</span>, <span class="tc-val">'10d'</span>] }
 
-<span class="tc-ok">▶  HubSpot form embedded</span>
-<span class="tc-ok">✓  CRM sync: contact created</span>`
-    },
-    {
-      label: 'Email & Automation',
-      html: `<span class="tc-cmt">// Klaviyo  ·  flow: post-inquiry nurture</span>
-<span class="tc-cmt">// Trigger: form_submit  ·  Segment: leads</span>
+<span class="tc-cmt">// SEO  ·  Core Web Vitals</span>
+<span class="tc-dim">LCP</span> <span class="tc-val">1.2s</span>  <span class="tc-dim">CLS</span> <span class="tc-val">0.02</span>  <span class="tc-dim">INP</span> <span class="tc-val">68ms</span>  <span class="tc-ok">all pass</span>
 
-{
-  <span class="tc-dim">flow:</span>    '<span class="tc-val">nurture-seq</span>',
-  <span class="tc-dim">contact:</span> {
-    <span class="tc-dim">stage:</span>    '<span class="tc-val">lead</span>',
-    <span class="tc-dim">source:</span>   '<span class="tc-val">organic</span>',
-    <span class="tc-dim">industry:</span> '<span class="tc-val">medtech</span>'
-  },
-
-  <span class="tc-dim">sequence:</span> [
-    { <span class="tc-dim">email:</span> '<span class="tc-val">intro</span>',      <span class="tc-dim">delay:</span> '<span class="tc-val">0h</span>'  },
-    { <span class="tc-dim">email:</span> '<span class="tc-val">case-study</span>', <span class="tc-dim">delay:</span> '<span class="tc-val">2d</span>'  },
-    { <span class="tc-dim">email:</span> '<span class="tc-val">follow-up</span>',  <span class="tc-dim">delay:</span> '<span class="tc-val">5d</span>'  },
-    { <span class="tc-dim">email:</span> '<span class="tc-val">cta</span>',        <span class="tc-dim">delay:</span> '<span class="tc-val">10d</span>' }
-  ]
-}
-
-<span class="tc-ok">▶  Enrolled: nurture-seq</span>
-<span class="tc-ok">✓  Email 1 of 4 queued · sends in 0h</span>`
-    }
-  ];
-
-  let termIdx = 0;
+<span class="tc-ok">✓  full stack configured · ready to ship</span>`;
 
   function typeClean(html, onDone) {
     const output = document.getElementById('terminal-output');
@@ -1236,27 +1137,13 @@
     tick();
   }
 
-  function runTermCycle(cycleNum) {
+  function runTerminal() {
     if (heroPhase !== 'terminal') return;
-    const svcIdx = termIdx % termCycles.length;
-    termIdx++;
-    const cycle   = termCycles[svcIdx];
-    const badgeEl = document.getElementById('svc-badge');
-    const checkEl = document.getElementById('svc-check');
-    if (badgeEl) badgeEl.textContent = cycle.label;
-    if (checkEl) checkEl.classList.remove('pop');
-    typeClean(cycle.html, () => {
+    const output = document.getElementById('terminal-output');
+    if (output) output.innerHTML = '';
+    typeClean(TERM_HTML, () => {
       if (heroPhase !== 'terminal') return;
-      if (checkEl) checkEl.classList.add('pop');
-      setTimeout(() => {
-        if (heroPhase !== 'terminal') return;
-        if (checkEl) checkEl.classList.remove('pop');
-        if (cycleNum + 1 >= 3) {
-          setTimeout(startExitPhase, 700);
-        } else {
-          setTimeout(() => runTermCycle(cycleNum + 1), 700);
-        }
-      }, 3000);
+      setTimeout(startExitPhase, 3500);
     });
   }
 
@@ -1730,15 +1617,13 @@
     const figmaBg = document.querySelector('.figma-bg');
     const wfPanel = document.getElementById('webflow-panel');
     if (figmaBg) figmaBg.classList.add('at-left');
+    if (wfPanel) wfPanel.classList.add('in-view');
     setTimeout(() => {
-      if (wfPanel) wfPanel.classList.add('in-view');
-      setTimeout(() => {
-        runWebflowCanvas(() => {
-          if (heroPhase !== 'webflow') return;
-          setTimeout(startTerminalPhase, 500);
-        });
-      }, 750);
-    }, 200);
+      runWebflowCanvas(() => {
+        if (heroPhase !== 'webflow') return;
+        setTimeout(startTerminalPhase, 500);
+      });
+    }, 750);
   }
 
   function startTerminalPhase() {
@@ -1746,7 +1631,7 @@
     heroPhase = 'terminal';
     const term = document.getElementById('terminal-clean');
     if (term) term.classList.add('in-view');
-    setTimeout(() => runTermCycle(0), 780);
+    setTimeout(() => runTerminal(), 780);
   }
 
   function startExitPhase() {
@@ -1788,18 +1673,14 @@
       e.target.classList.add('drawn');
       iconObs.unobserve(e.target);
     });
-  }, { threshold: 0.4 });
+  }, { threshold: 0, rootMargin: '0px 0px -50% 0px' });
   document.querySelectorAll('.svc-icon').forEach(icon => iconObs.observe(icon));
 
   if (!reduced) {
     runFigmaCanvas();
   } else {
-    const output  = document.getElementById('terminal-output');
-    const badgeEl = document.getElementById('svc-badge');
-    const checkEl = document.getElementById('svc-check');
-    if (output)  output.innerHTML = termCycles[0].html;
-    if (badgeEl) badgeEl.textContent = termCycles[0].label;
-    if (checkEl) checkEl.classList.add('pop');
+    const output = document.getElementById('terminal-output');
+    if (output) output.innerHTML = TERM_HTML;
     const wfPanel = document.getElementById('webflow-panel');
     if (wfPanel) wfPanel.classList.add('in-view');
   }
