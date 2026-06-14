@@ -1236,14 +1236,14 @@
     s(3060, () => { L('Subtext', 2); [0,1].forEach(i => setTimeout(() => D(sLine(22, 158+i*16, 22+[240,205][i], 158+i*16, {sw:2.5, stroke:C.muted}), 0.22), i*120)); });
     s(3370, () => { L('CTAs', 2); D(sRect(22, 188, 108, 30, {sw:1.2, fill:C.card, stroke:C.accent}), 0.26); setTimeout(() => D(sRect(138, 188, 92, 30, {sw:1.2, stroke:C.muted}), 0.22), 230); });
 
-    s(3730, () => { L('Product Screenshot', 2); D(sRect(265, 72, 234, 162, {sw:1.5, fill:C.lineV, stroke:C.muted}), 0.44); });
-    s(4180, () => { D(sRect(275, 82, 214, 20, {sw:1, fill:C.card, stroke:C.muted}), 0.2); });
+    s(3730, () => { L('Product Screenshot', 2); D(sRect(265, 72, 218, 162, {sw:1.5, fill:C.lineV, stroke:C.muted}), 0.44); });
+    s(4180, () => { D(sRect(275, 82, 196, 20, {sw:1, fill:C.card, stroke:C.muted}), 0.2); });
     s(4380, () => {
-      D(sLine(285, 94, 408, 94, {sw:3, stroke:C.muted}), 0.18);
-      D(sLine(428, 94, 454, 94, {sw:3, stroke:C.accent}), 0.14);
+      D(sLine(285, 94, 400, 94, {sw:3, stroke:C.muted}), 0.18);
+      D(sLine(418, 94, 441, 94, {sw:3, stroke:C.accent}), 0.14);
     });
     s(4560, () => {
-      D(sLine(275, 112, 489, 112, {sw:1, stroke:C.lineV}), 0.18);
+      D(sLine(275, 112, 471, 112, {sw:1, stroke:C.lineV}), 0.18);
       [[279,54],[306,38],[333,62],[360,30],[387,48]].forEach(([x,h],i) =>
         setTimeout(() => D(sRect(x, 218-h, 20, h, {sw:1, fill:C.card, stroke:C.accent}), 0.26), i*100)
       );
