@@ -121,7 +121,7 @@
   .eyebrow {
     font-family: var(--display); font-size: 0.9rem !important; font-weight: 600;
     letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
-    margin-bottom: 24px;
+    margin-bottom: 24px !important;
   }
   .hero h1 {
     font-family: var(--display); font-weight: 500;
@@ -448,9 +448,37 @@
   .sec-head h2 { font-family: var(--display); font-weight: 500; font-size: clamp(1.8rem, 4vw, 3.375rem); letter-spacing: -0.03em; margin: 12px 0 16px; line-height: 1.08; }
   .sec-head p { color: var(--muted); font-size: 1.08rem; }
 
+  /* ---- logo bar ---- */
+  .logo-bar { border-bottom: 1px solid var(--line); padding: 28px 0; overflow: hidden; }
+  .logo-bar-label {
+    font-family: var(--display); font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+    text-align: center; margin-bottom: 20px;
+  }
+  .logo-track-wrap { overflow: hidden; }
+  .logo-track {
+    display: flex; align-items: center; gap: 60px;
+    animation: scroll-logos 32s linear infinite;
+    width: max-content;
+  }
+  .logo-track:hover { animation-play-state: paused; }
+  @keyframes scroll-logos {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .logo-item { flex-shrink: 0; color: var(--accent); display: flex; align-items: center; }
+  /* For inline SVG logos: set fill="currentColor" on each <svg>. The color: var(--accent)
+     on .logo-item handles tinting. For <img> tags, add: filter: brightness(0) invert(0.85); */
+  .logo-item svg { height: 22px; width: auto; }
+  .logo-item img { height: 22px; width: auto; }
+  .logo-placeholder {
+    font-family: var(--display); font-size: 0.95rem; font-weight: 700;
+    color: var(--accent); opacity: 0.45; letter-spacing: 0.03em; white-space: nowrap;
+  }
+
   /* ---- services ---- */
   #services { border-bottom: 1px solid var(--line); background: var(--paper-2); }
-  .svc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .svc {
     padding: 32px; border-radius: 2px;
     background: var(--card); transition: background 0.2s, transform 0.22s cubic-bezier(0.16,1,0.3,1), box-shadow 0.22s;
@@ -475,9 +503,8 @@
   .svc-icon.drawn > :nth-child(4) { transition-delay: 0.9s; }
   .svc-icon.drawn > :nth-child(5) { transition-delay: 1.2s; }
   .svc-icon.drawn > :nth-child(6) { transition-delay: 1.5s; }
-  @media (max-width: 720px) {
-    .svc-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 900px) and (min-width: 721px) { .svc-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 720px) { .svc-grid { grid-template-columns: 1fr; } }
 
   /* ---- selected work ---- */
   #work { border-bottom: 1px solid var(--line); }
@@ -752,6 +779,28 @@
   </div>
 </header>
 
+<!-- Trusted by — replace .logo-placeholder spans with inline SVGs (fill="currentColor") or <img> tags.
+     Both sets below must be identical — the animation loops by scrolling to -50%. -->
+<section class="logo-bar" aria-label="Trusted by">
+  <p class="logo-bar-label">Trusted by</p>
+  <div class="logo-track-wrap">
+    <div class="logo-track">
+      <div class="logo-item"><span class="logo-placeholder">Company One</span></div>
+      <div class="logo-item"><span class="logo-placeholder">Company Two</span></div>
+      <div class="logo-item"><span class="logo-placeholder">Company Three</span></div>
+      <div class="logo-item"><span class="logo-placeholder">Company Four</span></div>
+      <div class="logo-item"><span class="logo-placeholder">Company Five</span></div>
+      <div class="logo-item"><span class="logo-placeholder">Company Six</span></div>
+      <div class="logo-item" aria-hidden="true"><span class="logo-placeholder">Company One</span></div>
+      <div class="logo-item" aria-hidden="true"><span class="logo-placeholder">Company Two</span></div>
+      <div class="logo-item" aria-hidden="true"><span class="logo-placeholder">Company Three</span></div>
+      <div class="logo-item" aria-hidden="true"><span class="logo-placeholder">Company Four</span></div>
+      <div class="logo-item" aria-hidden="true"><span class="logo-placeholder">Company Five</span></div>
+      <div class="logo-item" aria-hidden="true"><span class="logo-placeholder">Company Six</span></div>
+    </div>
+  </div>
+</section>
+
 <section id="services">
   <div class="wrap">
     <div class="sec-head">
@@ -781,8 +830,8 @@
           <rect x="22" y="29" width="15" height="8" rx="2" stroke="var(--accent)" stroke-width="1.5"/>
         </svg>
         <span class="svc-key">platform</span>
-        <h3>Webflow &amp; WordPress builds</h3>
-        <p>Production sites on the platform that fits your team — visual CMS in Webflow, or WordPress and Elementor when you need it.</p>
+        <h3>Webflow, WordPress &amp; custom</h3>
+        <p>Production sites on the right platform — visual CMS in Webflow, WordPress with Elementor when you need the plugin ecosystem, or fully custom code built with Claude and deployed on GitHub.</p>
       </div>
       <div class="svc">
         <svg class="svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -866,6 +915,30 @@
         <h3>Ongoing maintenance</h3>
         <p>A standing arrangement for updates, fixes, and the small things that pile up — so your site doesn't quietly rot between projects.</p>
       </div>
+      <div class="svc">
+        <svg class="svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 5 L21.8 16.5 L33 20 L21.8 23.5 L20 35 L18.2 23.5 L7 20 L18.2 16.5 Z" stroke="var(--accent)" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M33 7 L33.9 11 L38 12 L33.9 13 L33 17 L32.1 13 L28 12 L32.1 11 Z" stroke="var(--accent)" stroke-width="1.2" stroke-linejoin="round"/>
+        </svg>
+        <span class="svc-key">automate</span>
+        <h3>AI-assisted automation</h3>
+        <p>Claude-powered pipelines for content generation, SEO brief automation, and internal reporting — cutting the repetitive work out of your marketing stack.</p>
+      </div>
+      <div class="svc">
+        <svg class="svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="4" width="13" height="13" rx="2" stroke="var(--accent)" stroke-width="1.5"/>
+          <circle cx="29" cy="10.5" r="6.5" stroke="var(--accent)" stroke-width="1.5"/>
+          <rect x="4" y="23" width="13" height="13" rx="2" stroke="var(--accent)" stroke-width="1.5"/>
+          <rect x="23" y="23" width="13" height="13" rx="2" stroke="var(--accent)" stroke-width="1.5"/>
+          <line x1="17" y1="10.5" x2="22.5" y2="10.5" stroke="var(--accent)" stroke-width="1.5"/>
+          <line x1="10.5" y1="17" x2="10.5" y2="23" stroke="var(--accent)" stroke-width="1.5"/>
+          <line x1="29.5" y1="17" x2="29.5" y2="23" stroke="var(--accent)" stroke-width="1.5"/>
+          <line x1="17" y1="29.5" x2="23" y2="29.5" stroke="var(--accent)" stroke-width="1.5"/>
+        </svg>
+        <span class="svc-key">figma</span>
+        <h3>Figma design systems</h3>
+        <p>Component libraries, design tokens, and handoff-ready files that give developers and marketers a shared source of truth — built to your brand, not a generic template.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -926,7 +999,7 @@
         <div class="fact"><dt>Model</dt><dd>Solo studio</dd></div>
         <div class="fact"><dt>Billing</dt><dd>Hourly · monthly</dd></div>
         <div class="fact"><dt>Industries</dt><dd>Med device · biotech</dd></div>
-        <div class="fact"><dt>Platforms</dt><dd>Webflow · WordPress</dd></div>
+        <div class="fact"><dt>Platforms</dt><dd>Webflow · WordPress · custom</dd></div>
         <div class="fact"><dt>Availability</dt><dd>Taking projects</dd></div>
       </dl>
     </div>
