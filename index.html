@@ -495,35 +495,39 @@
   .svc-icon path, .svc-icon line, .svc-icon rect, .svc-icon circle, .svc-icon polyline {
     stroke-dasharray: 300;
     stroke-dashoffset: 300;
-  }
-  @keyframes svc-draw-cycle {
-    0%   { stroke-dashoffset: 300; animation-timing-function: cubic-bezier(0.16,1,0.3,1); }
-    30%  { stroke-dashoffset: 0;   animation-timing-function: linear; }
-    60%  { stroke-dashoffset: 0;   animation-timing-function: ease-in; }
-    90%  { stroke-dashoffset: 300; animation-timing-function: linear; }
-    100% { stroke-dashoffset: 300; }
+    transition: stroke-dashoffset 0s;
   }
   .svc-icon.drawn path, .svc-icon.drawn line, .svc-icon.drawn rect,
   .svc-icon.drawn circle, .svc-icon.drawn polyline {
-    animation: svc-draw-cycle 6s linear var(--cycle-delay, 0s) infinite both;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 2.4s cubic-bezier(0.16,1,0.3,1);
   }
-  .svc-icon.drawn > :nth-child(2) { animation-delay: calc(var(--cycle-delay, 0s) + 0.25s); }
-  .svc-icon.drawn > :nth-child(3) { animation-delay: calc(var(--cycle-delay, 0s) + 0.5s); }
-  .svc-icon.drawn > :nth-child(4) { animation-delay: calc(var(--cycle-delay, 0s) + 0.75s); }
-  .svc-icon.drawn > :nth-child(5) { animation-delay: calc(var(--cycle-delay, 0s) + 1s); }
-  .svc-icon.drawn > :nth-child(6) { animation-delay: calc(var(--cycle-delay, 0s) + 1.25s); }
-  .svc:nth-child(1)  { --cycle-delay: 0s; }
-  .svc:nth-child(2)  { --cycle-delay: 0.4s; }
-  .svc:nth-child(3)  { --cycle-delay: 0.8s; }
-  .svc:nth-child(4)  { --cycle-delay: 1.2s; }
-  .svc:nth-child(5)  { --cycle-delay: 1.6s; }
-  .svc:nth-child(6)  { --cycle-delay: 2.0s; }
-  .svc:nth-child(7)  { --cycle-delay: 2.4s; }
-  .svc:nth-child(8)  { --cycle-delay: 2.8s; }
-  .svc:nth-child(9)  { --cycle-delay: 3.2s; }
-  .svc:nth-child(10) { --cycle-delay: 3.6s; }
-  .svc:nth-child(11) { --cycle-delay: 4.0s; }
-  .svc:nth-child(12) { --cycle-delay: 4.4s; }
+  .svc-icon.drawn > :nth-child(2) { transition-delay: 0.3s; }
+  .svc-icon.drawn > :nth-child(3) { transition-delay: 0.6s; }
+  .svc-icon.drawn > :nth-child(4) { transition-delay: 0.9s; }
+  .svc-icon.drawn > :nth-child(5) { transition-delay: 1.2s; }
+  .svc-icon.drawn > :nth-child(6) { transition-delay: 1.5s; }
+  @keyframes svc-wiggle {
+    0%    { transform: rotate(0deg); }
+    10%   { transform: rotate(-6deg); }
+    20%   { transform: rotate(6deg); }
+    30%   { transform: rotate(-4deg); }
+    40%   { transform: rotate(3deg); }
+    50%   { transform: rotate(0deg); }
+    100%  { transform: rotate(0deg); }
+  }
+  .svc-icon.drawn { animation: svc-wiggle 10s ease-in-out 4s infinite; transform-origin: center bottom; }
+  .svc:nth-child(2)  .svc-icon.drawn { animation-delay: 6.5s; }
+  .svc:nth-child(3)  .svc-icon.drawn { animation-delay: 9s; }
+  .svc:nth-child(4)  .svc-icon.drawn { animation-delay: 5s; }
+  .svc:nth-child(5)  .svc-icon.drawn { animation-delay: 11.5s; }
+  .svc:nth-child(6)  .svc-icon.drawn { animation-delay: 7s; }
+  .svc:nth-child(7)  .svc-icon.drawn { animation-delay: 4.5s; }
+  .svc:nth-child(8)  .svc-icon.drawn { animation-delay: 8s; }
+  .svc:nth-child(9)  .svc-icon.drawn { animation-delay: 10.5s; }
+  .svc:nth-child(10) .svc-icon.drawn { animation-delay: 5.5s; }
+  .svc:nth-child(11) .svc-icon.drawn { animation-delay: 7.5s; }
+  .svc:nth-child(12) .svc-icon.drawn { animation-delay: 12s; }
   @media (max-width: 900px) and (min-width: 721px) { .svc-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 720px) { .svc-grid { grid-template-columns: 1fr; } }
 
@@ -543,12 +547,13 @@
     flex: 0 0 380px; scroll-snap-align: start;
     padding: 32px; border-radius: 2px;
     background: var(--card); transition: background 0.2s, transform 0.22s cubic-bezier(0.16,1,0.3,1), box-shadow 0.22s;
+    display: flex; flex-direction: column;
   }
   .project:hover { background: rgba(84,137,93,0.38); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.22); }
   .proj-industry { font-family: var(--display); font-size: 0.82rem; font-weight: 600; color: var(--accent); letter-spacing: 0.08em; }
   .project h3 { font-family: var(--display); font-weight: 600; font-size: 1.22rem; margin: 10px 0 10px; letter-spacing: -0.01em; }
   .project p { color: var(--muted); font-size: 0.98rem; }
-  .proj-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 18px; }
   .proj-tag { font-size: 0.78rem; font-weight: 600; padding: 4px 11px; border-radius: 999px; background: var(--warn); color: var(--ink); }
   .carousel-controls { display: flex; gap: 10px; margin-top: 28px; }
   .carousel-btn {
