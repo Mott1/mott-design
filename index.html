@@ -86,6 +86,7 @@
   }
   .hero-right {
     position: relative;
+    overflow: hidden;
   }
   .btn-primary {
     font-family: var(--body); font-weight: 600; font-size: 0.75rem;
@@ -105,11 +106,12 @@
     .hero { grid-template-columns: 1fr; }
     .hero-left { border-right: none; border-bottom: 1px solid var(--line); padding: 80px 28px 56px; align-items: flex-start; }
     .hero-right { min-height: 440px; }
-    .terminal-clean { top: 18%; left: 8%; }
+    .terminal-clean { top: 42%; left: 8%; }
   }
 
   /* ---- figma design canvas ---- */
-  .figma-bg { position: absolute; inset: 0; display: flex; flex-direction: column; overflow: hidden; }
+  .figma-bg { position: absolute; inset: 0; display: flex; flex-direction: column; overflow: hidden; transition: transform 0.72s cubic-bezier(0.16,1,0.3,1); }
+  .figma-bg.at-left { transform: translateX(-100%); }
   .figma-toolbar {
     height: 40px; flex-shrink: 0; background: #FFFFFF;
     border-bottom: 1px solid #E0E0E0;
@@ -169,16 +171,137 @@
   }
   #figma-svg { width: 100%; height: 100%; }
 
+  /* ---- webflow designer panel ---- */
+  .webflow-panel {
+    position: absolute; inset: 0;
+    transform: translateX(100%);
+    transition: transform 0.72s cubic-bezier(0.16,1,0.3,1);
+    display: flex; flex-direction: column; overflow: hidden;
+    background: #EBEBEB;
+  }
+  .webflow-panel.in-view { transform: translateX(0); }
+  .wf-toolbar {
+    height: 40px; flex-shrink: 0; background: #1A1A1A;
+    display: flex; align-items: center; z-index: 1;
+  }
+  .wf-logo-box {
+    width: 40px; height: 40px; flex-shrink: 0; background: #146EF5;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .wf-toolbar-center {
+    flex: 1; text-align: center;
+    font-family: var(--body); font-size: 11px; font-weight: 500; color: #777;
+  }
+  .wf-breakpoints {
+    display: flex; align-items: center; gap: 1px; padding: 0 8px;
+    border-left: 1px solid #2A2A2A; height: 100%;
+  }
+  .wf-bp {
+    width: 24px; height: 24px; border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--body); font-size: 10px; font-weight: 700; color: #555;
+    cursor: default; user-select: none; transition: all 0.15s ease;
+  }
+  .wf-bp.active { color: #FFF; background: rgba(255,255,255,0.14); }
+  .wf-publish-btn {
+    margin: 0 8px; padding: 5px 14px; border-radius: 4px;
+    background: #146EF5; color: #FFF; border: none;
+    font-family: var(--body); font-size: 10px; font-weight: 600;
+    cursor: default; flex-shrink: 0;
+  }
+  .wf-workspace { flex: 1; display: flex; overflow: hidden; }
+  .wf-nav-panel {
+    width: 162px; flex-shrink: 0; background: #1F2022;
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .wf-nav-head, .wf-style-head {
+    padding: 7px 10px 5px; flex-shrink: 0;
+    font-family: var(--body); font-size: 9px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; color: #484C50;
+    border-bottom: 1px solid #2C2E30;
+  }
+  .wf-nav-list { flex: 1; overflow: hidden; padding: 3px 0; }
+  .wf-nav-item {
+    display: flex; align-items: center; gap: 3px; padding: 2px 8px;
+    font-family: var(--body); font-size: 11px; color: #999;
+    white-space: nowrap; overflow: hidden;
+    opacity: 0; transform: translateX(-5px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    cursor: default; border-radius: 2px; user-select: none;
+  }
+  .wf-nav-item.in { opacity: 1; transform: none; }
+  .wf-nav-icon { font-size: 8px; color: #3C4044; flex-shrink: 0; }
+  .wf-canvas-wrap { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .wf-tab-bar {
+    height: 28px; flex-shrink: 0; background: #E0E0E0;
+    border-bottom: 1px solid #CECECE;
+    display: flex; align-items: flex-end; padding: 0 6px; gap: 2px;
+  }
+  .wf-tab {
+    height: 23px; padding: 0 10px;
+    background: #F5F5F5; border: 1px solid #CECECE; border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    display: flex; align-items: center; gap: 5px;
+    font-family: var(--body); font-size: 10px; color: #444; white-space: nowrap;
+  }
+  .wf-tab-favicon { width: 12px; height: 12px; border-radius: 2px; background: #146EF5; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .wf-tab-x { color: #BBB; font-size: 12px; margin-left: 4px; }
+  .wf-canvas-area {
+    flex: 1; background: #EBEBEB;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 16px 12px; overflow: hidden; position: relative;
+  }
+  #wf-svg { width: 100%; height: 100%; }
+  .wf-tooltip {
+    position: absolute; background: #1A1A1A; color: #FFF;
+    font-family: var(--body); font-size: 10px; font-weight: 500;
+    padding: 3px 8px; border-radius: 4px; pointer-events: none;
+    opacity: 0; transition: opacity 0.2s ease;
+    white-space: nowrap; z-index: 10;
+  }
+  .wf-tooltip.show { opacity: 1; }
+  .wf-style-panel {
+    width: 148px; flex-shrink: 0; background: #1F2022;
+    display: flex; flex-direction: column; overflow: hidden;
+    border-left: 1px solid #2C2E30;
+  }
+  .wf-style-list { flex: 1; overflow: hidden; padding: 4px 0; }
+  .wf-style-sec {
+    padding: 7px 8px 2px;
+    font-family: var(--body); font-size: 8px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; color: #4A7CFF;
+    opacity: 0; transition: opacity 0.2s ease;
+  }
+  .wf-style-sec.in { opacity: 1; }
+  .wf-style-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 2px 8px 2px 12px;
+    opacity: 0; transition: opacity 0.18s ease;
+  }
+  .wf-style-row.in { opacity: 1; }
+  .wf-style-prop { font-family: var(--body); font-size: 9.5px; color: #666; }
+  .wf-style-val { font-family: ui-monospace, monospace; font-size: 9px; color: #7AAEFF; }
+  /* chart bars (animated scaleY) */
+  .chart-bar {
+    transform-box: fill-box; transform-origin: bottom;
+    transform: scaleY(0);
+    transition: transform 0.55s cubic-bezier(0.34,1.2,0.64,1);
+  }
+  .chart-bar.grow { transform: scaleY(1); }
+
   /* ---- terminal: clean solution card ---- */
   .terminal-clean {
-    position: absolute; top: 24%; left: 28%; right: 0; bottom: 0;
+    position: absolute; top: 50%; left: 35%; right: 0; bottom: 0;
     background: #F0EDE6;
     border: 1px solid rgba(0,0,0,0.3);
     border-right: none; border-bottom: none;
     border-radius: 10px 0 0 0;
     box-shadow: -10px -10px 52px rgba(0,0,0,0.38);
     display: flex; flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.72s cubic-bezier(0.16,1,0.3,1);
   }
+  .terminal-clean.in-view { transform: translateX(0); }
   .terminal-clean .terminal-bar { background: #E8E4DC; border-bottom: 1px solid rgba(0,0,0,0.1); }
   .terminal-clean .terminal-body { flex: 1; padding: 14px 18px 0; overflow: hidden; position: relative; }
   .terminal-clean .terminal-body::after {
@@ -445,15 +568,56 @@
     </div>
   </div>
   <div class="hero-right">
+    <!-- Webflow designer (slides in from right) -->
+    <div class="webflow-panel" id="webflow-panel">
+      <div class="wf-toolbar">
+        <div class="wf-logo-box">
+          <svg width="19" height="15" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.9 0L11.9 9.6L9.4 3H7.1L4.6 9.6L1.6 0H0L3.4 12.4H6.2L8 6.2L9.9 12.4H12.7L17.6 0Z" fill="white"/>
+          </svg>
+        </div>
+        <div class="wf-toolbar-center">DataFlow — Homepage</div>
+        <div class="wf-breakpoints">
+          <span class="wf-bp active" id="wf-bp-d">D</span>
+          <span class="wf-bp" id="wf-bp-t">T</span>
+          <span class="wf-bp" id="wf-bp-m">M</span>
+        </div>
+        <button class="wf-publish-btn">Publish</button>
+      </div>
+      <div class="wf-workspace">
+        <div class="wf-nav-panel">
+          <div class="wf-nav-head">Navigator</div>
+          <div class="wf-nav-list" id="wf-nav-list"></div>
+        </div>
+        <div class="wf-canvas-wrap">
+          <div class="wf-tab-bar">
+            <div class="wf-tab">
+              <div class="wf-tab-favicon"></div>
+              dataflow.io — Homepage
+              <span class="wf-tab-x">×</span>
+            </div>
+          </div>
+          <div class="wf-canvas-area" id="wf-canvas-area">
+            <div class="wf-tooltip" id="wf-tooltip"></div>
+            <svg id="wf-svg" viewBox="0 0 480 440" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"></svg>
+          </div>
+        </div>
+        <div class="wf-style-panel">
+          <div class="wf-style-head">Style</div>
+          <div class="wf-style-list" id="wf-style-list"></div>
+        </div>
+      </div>
+    </div>
     <!-- Background: Figma design canvas -->
     <div class="figma-bg">
       <div class="figma-toolbar">
         <div class="figma-logo-box">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <rect x="1" y="1" width="6" height="6" rx="1.5" fill="#F24E1E"/>
-            <rect x="9" y="1" width="6" height="6" rx="1.5" fill="#FF7262"/>
-            <rect x="1" y="9" width="6" height="6" rx="1.5" fill="#0ACF83"/>
+          <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
+            <rect x="1" y="1" width="6" height="6" rx="2" fill="#F24E1E"/>
+            <rect x="9" y="1" width="6" height="6" rx="2" fill="#FF7262"/>
+            <rect x="1" y="9" width="6" height="6" rx="2" fill="#0ACF83"/>
             <circle cx="12" cy="12" r="3" fill="#1ABCFE"/>
+            <rect x="1" y="17" width="6" height="6" rx="2" fill="#A259FF"/>
           </svg>
         </div>
         <div class="figma-tools">
@@ -462,7 +626,7 @@
           <div class="figma-tool">□</div>
           <div class="figma-tool">T</div>
         </div>
-        <div class="figma-file">mott-design</div>
+        <div class="figma-file">DataFlow · Designs</div>
         <div class="figma-zoom">100%</div>
       </div>
       <div class="figma-workspace">
@@ -939,21 +1103,26 @@
     tick();
   }
 
-  function runTermCycle() {
+  function runTermCycle(cycleNum) {
+    if (heroPhase !== 'terminal') return;
     const svcIdx = termIdx % termCycles.length;
     termIdx++;
     const cycle   = termCycles[svcIdx];
-    const cleanEl = document.getElementById('terminal-clean');
     const badgeEl = document.getElementById('svc-badge');
     const checkEl = document.getElementById('svc-check');
-    if (!cleanEl) return;
     if (badgeEl) badgeEl.textContent = cycle.label;
     if (checkEl) checkEl.classList.remove('pop');
     typeClean(cycle.html, () => {
+      if (heroPhase !== 'terminal') return;
       if (checkEl) checkEl.classList.add('pop');
       setTimeout(() => {
+        if (heroPhase !== 'terminal') return;
         if (checkEl) checkEl.classList.remove('pop');
-        setTimeout(runTermCycle, 700);
+        if (cycleNum + 1 >= 3) {
+          setTimeout(startExitPhase, 700);
+        } else {
+          setTimeout(() => runTermCycle(cycleNum + 1), 700);
+        }
       }, 3000);
     });
   }
@@ -961,6 +1130,7 @@
   // ── Figma design canvas ───────────────────────────────────────────────────
   const NS = 'http://www.w3.org/2000/svg';
   let figmaGen = 0, figmaLayoutIdx = 0;
+  let wfGen = 0, heroPhase = 'figma';
 
   function figLayer(name, indent, cls, gen) {
     if (figmaGen !== gen) return;
@@ -1012,133 +1182,519 @@
     }, 20);
   }
 
-  function drawLanding(gen, done) {
+  // ── Figma: SaaS analytics wireframes ─────────────────────────────────────
+
+  function drawAnalyticsLanding(gen, done) {
     const s = (ms, fn) => setTimeout(() => { if (figmaGen === gen) fn(); }, ms);
     const D = (el, dur) => fDraw(el, dur, gen);
     const L = (nm, ind, cl) => figLayer(nm, ind, cl, gen);
 
-    s(0,    () => { L('Landing Page', 0, 'is-frame'); L('Nav', 1, 'is-group'); });
-    s(50,   () => D(sRect(10, 10, 500, 44, {sw:1.5}), 0.45));
-    s(550,  () => { L('Logo', 2); D(sRect(20, 18, 52, 26, {sw:1.2}), 0.26); });
-    s(870,  () => { L('Nav Links', 2); [0,1,2].forEach(i => setTimeout(() => D(sLine(86+i*48, 33, 122+i*48, 33, {sw:2.5, stroke:'#555'}), 0.22), i*130)); });
-    s(1380, () => { L('CTA', 2); D(sRect(444, 18, 56, 26, {sw:1.2, fill:'#E8EEFA', stroke:'#9AB0E8'}), 0.26); });
+    s(0,    () => { L('DataFlow · Landing', 0, 'is-frame'); L('Navbar', 1, 'is-group'); });
+    s(50,   () => D(sRect(10, 10, 500, 44, {sw:1.5}), 0.42));
+    s(510,  () => { L('Logo', 2); D(sRect(20, 18, 66, 26, {sw:1.2}), 0.24); });
+    s(790,  () => { L('Nav Links', 2); [0,1,2,3].forEach(i => setTimeout(() => D(sLine(110+i*52, 33, 148+i*52, 33, {sw:2.5, stroke:'#555'}), 0.2), i*110)); });
+    s(1280, () => { L('Sign In', 2); D(sRect(390, 18, 54, 26, {sw:1, stroke:'#CCCCCC'}), 0.22); });
+    s(1500, () => { L('Get Started', 2); D(sRect(450, 18, 60, 26, {sw:1.2, fill:'#E8EEFA', stroke:'#9AB0E8'}), 0.24); });
 
-    s(1650, () => { L('Hero', 1, 'is-group'); D(sRect(10, 66, 500, 168, {sw:1, stroke:'#BBBBBB'}), 0.55); });
-    s(2220, () => { L('Headline', 2); D(sLine(22, 96, 278, 96, {sw:9, stroke:'#E0E0E0'}), 0.34); });
-    s(2560, () => D(sLine(22, 116, 218, 116, {sw:9, stroke:'#E0E0E0'}), 0.26));
-    s(2840, () => { L('Subtext', 2); [0,1,2].forEach(i => setTimeout(() => D(sLine(22, 140+i*14, 22+[316,278,242][i], 140+i*14, {sw:2.5, stroke:'#BBBBBB'}), 0.24), i*110)); });
-    s(3290, () => { L('CTA Button', 2); D(sRect(22, 186, 118, 34, {sw:1.2, fill:'#E8EEFA', stroke:'#9AB0E8'}), 0.28); });
+    s(1740, () => { L('Hero', 1, 'is-group'); D(sRect(10, 66, 500, 176, {sw:1, stroke:'#BBBBBB'}), 0.5); });
+    s(2250, () => { L('Eyebrow', 2); D(sRect(22, 82, 110, 16, {sw:1, fill:'#EEF3FF', stroke:'#C0CDEE', rx:8}), 0.22); });
+    s(2480, () => { L('H1', 2); D(sLine(22, 112, 280, 112, {sw:10, stroke:'#E0E0E0'}), 0.32); });
+    s(2810, () => D(sLine(22, 132, 235, 132, {sw:10, stroke:'#E0E0E0'}), 0.26));
+    s(3060, () => { L('Subtext', 2); [0,1].forEach(i => setTimeout(() => D(sLine(22, 158+i*16, 22+[240,205][i], 158+i*16, {sw:2.5, stroke:'#BBBBBB'}), 0.22), i*120)); });
+    s(3370, () => { L('CTAs', 2); D(sRect(22, 188, 108, 30, {sw:1.2, fill:'#E8EEFA', stroke:'#9AB0E8'}), 0.26); setTimeout(() => D(sRect(138, 188, 92, 30, {sw:1.2, stroke:'#CCCCCC'}), 0.22), 230); });
 
-    s(3680, () => L('Cards', 1, 'is-group'));
-    [[10,248],[182,248],[354,248]].forEach(([x,y], i) => {
-      s(3730+i*430, () => { L('Card '+(i+1), 2); D(sRect(x, y, 156, 150, {sw:1.5}), 0.38); });
-      s(4120+i*430, () => {
-        D(sLine(x+12, y+22, x+88, y+22, {sw:5, stroke:'#CCCCCC'}), 0.2);
-        D(sLine(x+12, y+40, x+120, y+40, {sw:2, stroke:'#DDDDDD'}), 0.18);
-        D(sLine(x+12, y+54, x+100, y+54, {sw:2, stroke:'#DDDDDD'}), 0.18);
+    s(3730, () => { L('Product Screenshot', 2); D(sRect(265, 72, 234, 162, {sw:1.5, fill:'#111120', stroke:'#3A3A6A'}), 0.44); });
+    s(4180, () => { D(sRect(275, 84, 214, 22, {sw:1, fill:'#1A1A30', stroke:'none'}), 0.2); });
+    s(4380, () => {
+      D(sLine(285, 98, 410, 98, {sw:3, stroke:'#33336A'}), 0.18);
+      D(sLine(430, 98, 455, 98, {sw:3, stroke:'#4A7CFF'}), 0.14);
+    });
+    s(4560, () => {
+      D(sLine(275, 116, 489, 116, {sw:1, stroke:'#222240'}), 0.18);
+      [[279,54],[306,38],[333,62],[360,30],[387,48]].forEach(([x,h],i) =>
+        setTimeout(() => D(sRect(x, 218-h, 20, h, {sw:1, fill:'#DDE8F8', stroke:'#8AAAE8'}), 0.26), i*100)
+      );
+    });
+
+    s(5260, () => { L('Logo Strip', 1, 'is-group'); D(sRect(10, 254, 500, 48, {sw:1, stroke:'#CCCCCC'}), 0.3); });
+    s(5580, () => [0,1,2,3,4].forEach(i => setTimeout(() => D(sRect(22+i*96, 268, 76, 20, {sw:1, stroke:'#DDDDDD'}), 0.18), i*90)));
+    s(6060, () => { L('Features', 1, 'is-group'); [[10,316],[182,316],[354,316]].forEach(([x,y],i) => {
+      setTimeout(() => { L('Feature '+(i+1), 2); D(sRect(x, y, 156, 120, {sw:1.5}), 0.36); }, i*380);
+      setTimeout(() => {
+        D(sRect(x+12, y+14, 26, 20, {sw:1, fill:'#EEF3FF', stroke:'#C0CDEE'}), 0.16);
+        D(sLine(x+12, y+48, x+88, y+48, {sw:5, stroke:'#CCCCCC'}), 0.18);
+        D(sLine(x+12, y+66, x+124, y+66, {sw:2, stroke:'#DDDDDD'}), 0.16);
+        D(sLine(x+12, y+82, x+106, y+82, {sw:2, stroke:'#DDDDDD'}), 0.16);
+      }, i*380+380);
+    }); });
+    s(8000, () => done && done());
+  }
+
+  function drawAnalyticsMobile(gen, done) {
+    const s = (ms, fn) => setTimeout(() => { if (figmaGen === gen) fn(); }, ms);
+    const D = (el, dur) => fDraw(el, dur, gen);
+    const L = (nm, ind, cl) => figLayer(nm, ind, cl, gen);
+
+    s(0,   () => L('DataFlow · Mobile · 390px', 0, 'is-frame'));
+    s(50,  () => D(sRect(148, 8, 224, 462, {sw:2, rx:24}), 0.62));
+    s(700, () => D(sLine(162, 48, 360, 48, {sw:1, stroke:'#CCCCCC'}), 0.12));
+
+    s(860,  () => { L('Navbar', 1, 'is-group'); D(sRect(162, 56, 198, 40, {sw:1.2}), 0.3); });
+    s(1200, () => { L('Logo', 2); D(sRect(172, 64, 54, 22, {sw:1}), 0.2); });
+    s(1430, () => { L('Hamburger', 2); [0,1,2].forEach(i => D(sLine(336, 71+i*7, 352, 71+i*7, {sw:1.8, stroke:'#555'}), 0.12)); });
+
+    s(1620, () => { L('Hero', 1, 'is-group'); D(sRect(162, 106, 198, 148, {sw:1, stroke:'#BBBBBB'}), 0.42); });
+    s(2050, () => { L('Eyebrow', 2); D(sRect(172, 118, 90, 14, {sw:1, fill:'#EEF3FF', stroke:'#C0CDEE', rx:7}), 0.18); });
+    s(2260, () => { L('H1', 2); D(sLine(172, 144, 322, 144, {sw:8, stroke:'#E0E0E0'}), 0.28); });
+    s(2530, () => D(sLine(172, 162, 296, 162, {sw:8, stroke:'#E0E0E0'}), 0.22));
+    s(2760, () => { L('Subtext', 2); D(sLine(172, 184, 344, 184, {sw:2.5, stroke:'#BBBBBB'}), 0.2); });
+    s(2980, () => { L('CTA', 2); D(sRect(172, 202, 118, 30, {sw:1.2, fill:'#E8EEFA', stroke:'#9AB0E8'}), 0.24); });
+
+    s(3240, () => { L('Product Screenshot', 1); D(sRect(162, 244, 198, 118, {sw:1.5, fill:'#111120', stroke:'#3A3A6A'}), 0.38); });
+    s(3630, () => {
+      D(sRect(172, 254, 178, 18, {sw:1, fill:'#1A1A30', stroke:'none'}), 0.16);
+      [[170,54],[192,36],[214,58],[236,28],[258,44]].forEach(([x,h],i) =>
+        setTimeout(() => D(sRect(x, 356-h, 16, h, {sw:1, fill:'#DDE8F8', stroke:'#8AAAE8'}), 0.22), i*90)
+      );
+    });
+    s(4220, () => { L('Feature 1', 1); D(sRect(162, 374, 198, 56, {sw:1.5}), 0.3); });
+    s(4530, () => { D(sLine(174, 396, 236, 396, {sw:4, stroke:'#CCCCCC'}), 0.16); D(sLine(174, 414, 318, 414, {sw:2, stroke:'#DDDDDD'}), 0.14); });
+    s(4740, () => done && done());
+  }
+
+  function drawAnalyticsDashboard(gen, done) {
+    const s = (ms, fn) => setTimeout(() => { if (figmaGen === gen) fn(); }, ms);
+    const D = (el, dur) => fDraw(el, dur, gen);
+    const L = (nm, ind, cl) => figLayer(nm, ind, cl, gen);
+
+    s(0,   () => { L('DataFlow · Dashboard', 0, 'is-frame'); L('Sidebar', 1, 'is-group'); });
+    s(50,  () => D(sRect(8, 8, 108, 464, {sw:1.5}), 0.5));
+    s(560, () => { L('Logo', 2); D(sRect(18, 18, 78, 26, {sw:1}), 0.22); });
+    s(790, () => D(sLine(18, 56, 106, 56, {sw:1, stroke:'#CCCCCC'}), 0.12));
+    s(940, () => { L('Nav', 2); ['Dashboard','Analytics','Reports','Segments','Settings'].forEach((nm,i) => setTimeout(() => { L(nm, 3); D(sLine(22, 74+i*26, 22+[78,66,54,60,52][i], 74+i*26, {sw:3, stroke:'#999'}), 0.16); }, i*140)); });
+
+    s(1700, () => { L('Header', 1, 'is-group'); D(sRect(126, 8, 386, 44, {sw:1.5}), 0.4); });
+    s(2110, () => { L('Page Title', 2); D(sLine(138, 30, 248, 30, {sw:5, stroke:'#555'}), 0.22); });
+    s(2340, () => { L('Date Range', 2); D(sRect(368, 14, 130, 24, {sw:1, stroke:'#BBBBBB'}), 0.2); });
+
+    s(2560, () => L('KPIs', 1, 'is-group'));
+    [[126,62,90],[226,62,90],[326,62,90],[426,62,86]].forEach(([x,y,w], i) => {
+      s(2610+i*270, () => { L(['Revenue','Users','Sessions','Conv. Rate'][i], 2); D(sRect(x, y, w, 72, {sw:1.5}), 0.3); });
+      s(2890+i*270, () => {
+        D(sLine(x+8, y+22, x+54, y+22, {sw:3.5, stroke:'#4A7CFF'}), 0.16);
+        D(sLine(x+8, y+38, x+66, y+38, {sw:7, stroke:'#E0E0E0'}), 0.18);
+        D(sLine(x+8, y+56, x+46, y+56, {sw:2.5, stroke:'#DDDDDD'}), 0.14);
       });
     });
-    s(6100, () => done && done());
+
+    s(4150, () => { L('Main Chart', 1); D(sRect(126, 144, 262, 196, {sw:1.5}), 0.5); });
+    s(4650, () => D(sLine(138, 328, 376, 328, {sw:1, stroke:'#AAAAAA'}), 0.2));
+    [[148,240,22,88],[182,270,22,58],[216,228,22,100],[250,280,22,48],[284,250,22,78],[318,235,22,93],[352,260,22,68]].forEach(([x,y,w,h],i) =>
+      s(4870+i*140, () => D(sRect(x, y, w, h, {sw:1, fill:'#DDE8F8', stroke:'#8AAAE8'}), 0.26))
+    );
+
+    s(5900, () => { L('Activity Feed', 1); D(sRect(398, 144, 114, 196, {sw:1.5}), 0.36); });
+    s(6270, () => [0,1,2,3,4].forEach(i => D(sLine(408, 180+i*30, 502, 180+i*30, {sw:1, stroke:'#DDDDDD'}), 0.12)));
+    s(6630, () => done && done());
   }
 
-  function drawMobile(gen, done) {
+  function drawAnalyticsPricing(gen, done) {
     const s = (ms, fn) => setTimeout(() => { if (figmaGen === gen) fn(); }, ms);
     const D = (el, dur) => fDraw(el, dur, gen);
     const L = (nm, ind, cl) => figLayer(nm, ind, cl, gen);
 
-    s(0,    () => L('Mobile · 390px', 0, 'is-frame'));
-    s(50,   () => D(sRect(150, 8, 220, 452, {sw:2, rx:22}), 0.65));
-    s(710,  () => D(sLine(162, 46, 358, 46, {sw:1, stroke:'#CCCCCC'}), 0.14));
+    s(0,    () => { L('DataFlow · Pricing', 0, 'is-frame'); L('Navbar', 1, 'is-group'); });
+    s(50,   () => D(sRect(10, 10, 500, 44, {sw:1.5}), 0.4));
+    s(490,  () => { L('Logo', 2); D(sRect(20, 18, 66, 26, {sw:1.2}), 0.22); });
+    s(730,  () => { L('Nav Links', 2); [0,1,2,3].forEach(i => setTimeout(() => D(sLine(110+i*52, 33, 148+i*52, 33, {sw:2.5, stroke:'#555'}), 0.18), i*100)); });
+    s(1170, () => { L('Get Started', 2); D(sRect(450, 18, 60, 26, {sw:1.2, fill:'#E8EEFA', stroke:'#9AB0E8'}), 0.22); });
 
-    s(880,  () => { L('Nav', 1, 'is-group'); D(sRect(162, 54, 196, 40, {sw:1.2}), 0.3); });
-    s(1230, () => { L('Logo', 2); D(sRect(172, 62, 44, 24, {sw:1}), 0.2); });
-    s(1460, () => { L('Menu', 2); [0,1,2].forEach(i => D(sLine(334, 70+i*7, 348, 70+i*7, {sw:1.8, stroke:'#555'}), 0.14)); });
+    s(1400, () => { L('Pricing Hero', 1, 'is-group'); });
+    s(1450, () => { L('Headline', 2); D(sLine(90, 78, 430, 78, {sw:10, stroke:'#E0E0E0'}), 0.38); });
+    s(1840, () => { L('Subtext', 2); D(sLine(145, 102, 375, 102, {sw:3, stroke:'#BBBBBB'}), 0.28); });
+    s(2090, () => { L('Toggle', 2); D(sRect(196, 120, 128, 24, {sw:1, stroke:'#CCCCCC', rx:12}), 0.22); D(sRect(202, 124, 56, 16, {sw:1, fill:'#E8EEFA', stroke:'#9AB0E8', rx:8}), 0.18); });
 
-    s(1640, () => { L('Hero', 1, 'is-group'); D(sRect(162, 106, 196, 136, {sw:1, stroke:'#BBBBBB'}), 0.42); });
-    s(2080, () => { L('Headline', 2); D(sLine(172, 132, 306, 132, {sw:7, stroke:'#E0E0E0'}), 0.28); });
-    s(2360, () => D(sLine(172, 150, 278, 150, {sw:7, stroke:'#E0E0E0'}), 0.22));
-    s(2590, () => { L('Subtext', 2); [0,1].forEach(i => D(sLine(172, 174+i*14, 172+[180,156][i], 174+i*14, {sw:2, stroke:'#BBBBBB'}), 0.2)); });
-    s(2850, () => { L('Button', 2); D(sRect(172, 202, 100, 30, {sw:1.2, fill:'#E8EEFA', stroke:'#9AB0E8'}), 0.24); });
-
-    s(3110, () => { L('Card 1', 1); D(sRect(162, 252, 196, 80, {sw:1.5}), 0.34); });
-    s(3460, () => { D(sLine(174, 272, 242, 272, {sw:5, stroke:'#CCCCCC'}), 0.2); D(sLine(174, 290, 314, 290, {sw:2, stroke:'#DDDDDD'}), 0.18); });
-    s(3660, () => { L('Card 2', 1); D(sRect(162, 344, 196, 80, {sw:1.5}), 0.34); });
-    s(4010, () => { D(sLine(174, 364, 242, 364, {sw:5, stroke:'#CCCCCC'}), 0.2); D(sLine(174, 382, 314, 382, {sw:2, stroke:'#DDDDDD'}), 0.18); });
-    s(4360, () => done && done());
-  }
-
-  function drawDashboard(gen, done) {
-    const s = (ms, fn) => setTimeout(() => { if (figmaGen === gen) fn(); }, ms);
-    const D = (el, dur) => fDraw(el, dur, gen);
-    const L = (nm, ind, cl) => figLayer(nm, ind, cl, gen);
-
-    s(0,    () => { L('Dashboard', 0, 'is-frame'); L('Sidebar', 1, 'is-group'); });
-    s(50,   () => D(sRect(8, 8, 112, 464, {sw:1.5}), 0.5));
-    s(560,  () => { L('Logo', 2); D(sRect(18, 18, 82, 28, {sw:1}), 0.24); });
-    s(800,  () => D(sLine(18, 58, 110, 58, {sw:1, stroke:'#CCCCCC'}), 0.14));
-    s(950,  () => { L('Nav Items', 2); [0,1,2,3].forEach(i => setTimeout(() => D(sLine(24, 76+i*24, 24+[80,66,72,60][i], 76+i*24, {sw:3, stroke:'#999'}), 0.18), i*150)); });
-
-    s(1660, () => { L('Header', 1, 'is-group'); D(sRect(130, 8, 382, 46, {sw:1.5}), 0.4); });
-    s(2070, () => { L('Page Title', 2); D(sLine(142, 31, 224, 31, {sw:4, stroke:'#555'}), 0.22); });
-    s(2290, () => { L('Search', 2); D(sRect(388, 16, 116, 28, {sw:1, stroke:'#BBBBBB'}), 0.2); });
-
-    s(2510, () => L('Stats', 1, 'is-group'));
-    [[130,64,114],[254,64,114],[378,64,134]].forEach(([x,y,w], i) => {
-      s(2560+i*290, () => { L('Stat '+(i+1), 2); D(sRect(x, y, w, 74, {sw:1.5}), 0.32); });
-      s(2900+i*290, () => { D(sLine(x+10, y+28, x+62, y+28, {sw:6, stroke:'#DDDDDD'}), 0.2); D(sLine(x+10, y+48, x+90, y+48, {sw:2, stroke:'#DDDDDD'}), 0.18); });
+    s(2380, () => L('Plans', 1, 'is-group'));
+    [[10,160,'Starter'],[180,156,'Growth'],[354,160,'Enterprise']].forEach(([x,y,nm],i) => {
+      const isFeat = nm==='Growth';
+      s(2430+i*420, () => { L(nm, 2); D(sRect(x, y, 156, isFeat?200:190, {sw: isFeat?2:1.5, stroke: isFeat?'#9AB0E8':'#CCCCCC', fill: isFeat?'#EEF3FF':'none'}), 0.38); });
+      s(2800+i*420, () => {
+        D(sLine(x+10, y+18, x+80, y+18, {sw:4, stroke:'#CCCCCC'}), 0.16);
+        D(sLine(x+10, y+36, x+54, y+36, {sw:8, stroke: isFeat?'#9AB0E8':'#E0E0E0'}), 0.18);
+        D(sLine(x+10, y+58, x+136, y+58, {sw:1, stroke:'#EEEEEE'}), 0.12);
+        [0,1,2,3].forEach(j => D(sLine(x+14, y+74+j*18, x+14+[90,80,100,70][j], y+74+j*18, {sw:2, stroke:'#CCCCCC'}), 0.14));
+        D(sRect(x+10, y+(isFeat?160:150), 136, 28, {sw:1.2, fill: isFeat?'#C0CDEE':'none', stroke: isFeat?'#9AB0E8':'#CCCCCC'}), 0.22);
+      });
     });
 
-    s(3970, () => { L('Chart', 1); D(sRect(130, 148, 272, 200, {sw:1.5}), 0.5); });
-    s(4480, () => D(sLine(142, 336, 390, 336, {sw:1, stroke:'#AAAAAA'}), 0.2));
-    [[152,236,28,100],[204,268,28,68],[256,216,28,120],[308,280,28,56],[360,250,28,86]].forEach(([x,y,w,h], i) =>
-      s(4700+i*150, () => D(sRect(x, y, w, h, {sw:1, fill:'#DDE8F8', stroke:'#8AAAE8'}), 0.28))
-    );
-    s(5560, () => { L('Table', 1); D(sRect(412, 148, 100, 200, {sw:1.5}), 0.34); });
-    s(5910, () => [0,1,2,3].forEach(i => D(sLine(412, 188+i*36, 512, 188+i*36, {sw:1, stroke:'#DDDDDD'}), 0.14)));
-    s(6250, () => done && done());
-  }
-
-  function drawEmail(gen, done) {
-    const s = (ms, fn) => setTimeout(() => { if (figmaGen === gen) fn(); }, ms);
-    const D = (el, dur) => fDraw(el, dur, gen);
-    const L = (nm, ind, cl) => figLayer(nm, ind, cl, gen);
-
-    s(0,    () => L('Email · 600px', 0, 'is-frame'));
-    s(50,   () => D(sRect(90, 8, 340, 464, {sw:1.5, stroke:'#AAAAAA'}), 0.55));
-    s(600,  () => { L('Header', 1, 'is-group'); D(sRect(90, 8, 340, 80, {sw:1.5}), 0.4); });
-    s(1000, () => { L('Logo', 2); D(sRect(234, 24, 52, 26, {sw:1}), 0.22); });
-    s(1220, () => D(sLine(106, 72, 414, 72, {sw:1, stroke:'#CCCCCC'}), 0.18));
-    s(1400, () => { L('Hero Image', 1); D(sRect(90, 88, 340, 100, {sw:1, stroke:'#BBBBBB'}), 0.4); });
-    s(1800, () => { D(sLine(130, 108, 390, 168, {sw:1, stroke:'#CCCCCC'}), 0.3); D(sLine(390, 108, 130, 168, {sw:1, stroke:'#CCCCCC'}), 0.3); });
-    s(2100, () => { L('Headline', 1); D(sLine(106, 214, 378, 214, {sw:8, stroke:'#E0E0E0'}), 0.32); });
-    s(2420, () => { L('Subhead', 1); D(sLine(106, 234, 342, 234, {sw:4, stroke:'#CCCCCC'}), 0.26); });
-    s(2690, () => { L('Body Copy', 1); [0,1,2,3].forEach(i => setTimeout(() => D(sLine(106, 258+i*18, 106+[308,290,302,270][i], 258+i*18, {sw:2.5, stroke:'#BBBBBB'}), 0.22), i*100)); });
-    s(3190, () => { L('CTA', 1); D(sRect(195, 326, 130, 40, {sw:1.2, fill:'#E8EEFA', stroke:'#9AB0E8'}), 0.3); });
-    s(3490, () => D(sLine(106, 378, 414, 378, {sw:1, stroke:'#CCCCCC'}), 0.2));
-    s(3700, () => { L('Footer', 1); D(sRect(90, 386, 340, 60, {sw:1.5, stroke:'#AAAAAA'}), 0.34); });
-    s(4050, () => { D(sLine(210, 410, 310, 410, {sw:2.5, stroke:'#CCCCCC'}), 0.2); D(sLine(230, 428, 290, 428, {sw:2, stroke:'#CCCCCC'}), 0.16); });
-    s(4400, () => done && done());
+    s(4800, () => { L('FAQ', 1, 'is-group'); D(sLine(10, 376, 510, 376, {sw:1, stroke:'#EEEEEE'}), 0.2); });
+    s(5100, () => [0,1,2].forEach(i => {
+      D(sLine(20, 402+i*34, 320, 402+i*34, {sw:3.5, stroke:'#DDDDDD'}), 0.18);
+      D(sLine(20, 416+i*34, 260, 416+i*34, {sw:2, stroke:'#EEEEEE'}), 0.14);
+    }));
+    s(5500, () => done && done());
   }
 
   function runFigmaCanvas() {
+    if (heroPhase !== 'figma') return;
     figmaGen++;
     const gen = figmaGen;
     const svg = document.getElementById('figma-svg');
     const ll  = document.getElementById('figma-layer-list');
     if (svg) svg.innerHTML = '';
     if (ll)  ll.innerHTML  = '';
-    const layouts = [drawLanding, drawMobile, drawDashboard, drawEmail];
-    layouts[figmaLayoutIdx % layouts.length](gen, () => {
+    const layouts = [drawAnalyticsLanding, drawAnalyticsMobile, drawAnalyticsDashboard, drawAnalyticsPricing];
+    layouts[figmaLayoutIdx % 4](gen, () => {
       setTimeout(() => {
-        if (figmaGen !== gen) return;
+        if (figmaGen !== gen || heroPhase !== 'figma') return;
         figmaLayoutIdx++;
-        runFigmaCanvas();
-      }, 2200);
+        if (figmaLayoutIdx % 4 === 0) {
+          setTimeout(startWebflowPhase, 600);
+        } else {
+          setTimeout(runFigmaCanvas, 1800);
+        }
+      }, 2000);
     });
   }
 
+  // ── Webflow designer animation ────────────────────────────────────────────
+
+  function drawWebflow(gen, done) {
+    const s = (ms, fn) => setTimeout(() => { if (wfGen === gen) fn(); }, ms);
+    const svg = document.getElementById('wf-svg');
+    const nl  = document.getElementById('wf-nav-list');
+    const sl  = document.getElementById('wf-style-list');
+    const tip = document.getElementById('wf-tooltip');
+
+    function navEl(label, indent) {
+      if (wfGen !== gen || !nl) return;
+      const d = document.createElement('div');
+      d.className = 'wf-nav-item';
+      d.style.paddingLeft = (8 + indent * 9) + 'px';
+      const icon = indent <= 1 ? '▾' : '·';
+      d.innerHTML = '<span class="wf-nav-icon">' + icon + '</span><span>' + label + '</span>';
+      nl.appendChild(d);
+      requestAnimationFrame(() => requestAnimationFrame(() => d.classList.add('in')));
+    }
+
+    function styleSet(rows) {
+      if (wfGen !== gen || !sl) return;
+      sl.innerHTML = '';
+      rows.forEach((r, i) => {
+        const d = document.createElement('div');
+        if (r.sec) { d.className = 'wf-style-sec'; d.textContent = r.sec; }
+        else { d.className = 'wf-style-row'; d.innerHTML = '<span class="wf-style-prop">' + r.p + '</span><span class="wf-style-val">' + r.v + '</span>'; }
+        sl.appendChild(d);
+        setTimeout(() => { if (wfGen === gen) d.classList.add('in'); }, i * 52);
+      });
+    }
+
+    function showTip(text, x, y) {
+      if (!tip || wfGen !== gen) return;
+      tip.textContent = text;
+      tip.style.left = x + 'px'; tip.style.top = y + 'px';
+      tip.classList.add('show');
+      setTimeout(() => { if (wfGen === gen) tip.classList.remove('show'); }, 1800);
+    }
+
+    let selG = null;
+    function wfSel(x, y, w, h, label) {
+      if (!svg || wfGen !== gen) return;
+      if (selG && svg.contains(selG)) svg.removeChild(selG);
+      selG = document.createElementNS(NS, 'g');
+      const r = document.createElementNS(NS, 'rect');
+      r.setAttribute('x', x); r.setAttribute('y', y);
+      r.setAttribute('width', w); r.setAttribute('height', h);
+      r.setAttribute('fill', 'none'); r.setAttribute('stroke', '#0067FF'); r.setAttribute('stroke-width', '2');
+      selG.appendChild(r);
+      const lw = label.length * 5.5 + 8;
+      const ly = Math.max(0, y - 14);
+      const bg = document.createElementNS(NS, 'rect');
+      bg.setAttribute('x', x); bg.setAttribute('y', ly); bg.setAttribute('width', lw); bg.setAttribute('height', '14'); bg.setAttribute('fill', '#0067FF');
+      selG.appendChild(bg);
+      const t = document.createElementNS(NS, 'text');
+      t.setAttribute('x', x + 3); t.setAttribute('y', ly + 10);
+      t.setAttribute('fill', '#FFF'); t.setAttribute('font-size', '8'); t.setAttribute('font-weight', '700');
+      t.setAttribute('font-family', 'ui-sans-serif, system-ui, sans-serif');
+      t.textContent = label;
+      selG.appendChild(t);
+      svg.appendChild(selG);
+      showTip(label, 40, 40);
+    }
+
+    function clearSel() { if (selG && svg && svg.contains(selG)) { svg.removeChild(selG); selG = null; } }
+
+    function wfRect(x, y, w, h, fill, rx) {
+      if (!svg || wfGen !== gen) return null;
+      const r = document.createElementNS(NS, 'rect');
+      r.setAttribute('x', x); r.setAttribute('y', y); r.setAttribute('width', w); r.setAttribute('height', h);
+      r.setAttribute('fill', fill || 'none');
+      if (rx) r.setAttribute('rx', rx);
+      r.style.opacity = '0';
+      svg.appendChild(r);
+      requestAnimationFrame(() => { r.style.transition = 'opacity 0.32s ease'; r.style.opacity = '1'; });
+      return r;
+    }
+
+    function wfLine(x1, y1, x2, y2, stroke, sw) {
+      if (!svg || wfGen !== gen) return;
+      const l = document.createElementNS(NS, 'line');
+      l.setAttribute('x1', x1); l.setAttribute('y1', y1); l.setAttribute('x2', x2); l.setAttribute('y2', y2);
+      l.setAttribute('stroke', stroke || '#E8E8E8'); l.setAttribute('stroke-width', sw || 1);
+      l.style.opacity = '0'; svg.appendChild(l);
+      requestAnimationFrame(() => { l.style.transition = 'opacity 0.25s ease'; l.style.opacity = '1'; });
+    }
+
+    // ── Breakpoint flash ──────────────────────────────────────────────────
+    function flashBp(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('active');
+      setTimeout(() => { if (wfGen === gen) el.classList.remove('active'); }, 600);
+    }
+
+    s(0, () => {
+      if (!svg) return;
+      svg.innerHTML = '';
+      // Page shadow + background
+      const defs = document.createElementNS(NS, 'defs');
+      defs.innerHTML = '<filter id="wf-sh"><feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="rgba(0,0,0,0.14)"/></filter>';
+      svg.appendChild(defs);
+      wfRect(6, 0, 468, 440, '#FFFFFF');
+      navEl('Body', 0);
+    });
+
+    // ── Navbar ───────────────────────────────────────────────────────────
+    s(280, () => {
+      navEl('Navbar', 1);
+      wfRect(6, 0, 468, 46, '#FFFFFF');
+      wfLine(6, 46, 474, 46, '#EAEAEA', 1);
+      wfSel(6, 0, 468, 46, 'Navbar');
+      styleSet([{sec:'Layout'},{p:'display',v:'flex'},{p:'height',v:'72px'},{p:'width',v:'100%'},{sec:'Background'},{p:'color',v:'#FFFFFF'}]);
+    });
+    s(680, () => {
+      navEl('.logo', 2);
+      wfRect(16, 10, 92, 26, '#111111', '4');
+    });
+    s(900, () => {
+      navEl('.nav-links', 2);
+      [0,1,2,3].forEach(i => { setTimeout(() => { wfRect(148+i*56, 17, 44, 12, '#DDDDDD', '3'); }, i*80); });
+    });
+    s(1280, () => {
+      navEl('.nav-cta', 2);
+      wfRect(404, 11, 62, 24, '#146EF5', '5');
+      wfSel(404, 11, 62, 24, '.nav-cta');
+      styleSet([{sec:'Background'},{p:'color',v:'#146EF5'},{sec:'Spacing'},{p:'padding',v:'10px 20px'},{sec:'Border'},{p:'radius',v:'5px'}]);
+    });
+
+    // ── Hero section ─────────────────────────────────────────────────────
+    s(1700, () => {
+      navEl('Section.hero', 1);
+      wfRect(6, 46, 468, 178, '#F7F8FC');
+      wfSel(6, 46, 468, 178, 'Section.hero');
+      styleSet([{sec:'Layout'},{p:'display',v:'grid'},{p:'columns',v:'1fr 1fr'},{sec:'Background'},{p:'color',v:'#F7F8FC'}]);
+      flashBp('wf-bp-t');
+    });
+    s(2080, () => {
+      navEl('.hero-content', 2);
+      // Eyebrow badge
+      wfRect(16, 60, 118, 16, '#EEF3FF', '8');
+      wfSel(16, 60, 118, 16, '.eyebrow');
+    });
+    s(2440, () => {
+      navEl('h1', 2);
+      wfRect(16, 88, 215, 18, '#111111', '2');
+      wfRect(16, 110, 185, 18, '#111111', '2');
+      wfSel(16, 84, 215, 50, 'h1');
+      styleSet([{sec:'Typography'},{p:'font',v:'Inter'},{p:'size',v:'3.5rem'},{p:'weight',v:'700'},{p:'color',v:'#111111'}]);
+    });
+    s(2860, () => {
+      navEl('p', 2);
+      wfRect(16, 148, 215, 9, '#AAAAAA', '2');
+      wfRect(16, 162, 198, 9, '#AAAAAA', '2');
+      wfSel(16, 148, 215, 26, 'p');
+    });
+    s(3220, () => {
+      navEl('.cta-wrap', 2);
+      navEl('.btn-primary', 3);
+      wfRect(16, 184, 118, 28, '#146EF5', '5');
+      const gb = document.createElementNS(NS, 'rect');
+      gb.setAttribute('x','140'); gb.setAttribute('y','184'); gb.setAttribute('width','96'); gb.setAttribute('height','28');
+      gb.setAttribute('fill','none'); gb.setAttribute('rx','5');
+      gb.setAttribute('stroke','#CCCCCC'); gb.setAttribute('stroke-width','1');
+      gb.style.opacity = '0'; svg.appendChild(gb);
+      requestAnimationFrame(() => { gb.style.transition='opacity 0.3s ease'; gb.style.opacity='1'; });
+      navEl('.btn-ghost', 3);
+      wfSel(16, 184, 118, 28, '.btn-primary');
+      styleSet([{sec:'Background'},{p:'color',v:'#146EF5'},{sec:'Spacing'},{p:'padding',v:'14px 28px'},{sec:'Border'},{p:'radius',v:'5px'}]);
+    });
+
+    // ── Hero visual (dark product card) ──────────────────────────────────
+    s(3660, () => {
+      navEl('.hero-visual', 2);
+      wfRect(248, 52, 218, 164, '#0A0A1A', '10');
+      // Window chrome
+      wfRect(248, 52, 218, 28, '#141428', '10');
+      wfSel(248, 52, 218, 164, '.hero-visual');
+      styleSet([{sec:'Background'},{p:'color',v:'#0A0A1A'},{sec:'Border'},{p:'radius',v:'10px'},{sec:'Size'},{p:'width',v:'100%'}]);
+    });
+    s(4050, () => {
+      // Window dots
+      [[260,66,'#FF5F56'],[275,66,'#FFBD2E'],[290,66,'#27C93F']].forEach(([cx,cy,fill]) => {
+        const c = document.createElementNS(NS, 'circle');
+        c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', '4'); c.setAttribute('fill', fill);
+        c.style.opacity='0'; svg.appendChild(c);
+        requestAnimationFrame(() => { c.style.transition='opacity 0.25s ease'; c.style.opacity='1'; });
+      });
+      // Chart grid
+      wfRect(256, 86, 202, 120, '#0D0D20');
+      wfLine(256, 196, 458, 196, '#1E1E38', 1);
+      [0,1,2,3].forEach(i => wfLine(256, 106+i*24, 458, 106+i*24, '#16162C', 1));
+    });
+    s(4380, () => {
+      // Animated chart bars
+      const barData = [[262,80,'#4A7CFF'],[291,52,'#6B94FF'],[320,92,'#4A7CFF'],[349,38,'#6B94FF'],[378,66,'#4A7CFF'],[407,84,'#6B94FF']];
+      barData.forEach(([x,h,fill],i) => {
+        const bar = document.createElementNS(NS, 'rect');
+        bar.setAttribute('x', x); bar.setAttribute('y', 196-h); bar.setAttribute('width', '22'); bar.setAttribute('height', h);
+        bar.setAttribute('fill', fill); bar.setAttribute('rx', '2'); bar.setAttribute('class', 'chart-bar');
+        svg.appendChild(bar);
+        setTimeout(() => { if (wfGen === gen) bar.classList.add('grow'); }, i * 90);
+      });
+      flashBp('wf-bp-m');
+    });
+
+    // ── Logo strip ───────────────────────────────────────────────────────
+    s(5000, () => {
+      navEl('Section.logos', 1);
+      wfRect(6, 224, 468, 48, '#F8F9FA');
+      wfLine(6, 224, 474, 224, '#EAEAEA', 1);
+      wfLine(6, 272, 474, 272, '#EAEAEA', 1);
+      [0,1,2,3,4].forEach(i => { setTimeout(() => wfRect(18+i*90, 236, 74, 18, '#DCDCDC', '3'), i*80); });
+      wfSel(6, 224, 468, 48, 'Section.logos');
+      styleSet([{sec:'Layout'},{p:'display',v:'flex'},{p:'gap',v:'32px'},{sec:'Background'},{p:'color',v:'#F8F9FA'}]);
+    });
+
+    // ── Features section ─────────────────────────────────────────────────
+    s(5700, () => {
+      navEl('Section.features', 1);
+      wfRect(6, 272, 468, 100, '#FFFFFF');
+      wfLine(6, 272, 474, 272, '#EAEAEA', 1);
+      navEl('.section-head', 2);
+      wfRect(16, 282, 148, 14, '#111111', '2');
+      wfRect(16, 300, 220, 10, '#CCCCCC', '2');
+      wfSel(6, 272, 468, 100, 'Section.features');
+      styleSet([{sec:'Layout'},{p:'display',v:'grid'},{p:'columns',v:'repeat(3,1fr)'},{p:'gap',v:'24px'}]);
+    });
+    s(6200, () => {
+      navEl('.feature-grid', 2);
+      [[16,322],[168,322],[320,322]].forEach(([x,y], i) => {
+        setTimeout(() => {
+          navEl('.feature', 3);
+          wfRect(x, y, 144, 50, '#F8F9FA', '8');
+          // Icon
+          wfRect(x+8, y+8, 20, 18, ['#EEF3FF','#F0FFF4','#FFF8F0'][i], '4');
+          // Title line
+          wfRect(x+34, y+12, 80, 10, '#333333', '2');
+          // Body line
+          wfRect(x+8, y+34, 120, 8, '#AAAAAA', '2');
+        }, i * 260);
+      });
+    });
+
+    // ── Pricing section ──────────────────────────────────────────────────
+    s(7000, () => {
+      navEl('Section.pricing', 1);
+      wfRect(6, 372, 468, 68, '#FFFFFF');
+      wfLine(6, 372, 474, 372, '#EAEAEA', 1);
+      navEl('.pricing-head', 2);
+      wfRect(16, 380, 130, 12, '#111111', '2');
+      navEl('.price-grid', 2);
+      // 3 pricing cards
+      [[16,398,148,32,false],[172,394,148,40,true],[328,398,148,32,false]].forEach(([x,y,w,h,feat],i) => {
+        setTimeout(() => {
+          navEl('.price-card', 3);
+          wfRect(x, y, w, h, feat?'#146EF5':'#F8F9FA', '8');
+          wfRect(x+8, y+8, 60, 9, feat?'rgba(255,255,255,0.8)':'#AAAAAA', '2');
+          wfRect(x+8, y+22, 80, 12, feat?'#FFFFFF':'#111111', '2');
+        }, i * 200);
+      });
+      wfSel(172, 394, 148, 40, '.price-featured');
+      styleSet([{sec:'Background'},{p:'color',v:'#146EF5'},{sec:'Border'},{p:'radius',v:'8px'},{sec:'Typography'},{p:'color',v:'#FFFFFF'}]);
+    });
+
+    s(8000, () => { clearSel(); done && done(); });
+  }
+
+  function runWebflowCanvas(done) {
+    wfGen++;
+    const gen = wfGen;
+    const nl = document.getElementById('wf-nav-list');
+    const sl = document.getElementById('wf-style-list');
+    if (nl) nl.innerHTML = '';
+    if (sl) sl.innerHTML = '';
+    drawWebflow(gen, () => {
+      if (wfGen !== gen) return;
+      done && done();
+    });
+  }
+
+  // ── State machine ─────────────────────────────────────────────────────
+
+  function startWebflowPhase() {
+    heroPhase = 'webflow';
+    figmaGen++; // cancel any stale Figma timers
+    const figmaBg = document.querySelector('.figma-bg');
+    const wfPanel = document.getElementById('webflow-panel');
+    if (figmaBg) figmaBg.classList.add('at-left');
+    setTimeout(() => {
+      if (wfPanel) wfPanel.classList.add('in-view');
+      setTimeout(() => {
+        runWebflowCanvas(() => {
+          if (heroPhase !== 'webflow') return;
+          setTimeout(startTerminalPhase, 500);
+        });
+      }, 750);
+    }, 200);
+  }
+
+  function startTerminalPhase() {
+    if (heroPhase !== 'webflow') return;
+    heroPhase = 'terminal';
+    const term = document.getElementById('terminal-clean');
+    if (term) term.classList.add('in-view');
+    setTimeout(() => runTermCycle(0), 780);
+  }
+
+  function startExitPhase() {
+    if (heroPhase === 'exit') return;
+    heroPhase = 'exit';
+    wfGen++;
+    const term    = document.getElementById('terminal-clean');
+    const wfPanel = document.getElementById('webflow-panel');
+    const figmaBg = document.querySelector('.figma-bg');
+    // 1. Terminal slides out right
+    if (term) term.classList.remove('in-view');
+    // 2. Webflow slides out right
+    setTimeout(() => { if (wfPanel) wfPanel.classList.remove('in-view'); }, 620);
+    // 3. Figma slides in from left
+    setTimeout(() => {
+      heroPhase = 'figma';
+      if (figmaBg) figmaBg.classList.remove('at-left');
+      // Reset Webflow panel after it's off-screen
+      setTimeout(() => {
+        const nl = document.getElementById('wf-nav-list');
+        const sl = document.getElementById('wf-style-list');
+        const ws = document.getElementById('wf-svg');
+        if (nl) nl.innerHTML = '';
+        if (sl) sl.innerHTML = '';
+        if (ws) ws.innerHTML = '';
+      }, 800);
+      runFigmaCanvas();
+    }, 1300);
+  }
+
   if (!reduced) {
-    runTermCycle();
     runFigmaCanvas();
   } else {
     const output  = document.getElementById('terminal-output');
@@ -1147,6 +1703,8 @@
     if (output)  output.innerHTML = termCycles[0].html;
     if (badgeEl) badgeEl.textContent = termCycles[0].label;
     if (checkEl) checkEl.classList.add('pop');
+    const wfPanel = document.getElementById('webflow-panel');
+    if (wfPanel) wfPanel.classList.add('in-view');
   }
 </script>
 
