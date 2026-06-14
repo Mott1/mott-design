@@ -426,7 +426,7 @@
     margin-bottom: 14px; padding-left: 56px;
   }
   .tools-grid {
-    display: grid; grid-template-columns: repeat(7, 1fr); width: 100%; row-gap: 18px;
+    display: grid; grid-template-columns: repeat(7, 1fr); width: 95%; margin-left: 26px; row-gap: 18px;
   }
   @media (max-width: 720px) { .tools-grid { grid-template-columns: repeat(4, 1fr); gap: 18px 0; } }
   .tool-item {
@@ -704,7 +704,7 @@
           </div>
           <div class="wf-canvas-area" id="wf-canvas-area">
             <div class="wf-tooltip" id="wf-tooltip"></div>
-            <svg id="wf-svg" viewBox="0 0 480 440" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"></svg>
+            <svg id="wf-svg" viewBox="0 0 480 680" preserveAspectRatio="xMidYMin meet" xmlns="http://www.w3.org/2000/svg"></svg>
           </div>
         </div>
         <div class="wf-style-panel">
@@ -1499,8 +1499,8 @@
       const defs = document.createElementNS(NS, 'defs');
       defs.innerHTML = '<filter id="wf-sh"><feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="rgba(0,0,0,0.18)"/></filter>';
       svg.appendChild(defs);
-      // Mobile page canvas — 300px wide, centered in 480px viewBox
-      wfRect(PX, 0, PW, 440, C.ink);
+      // Mobile page canvas — fills 480×680 viewBox
+      wfRect(PX, 0, PW, 680, C.ink);
       navEl('Body', 0);
     });
 
@@ -1614,7 +1614,61 @@
       });
     });
 
-    s(7200, () => { clearSel(); done && done(); });
+    // ── Stats row ─────────────────────────────────────────────────────────
+    s(6500, () => {
+      navEl('Section.stats', 1);
+      wfRect(PX, 440, PW, 58, C.paper2);
+      wfLine(PX, 440, PR, 440, C.lineV, 1);
+      wfLine(PX, 498, PR, 498, C.lineV, 1);
+      [0,1,2].forEach(i => {
+        const sx = PX + 30 + i * 140;
+        setTimeout(() => {
+          wfRect(sx, 454, 72, 11, C.ink, '2');
+          wfRect(sx, 470, 50, 7, C.muted, '2');
+        }, i * 110);
+      });
+      wfSel(PX, 440, PW, 58, 'Section.stats');
+      styleSet([{sec:'Layout'},{p:'display',v:'flex'},{p:'justify',v:'space-around'},{sec:'Background'},{p:'color',v:'--paper-2'}]);
+    });
+
+    // ── Testimonial ───────────────────────────────────────────────────────
+    s(6800, () => {
+      navEl('Section.social', 1);
+      wfRect(PX, 498, PW, 88, C.accent);
+      wfRect(PX+14, 512, 20, 20, C.card, '10');
+      wfRect(PX+42, 516, 90, 8, C.paper, '2');
+      wfRect(PX+42, 528, 60, 6, C.muted, '2');
+      wfRect(PX+14, 544, 260, 7, C.muted, '2');
+      wfRect(PX+14, 556, 220, 7, C.muted, '2');
+      wfRect(PX+14, 568, 170, 7, C.muted, '2');
+      wfLine(PX, 586, PR, 586, C.lineV, 1);
+      wfSel(PX, 498, PW, 88, 'Section.social');
+      styleSet([{sec:'Background'},{p:'color',v:'--accent'},{sec:'Spacing'},{p:'padding',v:'16px'}]);
+    });
+
+    // ── Pricing CTA ───────────────────────────────────────────────────────
+    s(7050, () => {
+      navEl('Section.cta', 1);
+      wfRect(PX, 586, PW, 68, C.paper);
+      wfRect(PX+10, 598, 170, 11, C.ink, '2');
+      wfRect(PX+10, 614, 250, 7, C.muted, '2');
+      wfRect(PX+10, 626, 268, 20, C.warn, '5');
+      wfLine(PX, 654, PR, 654, C.lineV, 1);
+      wfSel(PX, 586, PW, 68, 'Section.cta');
+      styleSet([{sec:'Background'},{p:'color',v:'--paper'},{sec:'Spacing'},{p:'padding',v:'18px'}]);
+    });
+
+    // ── Footer ────────────────────────────────────────────────────────────
+    s(7250, () => {
+      navEl('Footer', 1);
+      wfRect(PX, 654, PW, 26, C.paper2);
+      wfRect(PX+12, 662, 58, 6, C.muted, '2');
+      wfRect(PR-100, 662, 88, 6, C.muted, '2');
+      wfSel(PX, 654, PW, 26, 'Footer');
+      styleSet([{sec:'Layout'},{p:'display',v:'flex'},{p:'justify',v:'space-between'},{sec:'Background'},{p:'color',v:'--paper-2'}]);
+    });
+
+    s(7600, () => { clearSel(); done && done(); });
   }
 
   function runWebflowCanvas(done) {
