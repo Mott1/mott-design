@@ -117,8 +117,12 @@
   .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
   .brand { font-family: var(--display); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; text-decoration: none; color: var(--ink); }
   .brand span { color: var(--accent); }
-  .nav-back { font-size: 0.88rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-  .nav-back:hover { color: var(--accent); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { font-size: 0.88rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta { font-family: var(--display); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em; background: transparent; color: var(--ink); border: 1.5px solid var(--ink); border-radius: 4px; padding: 8px 18px; text-decoration: none; transition: background 0.2s, color 0.2s, border-color 0.2s; }
+  .nav-cta:hover { background: var(--warn); color: var(--ink); border-color: var(--warn); }
+  @media (max-width: 720px) { .nav-links { display: none; } }
 
   /* page head */
   .page-head { padding: 72px 0 48px; border-bottom: 1px solid var(--line); margin-bottom: 56px; }
@@ -127,9 +131,16 @@
   .page-head p { color: var(--muted); font-size: 1.05rem; max-width: 54ch; }
 
   /* categories */
-  .cat-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 56px; }
-  .cat-nav a { font-family: var(--display); font-size: 0.8rem; font-weight: 500; color: var(--muted); text-decoration: none; padding: 6px 14px; border-radius: 40px; border: 1px solid var(--line); transition: all 0.15s; }
-  .cat-nav a:hover { color: var(--ink); border-color: var(--accent); }
+  .cat-nav {
+    position: sticky; top: 68px; z-index: 40;
+    background: rgba(41,93,50,0.97); backdrop-filter: blur(10px);
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 14px max(24px, calc((100vw - 1100px)/2));
+    margin: 0 calc(-1 * max(24px, calc((100vw - 1100px)/2)));
+    border-bottom: 1px solid var(--line); margin-bottom: 48px;
+  }
+  .cat-nav a { font-family: var(--display); font-size: 0.8rem; font-weight: 500; color: var(--muted); text-decoration: none; padding: 6px 14px; border-radius: 40px; transition: color 0.15s; }
+  .cat-nav a:hover { color: var(--ink); }
 
   /* faq sections */
   .faq-section { margin-bottom: 64px; }
@@ -173,8 +184,15 @@
 
 <nav>
   <div class="wrap nav-inner">
-    <a href="index.html" class="brand">Mott<span>.</span>Design</a>
-    <a href="index.html" class="nav-back">← Back to main site</a>
+    <a href="index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="index.html#services">Services</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="faq.html">FAQ</a>
+      <a href="glossary.html">Glossary</a>
+    </div>
+    <a href="index.html#contact" class="nav-cta">Get a quote</a>
   </div>
 </nav>
 
@@ -514,10 +532,10 @@
 
 <footer>
   <div class="wrap foot-inner">
-    <a href="index.html" class="brand" style="font-family:var(--display);font-weight:700;font-size:1.1rem;letter-spacing:-0.02em;text-decoration:none;color:var(--ink);">Mott<span style="color:var(--accent);">.</span>Design</a>
+    <a href="index.html" class="brand">mott<span>.</span>design</a>
     <nav class="foot-links">
-      <a href="glossary.html">Glossary</a>
-      <a href="faq.html">FAQ</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms &amp; Conditions</a>
       <a href="index.html">Home</a>
     </nav>
     <p>&copy; <span id="yr"></span> Mott Design LLC · Monterey, California</p>

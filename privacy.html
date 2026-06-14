@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Mott Design</title>
+<meta name="description" content="Privacy policy for Mott Design, a freelance web design studio based in Monterey, CA. Learn how we handle your data.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/privacy.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Privacy Policy — Mott Design">
+<meta property="og:description" content="How Mott Design collects, uses, and protects your information.">
+<meta property="og:url" content="https://mott.design/privacy.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #E4EAC8;
+    --paper: #295D32;
+    --paper-2: #284B2F;
+    --line: rgba(228,234,200,0.15);
+    --muted: #989E7B;
+    --accent: #D1DBB9;
+    --warn: #c4622d;
+    --display: 'Space Grotesk', system-ui, sans-serif;
+    --body: 'Inter', system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--body); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  .grain-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E"); opacity: 0.04; filter: contrast(200%); }
+
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* nav */
+  nav { position: sticky; top: 0; z-index: 50; background: rgba(41,93,50,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .brand { font-family: var(--display); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; text-decoration: none; color: var(--ink); }
+  .brand span { color: var(--accent); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { font-size: 0.88rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta { font-family: var(--display); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em; background: transparent; color: var(--ink); border: 1.5px solid var(--ink); border-radius: 4px; padding: 8px 18px; text-decoration: none; transition: background 0.2s, color 0.2s, border-color 0.2s; }
+  .nav-cta:hover { background: var(--warn); color: var(--ink); border-color: var(--warn); }
+  @media (max-width: 720px) { .nav-links { display: none; } }
+
+  /* page head */
+  .page-head { padding: 72px 0 48px; border-bottom: 1px solid var(--line); margin-bottom: 56px; }
+  .page-eyebrow { font-family: var(--display); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+  .page-head h1 { font-family: var(--display); font-weight: 500; font-size: clamp(2rem, 4vw, 2.8rem); line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 18px; }
+  .page-head p { color: var(--muted); font-size: 1.05rem; max-width: 54ch; }
+
+  /* content sections */
+  .prose { max-width: 720px; padding-bottom: 88px; }
+  .prose section { margin-bottom: 48px; }
+  .prose h2 { font-family: var(--display); font-weight: 500; font-size: 1.25rem; letter-spacing: -0.02em; margin-bottom: 12px; color: var(--ink); }
+  .prose p { color: var(--muted); font-size: 0.98rem; line-height: 1.75; margin-bottom: 12px; }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; transition: opacity 0.15s; }
+  .prose a:hover { opacity: 0.75; }
+  .prose ul { color: var(--muted); font-size: 0.98rem; line-height: 1.75; padding-left: 1.4em; margin-bottom: 12px; }
+  .prose ul li { margin-bottom: 6px; }
+  .divider { border: none; border-top: 1px solid var(--line); margin: 0 0 48px; }
+
+  /* footer */
+  footer { padding: 40px 0; border-top: 1px solid var(--line); margin-top: 0; }
+  .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .foot-inner p { font-size: 0.88rem; color: var(--muted); }
+  .foot-links { display: flex; gap: 20px; }
+  .foot-links a { font-size: 0.82rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .foot-links a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="grain-bg" aria-hidden="true"></div>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="index.html#services">Services</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="faq.html">FAQ</a>
+      <a href="glossary.html">Glossary</a>
+    </div>
+    <a href="index.html#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="page-eyebrow">Legal</p>
+      <h1>Privacy Policy</h1>
+      <p>Mott Design is a one-person studio. This policy explains plainly what information is collected when you visit this site or get in touch, and how it's handled.</p>
+    </header>
+
+    <div class="prose">
+
+      <section>
+        <h2>Who this covers</h2>
+        <p>This policy applies to the website at mott.design, operated by Michael Mott (trading as Mott Design), based in Monterey, California. If you have questions about anything here, email <a href="mailto:mpmott@gmail.com">mpmott@gmail.com</a>.</p>
+      </section>
+
+      <hr class="divider">
+
+      <section>
+        <h2>What information is collected</h2>
+        <p>The only personal information collected through this site is what you voluntarily provide when you fill out the contact form:</p>
+        <ul>
+          <li>Your name</li>
+          <li>Your email address</li>
+          <li>The message you write</li>
+        </ul>
+        <p>No tracking pixels, advertising cookies, or behavioral analytics tools are installed on this site. There is no account system and no newsletter sign-up.</p>
+      </section>
+
+      <hr class="divider">
+
+      <section>
+        <h2>How it's used</h2>
+        <p>Information submitted through the contact form is used solely to respond to your inquiry. It is not added to any mailing list, shared with third parties for marketing purposes, or used for any purpose other than replying to you directly.</p>
+      </section>
+
+      <hr class="divider">
+
+      <section>
+        <h2>Third-party services</h2>
+        <p>This site relies on a small number of third-party services to function. Each has its own privacy policy:</p>
+        <ul>
+          <li><strong>Formspree</strong> — processes contact form submissions and forwards them to my inbox. Formspree temporarily stores submitted data on their servers. See <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener">Formspree's privacy policy</a>.</li>
+          <li><strong>GitHub Pages</strong> — hosts this website. GitHub may collect standard server logs (IP address, request time, browser user agent) as part of normal hosting operations. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub's privacy statement</a>.</li>
+          <li><strong>Google Fonts</strong> — loads the typefaces used on this site (Space Grotesk and Inter). When your browser requests a font, Google's servers log your IP address. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's privacy policy</a>.</li>
+        </ul>
+        <p>Beyond what these hosting and infrastructure services may log in the ordinary course of operations, no other data about site visitors is collected or stored.</p>
+      </section>
+
+      <hr class="divider">
+
+      <section>
+        <h2>Cookies</h2>
+        <p>Mott Design does not set any cookies on your device. The third-party services listed above (particularly GitHub Pages) may set cookies as part of their standard operations, but this site does not use cookies for analytics, advertising, or any tracking purpose.</p>
+      </section>
+
+      <hr class="divider">
+
+      <section>
+        <h2>Data retention</h2>
+        <p>Contact form submissions delivered to my inbox are retained as long as they are relevant to an ongoing or potential project. If you would like your information deleted, email <a href="mailto:mpmott@gmail.com">mpmott@gmail.com</a> and I will remove it promptly.</p>
+      </section>
+
+      <hr class="divider">
+
+      <section>
+        <h2>No sale of data</h2>
+        <p>Your personal information is never sold, rented, or traded to any third party, for any reason.</p>
+      </section>
+
+      <hr class="divider">
+
+      <section>
+        <h2>Children's privacy</h2>
+        <p>This site is not directed at children under 13, and no information is knowingly collected from children.</p>
+      </section>
+
+      <hr class="divider">
+
+      <section>
+        <h2>Changes to this policy</h2>
+        <p>If this policy changes materially, the updated version will be posted here with a revised effective date. Continued use of the site after changes are posted constitutes acceptance of the updated policy.</p>
+      </section>
+
+      <hr class="divider">
+
+      <section>
+        <h2>Contact</h2>
+        <p>Questions or requests about your data can be sent to <a href="mailto:mpmott@gmail.com">mpmott@gmail.com</a>. I'll respond within a few business days.</p>
+        <p>Effective date: June 2026</p>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <a href="index.html" class="brand">mott<span>.</span>design</a>
+    <nav class="foot-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms &amp; Conditions</a>
+      <a href="index.html">Home</a>
+    </nav>
+    <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
+  </div>
+</footer>
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>

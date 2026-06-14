@@ -423,7 +423,7 @@
   .tools-label {
     font-family: var(--display); font-size: 0.9rem !important; font-weight: 600;
     letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
-    margin-bottom: 14px; padding-left: 56px;
+    margin-bottom: 23px !important; padding-left: 56px;
   }
   .tools-grid {
     display: grid; grid-template-columns: repeat(7, 1fr); width: 95%; margin-left: 26px; row-gap: 18px;
@@ -504,13 +504,39 @@
   .svc-icon.drawn > :nth-child(4) { transition-delay: 0.9s; }
   .svc-icon.drawn > :nth-child(5) { transition-delay: 1.2s; }
   .svc-icon.drawn > :nth-child(6) { transition-delay: 1.5s; }
+  @keyframes svc-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-4px); }
+  }
+  .svc-icon.drawn { animation: svc-float 3s ease-in-out 4s infinite; }
+  .svc:nth-child(2)  .svc-icon.drawn { animation-delay: 4.25s; }
+  .svc:nth-child(3)  .svc-icon.drawn { animation-delay: 4.5s; }
+  .svc:nth-child(4)  .svc-icon.drawn { animation-delay: 4.75s; }
+  .svc:nth-child(5)  .svc-icon.drawn { animation-delay: 5s; }
+  .svc:nth-child(6)  .svc-icon.drawn { animation-delay: 5.25s; }
+  .svc:nth-child(7)  .svc-icon.drawn { animation-delay: 5.5s; }
+  .svc:nth-child(8)  .svc-icon.drawn { animation-delay: 5.75s; }
+  .svc:nth-child(9)  .svc-icon.drawn { animation-delay: 6s; }
+  .svc:nth-child(10) .svc-icon.drawn { animation-delay: 6.25s; }
+  .svc:nth-child(11) .svc-icon.drawn { animation-delay: 6.5s; }
+  .svc:nth-child(12) .svc-icon.drawn { animation-delay: 6.75s; }
   @media (max-width: 900px) and (min-width: 721px) { .svc-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 720px) { .svc-grid { grid-template-columns: 1fr; } }
 
-  /* ---- selected work ---- */
-  #work { border-bottom: 1px solid var(--line); }
-  .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  /* ---- selected work carousel ---- */
+  #work { border-bottom: 1px solid var(--line); padding-bottom: 48px; }
+  .work-outer { overflow: hidden; }
+  .work-carousel {
+    display: flex; gap: 16px;
+    overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    padding: 0 max(24px, calc((100vw - 1100px)/2)) 8px;
+    cursor: grab;
+  }
+  .work-carousel:active { cursor: grabbing; }
+  .work-carousel::-webkit-scrollbar { display: none; }
   .project {
+    flex: 0 0 380px; scroll-snap-align: start;
     padding: 32px; border-radius: 2px;
     background: var(--card); transition: background 0.2s, transform 0.22s cubic-bezier(0.16,1,0.3,1), box-shadow 0.22s;
   }
@@ -519,9 +545,17 @@
   .project h3 { font-family: var(--display); font-weight: 600; font-size: 1.22rem; margin: 10px 0 10px; letter-spacing: -0.01em; }
   .project p { color: var(--muted); font-size: 0.98rem; }
   .proj-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
-  .proj-tag { font-size: 0.8rem; font-weight: 500; padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper-2); color: var(--muted); }
+  .proj-tag { font-size: 0.78rem; font-weight: 600; padding: 4px 11px; border-radius: 999px; background: var(--warn); color: var(--ink); }
+  .carousel-controls { display: flex; gap: 10px; margin-top: 28px; }
+  .carousel-btn {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--card); border: 1px solid var(--line); color: var(--ink);
+    font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .carousel-btn:hover { background: var(--warn); border-color: var(--warn); }
   @media (max-width: 720px) {
-    .work-grid { grid-template-columns: 1fr; }
+    .project { flex: 0 0 300px; padding: 24px; }
   }
 
   /* ---- about ---- */
@@ -619,11 +653,13 @@
 
 <nav>
   <div class="wrap nav-inner">
-    <div class="brand">Mott<span>.</span>Design</div>
+    <div class="brand">mott<span>.</span>design</div>
     <div class="nav-links">
       <a href="#services">Services</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
+      <a href="faq.html">FAQ</a>
+      <a href="glossary.html">Glossary</a>
     </div>
     <a href="#contact" class="nav-cta">Get a quote</a>
   </div>
@@ -650,33 +686,37 @@
             <img src="https://cdn.simpleicons.org/wordpress/D1DBB9" alt="WordPress" width="26" height="26">
             <span>WordPress</span>
           </div>
-          <div class="tool-item" title="Google Tag Manager">
-            <img src="https://cdn.simpleicons.org/googletagmanager/D1DBB9" alt="Google Tag Manager" width="26" height="26">
-            <span>Tag Manager</span>
+          <div class="tool-item" title="Elementor">
+            <img src="https://cdn.simpleicons.org/elementor/D1DBB9" alt="Elementor" width="26" height="26">
+            <span>Elementor</span>
           </div>
-          <div class="tool-item" title="Google Analytics">
-            <img src="https://cdn.simpleicons.org/googleanalytics/D1DBB9" alt="Google Analytics" width="26" height="26">
-            <span>GA4</span>
-          </div>
-          <div class="tool-item" title="HubSpot">
-            <img src="https://cdn.simpleicons.org/hubspot/D1DBB9" alt="HubSpot" width="26" height="26">
-            <span>HubSpot</span>
-          </div>
-          <div class="tool-item" title="SEMrush">
-            <img src="https://cdn.simpleicons.org/semrush/D1DBB9" alt="SEMrush" width="26" height="26">
-            <span>SEMrush</span>
-          </div>
-          <div class="tool-item" title="Figma">
-            <img src="https://cdn.simpleicons.org/figma/D1DBB9" alt="Figma" width="26" height="26">
-            <span>Figma</span>
+          <div class="tool-item" title="Claude Code">
+            <img src="https://cdn.simpleicons.org/claudecode/D1DBB9" alt="Claude Code" width="26" height="26">
+            <span>Claude Code</span>
           </div>
           <div class="tool-item" title="Claude">
             <img src="https://cdn.simpleicons.org/claude/D1DBB9" alt="Claude" width="26" height="26">
             <span>Claude</span>
           </div>
-          <div class="tool-item" title="Elementor">
-            <img src="https://cdn.simpleicons.org/elementor/D1DBB9" alt="Elementor" width="26" height="26">
-            <span>Elementor</span>
+          <div class="tool-item" title="Figma">
+            <img src="https://cdn.simpleicons.org/figma/D1DBB9" alt="Figma" width="26" height="26">
+            <span>Figma</span>
+          </div>
+          <div class="tool-item" title="HubSpot">
+            <img src="https://cdn.simpleicons.org/hubspot/D1DBB9" alt="HubSpot" width="26" height="26">
+            <span>HubSpot</span>
+          </div>
+          <div class="tool-item" title="Google Analytics">
+            <img src="https://cdn.simpleicons.org/googleanalytics/D1DBB9" alt="GA4" width="26" height="26">
+            <span>GA4</span>
+          </div>
+          <div class="tool-item" title="Google Tag Manager">
+            <img src="https://cdn.simpleicons.org/googletagmanager/D1DBB9" alt="Tag Manager" width="26" height="26">
+            <span>Tag Manager</span>
+          </div>
+          <div class="tool-item" title="SEMrush">
+            <img src="https://cdn.simpleicons.org/semrush/D1DBB9" alt="SEMrush" width="26" height="26">
+            <span>SEMrush</span>
           </div>
           <div class="tool-item" title="PostHog">
             <img src="https://cdn.simpleicons.org/posthog/D1DBB9" alt="PostHog" width="26" height="26">
@@ -689,10 +729,6 @@
           <div class="tool-item" title="Railway">
             <img src="https://cdn.simpleicons.org/railway/D1DBB9" alt="Railway" width="26" height="26">
             <span>Railway</span>
-          </div>
-          <div class="tool-item" title="Claude Code">
-            <img src="https://cdn.simpleicons.org/claudecode/D1DBB9" alt="Claude Code" width="26" height="26">
-            <span>Claude Code</span>
           </div>
           <div class="tool-item" title="Stripe">
             <img src="https://cdn.simpleicons.org/stripe/D1DBB9" alt="Stripe" width="26" height="26">
@@ -834,7 +870,7 @@
 <section id="services">
   <div class="wrap">
     <div class="sec-head">
-      <span class="sec-num">01 / Services</span>
+      <span class="sec-num">Services</span>
       <h2>What I take on</h2>
       <p>Most engagements start with a build or a migration and grow into the measurement work that keeps a site honest. Pick one piece or hand me the whole stack.</p>
     </div>
@@ -934,19 +970,6 @@
       </div>
       <div class="svc">
         <svg class="svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="7" width="32" height="30" rx="2" stroke="var(--accent)" stroke-width="1.5"/>
-          <line x1="4" y1="16" x2="36" y2="16" stroke="var(--accent)" stroke-width="1.5"/>
-          <line x1="13" y1="4" x2="13" y2="10" stroke="var(--accent)" stroke-width="1.5"/>
-          <line x1="27" y1="4" x2="27" y2="10" stroke="var(--accent)" stroke-width="1.5"/>
-          <circle cx="20" cy="28" r="5" stroke="var(--accent)" stroke-width="1.5"/>
-          <polyline points="20,23 20,28 24,28" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span class="svc-key">retainer</span>
-        <h3>Ongoing maintenance</h3>
-        <p>A standing arrangement for updates, fixes, and the small things that pile up — so your site doesn't quietly rot between projects.</p>
-      </div>
-      <div class="svc">
-        <svg class="svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M20 5 L21.8 16.5 L33 20 L21.8 23.5 L20 35 L18.2 23.5 L7 20 L18.2 16.5 Z" stroke="var(--accent)" stroke-width="1.5" stroke-linejoin="round"/>
           <path d="M33 7 L33.9 11 L38 12 L33.9 13 L33 17 L32.1 13 L28 12 L32.1 11 Z" stroke="var(--accent)" stroke-width="1.2" stroke-linejoin="round"/>
         </svg>
@@ -969,6 +992,19 @@
         <h3>Figma design systems</h3>
         <p>Component libraries, design tokens, and handoff-ready files that give developers and marketers a shared source of truth — built to your brand, not a generic template.</p>
       </div>
+      <div class="svc">
+        <svg class="svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="7" width="32" height="30" rx="2" stroke="var(--accent)" stroke-width="1.5"/>
+          <line x1="4" y1="16" x2="36" y2="16" stroke="var(--accent)" stroke-width="1.5"/>
+          <line x1="13" y1="4" x2="13" y2="10" stroke="var(--accent)" stroke-width="1.5"/>
+          <line x1="27" y1="4" x2="27" y2="10" stroke="var(--accent)" stroke-width="1.5"/>
+          <circle cx="20" cy="28" r="5" stroke="var(--accent)" stroke-width="1.5"/>
+          <polyline points="20,23 20,28 24,28" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="svc-key">retainer</span>
+        <h3>Ongoing maintenance</h3>
+        <p>A standing arrangement for updates, fixes, and the small things that pile up — so your site doesn't quietly rot between projects.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -976,38 +1012,109 @@
 <section id="work">
   <div class="wrap">
     <div class="sec-head">
-      <span class="sec-num">02 / Selected Work</span>
+      <span class="sec-num">Selected Work</span>
       <h2>Projects from the field</h2>
       <p>A sample of recent engagements — anonymized by industry, because the client relationship matters more than the credit.</p>
     </div>
-    <div class="work-grid">
-      <div class="project">
-        <span class="proj-industry">Medical device</span>
-        <h3>Commercial site rebuild &amp; analytics overhaul</h3>
-        <p>Rebuilt a legacy WordPress site on Elementor, restructured navigation for two buyer personas, and replaced broken UA tracking with a clean GA4 and GTM implementation.</p>
-        <div class="proj-tags">
-          <span class="proj-tag">WordPress · Elementor</span>
-          <span class="proj-tag">GA4 · GTM</span>
-        </div>
-      </div>
+  </div>
+  <div class="work-outer">
+    <div class="work-carousel" id="work-carousel">
       <div class="project">
         <span class="proj-industry">Genomics</span>
         <h3>Platform migration &amp; consent compliance</h3>
-        <p>Migrated a Squarespace site to Webflow, preserved SEO equity across 80+ redirects, then wired up Cookiebot and consent mode so tags gate correctly on opt-in.</p>
-        <div class="proj-tags">
-          <span class="proj-tag">Webflow</span>
-          <span class="proj-tag">Cookiebot · Consent Mode</span>
-        </div>
+        <p>Migrated from Squarespace to Webflow across 80+ URLs, preserved SEO equity with a complete redirect map, and wired up Cookiebot with Consent Mode v2 so GA4 and ad pixels gate correctly on opt-in.</p>
+        <div class="proj-tags"><span class="proj-tag">Webflow</span><span class="proj-tag">Cookiebot</span><span class="proj-tag">Consent Mode</span></div>
       </div>
       <div class="project">
-        <span class="proj-industry">Healthcare tech</span>
-        <h3>New marketing site &amp; HubSpot integration</h3>
-        <p>Designed and built a marketing site for a pre-launch SaaS product, with forms feeding HubSpot directly and lifecycle emails triggered by lead stage.</p>
-        <div class="proj-tags">
-          <span class="proj-tag">Webflow</span>
-          <span class="proj-tag">HubSpot · Email automation</span>
-        </div>
+        <span class="proj-industry">Digital health</span>
+        <h3>Marketing site &amp; HubSpot integration</h3>
+        <p>Designed and built a Webflow site for a pre-launch patient engagement platform; forms feed HubSpot directly with lifecycle stage automation triggered on form completion.</p>
+        <div class="proj-tags"><span class="proj-tag">Webflow</span><span class="proj-tag">HubSpot</span><span class="proj-tag">Email automation</span></div>
       </div>
+      <div class="project">
+        <span class="proj-industry">Medical device</span>
+        <h3>Commercial site rebuild &amp; analytics overhaul</h3>
+        <p>Rebuilt a legacy WordPress site on Elementor, restructured navigation for dual buyer personas, and replaced deprecated UA tracking with a clean GA4 and GTM implementation.</p>
+        <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">Elementor</span><span class="proj-tag">GA4 · GTM</span></div>
+      </div>
+      <div class="project">
+        <span class="proj-industry">Cybersecurity</span>
+        <h3>Product launch site &amp; CRM wiring</h3>
+        <p>Built a B2B marketing site for a mobile security platform entering enterprise, with a gated demo request flow, HubSpot CRM integration, and PostHog session analytics.</p>
+        <div class="proj-tags"><span class="proj-tag">Webflow</span><span class="proj-tag">HubSpot</span><span class="proj-tag">PostHog</span></div>
+      </div>
+      <div class="project">
+        <span class="proj-industry">Enterprise tech</span>
+        <h3>GA4 migration &amp; analytics rebuild</h3>
+        <p>Full GA4 property buildout and GTM re-tag for a communications-technology platform — 40+ custom events, BigQuery export, and a Looker Studio dashboard replacing legacy UA reports.</p>
+        <div class="proj-tags"><span class="proj-tag">GA4</span><span class="proj-tag">GTM</span><span class="proj-tag">BigQuery</span></div>
+      </div>
+      <div class="project">
+        <span class="proj-industry">Fintech</span>
+        <h3>Rebrand &amp; Webflow build</h3>
+        <p>Executed a complete visual rebrand and rebuilt the marketing site in Webflow from a hard-coded template, with Stripe integration for direct payment capture and a Figma design system handoff.</p>
+        <div class="proj-tags"><span class="proj-tag">Webflow</span><span class="proj-tag">Stripe</span><span class="proj-tag">Figma</span></div>
+      </div>
+      <div class="project">
+        <span class="proj-industry">Cancer diagnostics</span>
+        <h3>Multi-audience site restructure</h3>
+        <p>Rebuilt a multi-market site for an oncology diagnostics firm, restructuring content architecture for three physician audiences and implementing GTM with role-based conversion goals.</p>
+        <div class="proj-tags"><span class="proj-tag">Webflow</span><span class="proj-tag">GTM</span><span class="proj-tag">GA4</span></div>
+      </div>
+      <div class="project">
+        <span class="proj-industry">Clinical research</span>
+        <h3>Patient intake &amp; portal redesign</h3>
+        <p>Redesigned a patient-facing portal for a clinical trial management company, improving navigation clarity and replacing a fragmented consent workflow with a single-page intake form.</p>
+        <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">Custom</span><span class="proj-tag">GA4</span></div>
+      </div>
+      <div class="project">
+        <span class="proj-industry">AI healthcare</span>
+        <h3>Pre-launch landing page &amp; waitlist</h3>
+        <p>Built a teaser site and waitlist capture for an AI-powered care coordination startup, with Webflow CMS for blog content, PostHog behaviour analytics, and Mailchimp nurture automation.</p>
+        <div class="proj-tags"><span class="proj-tag">Webflow</span><span class="proj-tag">PostHog</span><span class="proj-tag">Mailchimp</span></div>
+      </div>
+      <div class="project">
+        <span class="proj-industry">Mobile security</span>
+        <h3>B2B site overhaul &amp; Salesforce integration</h3>
+        <p>Rebuilt from a dated WordPress theme to a modern Webflow site, with Salesforce Web-to-Lead on all forms and a full GTM and GA4 re-implementation including ABM event tracking.</p>
+        <div class="proj-tags"><span class="proj-tag">Webflow</span><span class="proj-tag">Salesforce</span><span class="proj-tag">GTM</span></div>
+      </div>
+      <div class="project">
+        <span class="proj-industry">Epigenomics</span>
+        <h3>Data storytelling microsite</h3>
+        <p>Built a standalone microsite to communicate complex sequencing technology to biopharma buyers, with animated data visualisations, gated whitepaper download flow, and HubSpot lead capture.</p>
+        <div class="proj-tags"><span class="proj-tag">Webflow</span><span class="proj-tag">HubSpot</span><span class="proj-tag">Custom animation</span></div>
+      </div>
+      <div class="project">
+        <span class="proj-industry">Medical association</span>
+        <h3>Conference &amp; membership site</h3>
+        <p>Designed and built an annual conference microsite integrated with the association's WordPress CMS, covering session registration, speaker profiles, and post-event on-demand video.</p>
+        <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">HubSpot</span><span class="proj-tag">GA4</span></div>
+      </div>
+      <div class="project">
+        <span class="proj-industry">Rare disease</span>
+        <h3>Patient education hub &amp; SEO</h3>
+        <p>Built a patient-facing resource hub in WordPress, optimised for FAQ schema and featured snippets, with structured data for AEO and PostHog analytics to track content engagement by condition.</p>
+        <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">PostHog</span><span class="proj-tag">SEO schema</span></div>
+      </div>
+      <div class="project">
+        <span class="proj-industry">Molecular diagnostics</span>
+        <h3>HubSpot CRM buildout &amp; automation</h3>
+        <p>Set up HubSpot from scratch for a molecular diagnostics company — contact properties, pipeline stages, UTM attribution mapping, and automated nurture sequences for physician leads.</p>
+        <div class="proj-tags"><span class="proj-tag">HubSpot</span><span class="proj-tag">Email automation</span><span class="proj-tag">GTM</span></div>
+      </div>
+      <div class="project">
+        <span class="proj-industry">Digital health</span>
+        <h3>Event tracking &amp; analytics rebuild</h3>
+        <p>Replaced a broken legacy tracking setup on a patient engagement platform with a clean GA4 implementation, custom funnel events, and a PostHog product analytics layer for in-app behaviour.</p>
+        <div class="proj-tags"><span class="proj-tag">GA4</span><span class="proj-tag">PostHog</span><span class="proj-tag">GTM</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="carousel-controls">
+      <button class="carousel-btn" id="carousel-prev" aria-label="Previous projects">&#8592;</button>
+      <button class="carousel-btn" id="carousel-next" aria-label="Next projects">&#8594;</button>
     </div>
   </div>
 </section>
@@ -1015,20 +1122,20 @@
 <section id="about">
   <div class="wrap">
     <div class="sec-head">
-      <span class="sec-num">03 / About</span>
+      <span class="sec-num">About</span>
       <h2>One person, the whole pipeline</h2>
     </div>
     <div class="about-grid">
       <div class="about-body">
-        <p>Mott Design is a freelance studio working with <strong>medical device, genomics, and healthcare-technology</strong> companies — the kind of clients where a marketing site has to be fast, compliant, and measurable, not just pretty.</p>
+        <p>Mott Design is a freelance studio for <strong>high-growth technology companies</strong> — life sciences, digital health, cybersecurity, and beyond. The kind of clients where the marketing stack has to keep up with the science.</p>
         <p>Because it's one person from kickoff to launch, the build and the tracking are never someone else's problem. The site gets designed, developed, migrated, instrumented, and handed back to you with the analytics and consent already working — and documentation so your team isn't stuck.</p>
-        <p>The work spans the full marketing-technology stack: <strong>design and development, GA4 and Tag Manager, SEO, consent compliance, HubSpot, and email automation.</strong> One point of contact, no handoffs between agencies.</p>
+        <p>The work spans the full marketing-technology stack: <strong>design and development, GA4 and Tag Manager, SEO, consent compliance, CRM integrations, and automation.</strong> One point of contact, no handoffs between agencies.</p>
       </div>
       <dl class="facts">
         <div class="fact"><dt>Based in</dt><dd>Monterey, CA</dd></div>
         <div class="fact"><dt>Model</dt><dd>Solo studio</dd></div>
         <div class="fact"><dt>Billing</dt><dd>Hourly · monthly</dd></div>
-        <div class="fact"><dt>Industries</dt><dd>Med device · biotech</dd></div>
+        <div class="fact"><dt>Industries</dt><dd>Life sciences · digital health · cybersecurity</dd></div>
         <div class="fact"><dt>Platforms</dt><dd>Webflow · WordPress · custom</dd></div>
         <div class="fact"><dt>Availability</dt><dd>Taking projects</dd></div>
       </dl>
@@ -1039,7 +1146,7 @@
 <section id="contact">
   <div class="wrap">
     <div class="sec-head">
-      <span class="sec-num">04 / Contact</span>
+      <span class="sec-num">Contact</span>
       <h2>Tell me about the project</h2>
       <p>Send a few lines on what you're building or what's broken, and you'll get a real reply with a scope and a quote — not a sales sequence.</p>
     </div>
@@ -1071,10 +1178,10 @@
 
 <footer>
   <div class="wrap foot-inner">
-    <div class="brand">Mott<span>.</span>Design</div>
+    <div class="brand">mott<span>.</span>design</div>
     <nav class="foot-links" aria-label="Resources">
-      <a href="glossary.html">Web &amp; Martech Glossary</a>
-      <a href="faq.html">FAQ</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms &amp; Conditions</a>
     </nav>
     <p>&copy; <span id="yr"></span> Mott Design LLC · Monterey, California</p>
   </div>
@@ -1915,6 +2022,23 @@
     const wfPanel = document.getElementById('webflow-panel');
     if (wfPanel) wfPanel.classList.add('in-view');
   }
+
+  // ── Work carousel controls ────────────────────────────────────────────────
+  (function() {
+    var carousel = document.getElementById('work-carousel');
+    var btnNext  = document.getElementById('carousel-next');
+    var btnPrev  = document.getElementById('carousel-prev');
+    if (!carousel || !btnNext || !btnPrev) return;
+    var cardW = function() { var c = carousel.querySelector('.project'); return c ? c.offsetWidth + 16 : 396; };
+    btnNext.addEventListener('click', function() { carousel.scrollBy({ left: cardW(), behavior: 'smooth' }); });
+    btnPrev.addEventListener('click', function() { carousel.scrollBy({ left: -cardW(), behavior: 'smooth' }); });
+    // drag-to-scroll
+    var isDown = false, startX, scrollLeft;
+    carousel.addEventListener('mousedown', function(e) { isDown = true; startX = e.pageX - carousel.offsetLeft; scrollLeft = carousel.scrollLeft; carousel.style.scrollBehavior = 'auto'; });
+    carousel.addEventListener('mouseleave', function() { isDown = false; carousel.style.scrollBehavior = ''; });
+    carousel.addEventListener('mouseup',    function() { isDown = false; carousel.style.scrollBehavior = ''; });
+    carousel.addEventListener('mousemove',  function(e) { if (!isDown) return; e.preventDefault(); var x = e.pageX - carousel.offsetLeft; carousel.scrollLeft = scrollLeft - (x - startX); });
+  })();
 </script>
 
 </body>
