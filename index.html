@@ -449,7 +449,7 @@
   .sec-head p { color: var(--muted); font-size: 1.08rem; }
 
   /* ---- logo bar ---- */
-  .logo-bar { border-bottom: 1px solid var(--line); padding: 28px 0; overflow: hidden; opacity: 0; transition: opacity 0.8s ease; }
+  .logo-bar { border-bottom: 1px solid var(--line); padding: 28px 0; overflow: hidden; }
   .logo-bar-label {
     font-family: var(--display); font-size: 0.68rem; font-weight: 700;
     letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
@@ -466,7 +466,8 @@
     0% { transform: translateX(var(--scroll-from, 0px)); }
     100% { transform: translateX(var(--scroll-to, -50%)); }
   }
-  .logo-item { flex-shrink: 0; color: var(--accent); display: flex; align-items: center; }
+  .logo-item { flex-shrink: 0; color: var(--accent); display: flex; align-items: center; opacity: 0; transition: opacity 0.55s ease; }
+  .logo-item.reveal { opacity: 1; }
   /* For inline SVG logos: set fill="currentColor" on each <svg>. The color: var(--accent)
      on .logo-item handles tinting. For <img> tags, add: filter: brightness(0) invert(0.85); */
   .logo-item svg { height: 22px; width: auto; }
@@ -783,12 +784,12 @@
   <p class="logo-bar-label">Trusted by</p>
   <div class="logo-track-wrap">
     <div class="logo-track">
-      <div class="logo-item"><img src="logos/google.svg" alt="Google" height="22"></div>
+      <div class="logo-item logo-google"><img src="logos/google_2.svg" alt="Google" height="22"></div>
       <div class="logo-item"><img src="logos/23andme.svg" alt="23andMe" height="22"></div>
       <div class="logo-item"><img src="logos/variphy.svg" alt="Variphy" height="22"></div>
       <div class="logo-item"><img src="logos/genome_medical.svg" alt="Genome Medical" height="22"></div>
       <div class="logo-item"><img src="logos/freenome.svg" alt="Freenome" height="22"></div>
-      <div class="logo-item"><img src="logos/aao_2.svg" alt="AAO" height="22"></div>
+      <div class="logo-item"><img src="logos/aao_3.svg" alt="AAO" height="22"></div>
       <div class="logo-item"><img src="logos/mdisrupt.svg" alt="mDisrupt" height="22"></div>
       <div class="logo-item"><img src="logos/paradigm_health.svg" alt="Paradigm Health" height="22"></div>
       <div class="logo-item"><img src="logos/getwell.svg" alt="GetWell" height="22"></div>
@@ -805,12 +806,12 @@
       <div class="logo-item"><img src="logos/agendia.svg" alt="Agendia" height="22"></div>
       <div class="logo-item"><img src="logos/quokka.svg" alt="Quokka" height="22"></div>
       <!-- duplicate set for seamless scroll loop -->
-      <div class="logo-item" aria-hidden="true"><img src="logos/google.svg" alt="" height="22"></div>
+      <div class="logo-item logo-google" aria-hidden="true"><img src="logos/google_2.svg" alt="" height="22"></div>
       <div class="logo-item" aria-hidden="true"><img src="logos/23andme.svg" alt="" height="22"></div>
       <div class="logo-item" aria-hidden="true"><img src="logos/variphy.svg" alt="" height="22"></div>
       <div class="logo-item" aria-hidden="true"><img src="logos/genome_medical.svg" alt="" height="22"></div>
       <div class="logo-item" aria-hidden="true"><img src="logos/freenome.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img src="logos/aao_2.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/aao_3.svg" alt="" height="22"></div>
       <div class="logo-item" aria-hidden="true"><img src="logos/mdisrupt.svg" alt="" height="22"></div>
       <div class="logo-item" aria-hidden="true"><img src="logos/paradigm_health.svg" alt="" height="22"></div>
       <div class="logo-item" aria-hidden="true"><img src="logos/getwell.svg" alt="" height="22"></div>
@@ -1857,7 +1858,7 @@
   }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
   document.querySelectorAll('.svc-icon').forEach(icon => iconObs.observe(icon));
 
-  // ── Logo bar: fade in + start centered scroll ─────────────────────────────
+  // ── Logo bar: staggered reveal → centered scroll ─────────────────────────
   const logoBar = document.querySelector('.logo-bar');
   const logoTrack = document.querySelector('.logo-track');
   const logoWrap = document.querySelector('.logo-track-wrap');
@@ -1865,18 +1866,36 @@
     const logoBarObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (!e.isIntersecting) return;
-        logoBar.style.opacity = '1';
-        setTimeout(() => {
-          const wrapW = logoWrap.offsetWidth;
-          const setW = logoTrack.scrollWidth / 2;
-          const firstItem = logoTrack.querySelector('.logo-item');
-          const firstW = firstItem ? firstItem.offsetWidth : 80;
-          const startX = Math.round(wrapW / 2 - firstW / 2);
-          const endX = startX - Math.round(setW);
-          logoTrack.style.setProperty('--scroll-from', startX + 'px');
-          logoTrack.style.setProperty('--scroll-to', endX + 'px');
-          logoTrack.classList.add('is-scrolling');
-        }, 900);
+
+        // Measure: use duplicate Google (2nd half of track) for center calc
+        const wrapW = logoWrap.offsetWidth;
+        const setW = logoTrack.scrollWidth / 2;
+        const googleEl = logoTrack.querySelector('.logo-google');
+        const googleW = googleEl ? googleEl.offsetWidth : 80;
+        // Position so the duplicate Google (at offset setW in track) is centered
+        const startX = Math.round(wrapW / 2 - googleW / 2 - setW);
+        const endX = startX - Math.round(setW);
+        logoTrack.style.transform = 'translateX(' + startX + 'px)';
+
+        // Step 1: fade in Google items (original + duplicate both carry .logo-google)
+        logoTrack.querySelectorAll('.logo-google').forEach(g => g.classList.add('reveal'));
+
+        // Step 2: 1 s later — fade in all other logos
+        setTimeout(function() {
+          logoTrack.querySelectorAll('.logo-item:not(.logo-google)').forEach(function(item) {
+            item.classList.add('reveal');
+          });
+
+          // Step 3: after fade completes, hand off to scroll animation
+          setTimeout(function() {
+            logoTrack.style.setProperty('--scroll-from', startX + 'px');
+            logoTrack.style.setProperty('--scroll-to', endX + 'px');
+            logoTrack.style.transform = '';
+            void logoTrack.offsetWidth; // force reflow so animation picks up CSS vars
+            logoTrack.classList.add('is-scrolling');
+          }, 700);
+        }, 1000);
+
         logoBarObs.unobserve(e.target);
       });
     }, { threshold: 0.1 });
