@@ -1867,18 +1867,23 @@
       entries.forEach(e => {
         if (!e.isIntersecting) return;
 
-        // Measure: use duplicate Google (2nd half of track) for center calc
+        // Use the duplicate Google's actual offsetLeft for pixel-perfect centering
         const wrapW = logoWrap.offsetWidth;
-        const setW = logoTrack.scrollWidth / 2;
-        const googleEl = logoTrack.querySelector('.logo-google');
-        const googleW = googleEl ? googleEl.offsetWidth : 80;
-        // Position so the duplicate Google (at offset setW in track) is centered
-        const startX = Math.round(wrapW / 2 - googleW / 2 - setW);
-        const endX = startX - Math.round(setW);
+        const allGoogles = logoTrack.querySelectorAll('.logo-google');
+        const dupGoogle = allGoogles[1] || allGoogles[0];
+        const googleW = dupGoogle.offsetWidth;
+        const dupLeft = dupGoogle.offsetLeft;
+        const startX = Math.round(wrapW / 2 - googleW / 2 - dupLeft);
+        const setW = Math.round(logoTrack.scrollWidth / 2);
+        const endX = startX - setW;
         logoTrack.style.transform = 'translateX(' + startX + 'px)';
 
-        // Step 1: fade in Google items (original + duplicate both carry .logo-google)
-        logoTrack.querySelectorAll('.logo-google').forEach(g => g.classList.add('reveal'));
+        // Step 1: let browser commit opacity:0 first, then fade in Google
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            logoTrack.querySelectorAll('.logo-google').forEach(function(g) { g.classList.add('reveal'); });
+          });
+        });
 
         // Step 2: 1 s later — fade in all other logos
         setTimeout(function() {
