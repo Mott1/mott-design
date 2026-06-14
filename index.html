@@ -1227,25 +1227,25 @@
     s(510,  () => { L('Logo', 2); D(sRect(20, 18, 66, 26, {sw:1.2}), 0.24); });
     s(790,  () => { L('Nav Links', 2); [0,1,2,3].forEach(i => setTimeout(() => D(sLine(110+i*52, 33, 148+i*52, 33, {sw:2.5, stroke:C.ink}), 0.2), i*110)); });
     s(1280, () => { L('Sign In', 2); D(sRect(390, 18, 54, 26, {sw:1, stroke:C.muted}), 0.22); });
-    s(1500, () => { L('Get Started', 2); D(sRect(450, 18, 60, 26, {sw:1.2, fill:C.card, stroke:C.warn}), 0.24); });
+    s(1500, () => { L('Get Started', 2); D(sRect(450, 18, 60, 26, {sw:1.2, fill:C.card, stroke:C.accent}), 0.24); });
 
     s(1740, () => { L('Hero', 1, 'is-group'); D(sRect(10, 66, 500, 176, {sw:1, stroke:C.muted}), 0.5); });
-    s(2250, () => { L('Eyebrow', 2); D(sRect(22, 82, 110, 16, {sw:1, fill:C.card, stroke:C.warn, rx:8}), 0.22); });
+    s(2250, () => { L('Eyebrow', 2); D(sRect(22, 82, 110, 16, {sw:1, fill:C.card, stroke:C.accent, rx:8}), 0.22); });
     s(2480, () => { L('H1', 2); D(sLine(22, 112, 280, 112, {sw:10, stroke:C.accent}), 0.32); });
     s(2810, () => D(sLine(22, 132, 235, 132, {sw:10, stroke:C.accent}), 0.26));
     s(3060, () => { L('Subtext', 2); [0,1].forEach(i => setTimeout(() => D(sLine(22, 158+i*16, 22+[240,205][i], 158+i*16, {sw:2.5, stroke:C.muted}), 0.22), i*120)); });
-    s(3370, () => { L('CTAs', 2); D(sRect(22, 188, 108, 30, {sw:1.2, fill:C.card, stroke:C.warn}), 0.26); setTimeout(() => D(sRect(138, 188, 92, 30, {sw:1.2, stroke:C.muted}), 0.22), 230); });
+    s(3370, () => { L('CTAs', 2); D(sRect(22, 188, 108, 30, {sw:1.2, fill:C.card, stroke:C.accent}), 0.26); setTimeout(() => D(sRect(138, 188, 92, 30, {sw:1.2, stroke:C.muted}), 0.22), 230); });
 
     s(3730, () => { L('Product Screenshot', 2); D(sRect(265, 72, 234, 162, {sw:1.5, fill:C.lineV, stroke:C.muted}), 0.44); });
     s(4180, () => { D(sRect(275, 82, 214, 20, {sw:1, fill:C.card, stroke:C.muted}), 0.2); });
     s(4380, () => {
       D(sLine(285, 94, 408, 94, {sw:3, stroke:C.muted}), 0.18);
-      D(sLine(428, 94, 454, 94, {sw:3, stroke:C.warn}), 0.14);
+      D(sLine(428, 94, 454, 94, {sw:3, stroke:C.accent}), 0.14);
     });
     s(4560, () => {
       D(sLine(275, 112, 489, 112, {sw:1, stroke:C.lineV}), 0.18);
       [[279,54],[306,38],[333,62],[360,30],[387,48]].forEach(([x,h],i) =>
-        setTimeout(() => D(sRect(x, 218-h, 20, h, {sw:1, fill:C.warnD, stroke:C.warn}), 0.26), i*100)
+        setTimeout(() => D(sRect(x, 218-h, 20, h, {sw:1, fill:C.card, stroke:C.accent}), 0.26), i*100)
       );
     });
 
@@ -1254,7 +1254,7 @@
     s(6060, () => { L('Features', 1, 'is-group'); [[10,316],[182,316],[354,316]].forEach(([x,y],i) => {
       setTimeout(() => { L('Feature '+(i+1), 2); D(sRect(x, y, 156, 120, {sw:1.5}), 0.36); }, i*380);
       setTimeout(() => {
-        D(sRect(x+12, y+14, 26, 20, {sw:1, fill:C.card, stroke:C.warn}), 0.16);
+        D(sRect(x+12, y+14, 26, 20, {sw:1, fill:C.card, stroke:C.accent}), 0.16);
         D(sLine(x+12, y+48, x+88, y+48, {sw:5, stroke:C.accent}), 0.18);
         D(sLine(x+12, y+66, x+124, y+66, {sw:2, stroke:C.muted}), 0.16);
         D(sLine(x+12, y+82, x+106, y+82, {sw:2, stroke:C.muted}), 0.16);
