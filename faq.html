@@ -97,6 +97,18 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body { background: var(--paper); color: var(--ink); font-family: var(--body); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .grain-bg {
+    filter: contrast(200%);
+    pointer-events: none;
+    background-image: url('grain.png');
+    background-position: 50%;
+    background-size: contain;
+    background-attachment: fixed;
+    background-repeat: repeat;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+  }
   .wrap { max-width: 860px; margin: 0 auto; padding: 0 56px; }
   @media (max-width: 720px) { .wrap { padding: 0 24px; } }
 
@@ -157,6 +169,7 @@
 </style>
 </head>
 <body>
+<div class="grain-bg" aria-hidden="true"></div>
 
 <nav>
   <div class="wrap nav-inner">
