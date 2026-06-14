@@ -11,6 +11,9 @@
 <meta property="og:title" content="Web Development & Martech Glossary — Mott Design">
 <meta property="og:description" content="Plain-language definitions of web development, analytics, SEO, consent compliance, and marketing technology terms.">
 <meta property="og:url" content="https://mottdesign.com/glossary.html">
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<!-- End cookieyes banner -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -108,6 +111,17 @@
   .foot-links { display: flex; gap: 20px; }
   .foot-links a { font-size: 0.82rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .foot-links a:hover { color: var(--accent); }
+  /* CookieYes banner */
+  .cky-consent-container, .cky-modal { background: var(--paper-2) !important; border-color: var(--line) !important; }
+  .cky-consent-bar { background: var(--paper-2) !important; border-top: 1px solid var(--line) !important; box-shadow: none !important; }
+  .cky-title h2, .cky-title { color: var(--ink) !important; font-family: 'Space Grotesk', sans-serif !important; }
+  .cky-notice-des, .cky-notice-des p { color: var(--muted) !important; font-family: 'Inter', sans-serif !important; }
+  .cky-notice-des a, .cky-policy-btn { color: var(--accent) !important; }
+  .cky-btn-accept { background: var(--warn) !important; border-color: var(--warn) !important; color: var(--ink) !important; border-radius: 4px !important; font-family: 'Space Grotesk', sans-serif !important; font-weight: 600 !important; }
+  .cky-btn-reject, .cky-btn-customize { background: transparent !important; border: 1.5px solid rgba(228,234,200,0.4) !important; color: var(--ink) !important; border-radius: 4px !important; font-family: 'Space Grotesk', sans-serif !important; }
+  .cky-btn-accept:hover { opacity: 0.85 !important; }
+  .cky-btn-reject:hover, .cky-btn-customize:hover { border-color: var(--ink) !important; }
+  .cky-close-btn svg path { stroke: var(--muted) !important; }
 </style>
 </head>
 <body>
@@ -565,7 +579,6 @@
     <nav class="foot-links">
       <a href="privacy.html">Privacy Policy</a>
       <a href="terms.html">Terms &amp; Conditions</a>
-      <a href="index.html">Home</a>
     </nav>
     <p>&copy; <span id="yr"></span> Mott Design LLC · Monterey, California</p>
   </div>

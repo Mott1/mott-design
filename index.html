@@ -42,6 +42,9 @@
   }
 }
 </script>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<!-- End cookieyes banner -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -492,34 +495,35 @@
   .svc-icon path, .svc-icon line, .svc-icon rect, .svc-icon circle, .svc-icon polyline {
     stroke-dasharray: 300;
     stroke-dashoffset: 300;
-    transition: stroke-dashoffset 0s;
+  }
+  @keyframes svc-draw-cycle {
+    0%   { stroke-dashoffset: 300; animation-timing-function: cubic-bezier(0.16,1,0.3,1); }
+    30%  { stroke-dashoffset: 0;   animation-timing-function: linear; }
+    60%  { stroke-dashoffset: 0;   animation-timing-function: ease-in; }
+    90%  { stroke-dashoffset: 300; animation-timing-function: linear; }
+    100% { stroke-dashoffset: 300; }
   }
   .svc-icon.drawn path, .svc-icon.drawn line, .svc-icon.drawn rect,
   .svc-icon.drawn circle, .svc-icon.drawn polyline {
-    stroke-dashoffset: 0;
-    transition: stroke-dashoffset 2.4s cubic-bezier(0.16,1,0.3,1);
+    animation: svc-draw-cycle 6s linear var(--cycle-delay, 0s) infinite both;
   }
-  .svc-icon.drawn > :nth-child(2) { transition-delay: 0.3s; }
-  .svc-icon.drawn > :nth-child(3) { transition-delay: 0.6s; }
-  .svc-icon.drawn > :nth-child(4) { transition-delay: 0.9s; }
-  .svc-icon.drawn > :nth-child(5) { transition-delay: 1.2s; }
-  .svc-icon.drawn > :nth-child(6) { transition-delay: 1.5s; }
-  @keyframes svc-float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-4px); }
-  }
-  .svc-icon.drawn { animation: svc-float 3s ease-in-out 4s infinite; }
-  .svc:nth-child(2)  .svc-icon.drawn { animation-delay: 4.25s; }
-  .svc:nth-child(3)  .svc-icon.drawn { animation-delay: 4.5s; }
-  .svc:nth-child(4)  .svc-icon.drawn { animation-delay: 4.75s; }
-  .svc:nth-child(5)  .svc-icon.drawn { animation-delay: 5s; }
-  .svc:nth-child(6)  .svc-icon.drawn { animation-delay: 5.25s; }
-  .svc:nth-child(7)  .svc-icon.drawn { animation-delay: 5.5s; }
-  .svc:nth-child(8)  .svc-icon.drawn { animation-delay: 5.75s; }
-  .svc:nth-child(9)  .svc-icon.drawn { animation-delay: 6s; }
-  .svc:nth-child(10) .svc-icon.drawn { animation-delay: 6.25s; }
-  .svc:nth-child(11) .svc-icon.drawn { animation-delay: 6.5s; }
-  .svc:nth-child(12) .svc-icon.drawn { animation-delay: 6.75s; }
+  .svc-icon.drawn > :nth-child(2) { animation-delay: calc(var(--cycle-delay, 0s) + 0.25s); }
+  .svc-icon.drawn > :nth-child(3) { animation-delay: calc(var(--cycle-delay, 0s) + 0.5s); }
+  .svc-icon.drawn > :nth-child(4) { animation-delay: calc(var(--cycle-delay, 0s) + 0.75s); }
+  .svc-icon.drawn > :nth-child(5) { animation-delay: calc(var(--cycle-delay, 0s) + 1s); }
+  .svc-icon.drawn > :nth-child(6) { animation-delay: calc(var(--cycle-delay, 0s) + 1.25s); }
+  .svc:nth-child(1)  { --cycle-delay: 0s; }
+  .svc:nth-child(2)  { --cycle-delay: 0.4s; }
+  .svc:nth-child(3)  { --cycle-delay: 0.8s; }
+  .svc:nth-child(4)  { --cycle-delay: 1.2s; }
+  .svc:nth-child(5)  { --cycle-delay: 1.6s; }
+  .svc:nth-child(6)  { --cycle-delay: 2.0s; }
+  .svc:nth-child(7)  { --cycle-delay: 2.4s; }
+  .svc:nth-child(8)  { --cycle-delay: 2.8s; }
+  .svc:nth-child(9)  { --cycle-delay: 3.2s; }
+  .svc:nth-child(10) { --cycle-delay: 3.6s; }
+  .svc:nth-child(11) { --cycle-delay: 4.0s; }
+  .svc:nth-child(12) { --cycle-delay: 4.4s; }
   @media (max-width: 900px) and (min-width: 721px) { .svc-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 720px) { .svc-grid { grid-template-columns: 1fr; } }
 
@@ -638,6 +642,17 @@
   .fact.in-view { opacity: 1; transform: none; }
 
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  /* CookieYes banner */
+  .cky-consent-container, .cky-modal { background: var(--paper-2) !important; border-color: var(--line) !important; }
+  .cky-consent-bar { background: var(--paper-2) !important; border-top: 1px solid var(--line) !important; box-shadow: none !important; }
+  .cky-title h2, .cky-title { color: var(--ink) !important; font-family: 'Space Grotesk', sans-serif !important; }
+  .cky-notice-des, .cky-notice-des p { color: var(--muted) !important; font-family: 'Inter', sans-serif !important; }
+  .cky-notice-des a, .cky-policy-btn { color: var(--accent) !important; }
+  .cky-btn-accept { background: var(--warn) !important; border-color: var(--warn) !important; color: var(--ink) !important; border-radius: 4px !important; font-family: 'Space Grotesk', sans-serif !important; font-weight: 600 !important; }
+  .cky-btn-reject, .cky-btn-customize { background: transparent !important; border: 1.5px solid rgba(228,234,200,0.4) !important; color: var(--ink) !important; border-radius: 4px !important; font-family: 'Space Grotesk', sans-serif !important; }
+  .cky-btn-accept:hover { opacity: 0.85 !important; }
+  .cky-btn-reject:hover, .cky-btn-customize:hover { border-color: var(--ink) !important; }
+  .cky-close-btn svg path { stroke: var(--muted) !important; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { transition: none !important; animation: none !important; }
@@ -2029,15 +2044,42 @@
     var btnNext  = document.getElementById('carousel-next');
     var btnPrev  = document.getElementById('carousel-prev');
     if (!carousel || !btnNext || !btnPrev) return;
-    var cardW = function() { var c = carousel.querySelector('.project'); return c ? c.offsetWidth + 16 : 396; };
+
+    // Clone cards for seamless infinite scroll
+    var originals = Array.from(carousel.querySelectorAll('.project'));
+    originals.forEach(function(card) {
+      var clone = card.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      carousel.appendChild(clone);
+    });
+
+    var half = carousel.scrollWidth / 2;
+    function cardW() { return originals[0] ? originals[0].offsetWidth + 16 : 396; }
+
+    // Reset to equivalent position in original set when entering clone territory
+    carousel.addEventListener('scroll', function() {
+      if (carousel.scrollLeft >= half) {
+        carousel.scrollLeft -= half;
+      }
+    });
+
     btnNext.addEventListener('click', function() { carousel.scrollBy({ left: cardW(), behavior: 'smooth' }); });
-    btnPrev.addEventListener('click', function() { carousel.scrollBy({ left: -cardW(), behavior: 'smooth' }); });
+    btnPrev.addEventListener('click', function() {
+      if (carousel.scrollLeft < cardW()) {
+        // Teleport to end of original set so prev scrolls backward through it
+        carousel.style.scrollBehavior = 'auto';
+        carousel.scrollLeft = half - carousel.offsetWidth;
+        carousel.style.scrollBehavior = '';
+      }
+      carousel.scrollBy({ left: -cardW(), behavior: 'smooth' });
+    });
+
     // drag-to-scroll
-    var isDown = false, startX, scrollLeft;
-    carousel.addEventListener('mousedown', function(e) { isDown = true; startX = e.pageX - carousel.offsetLeft; scrollLeft = carousel.scrollLeft; carousel.style.scrollBehavior = 'auto'; });
+    var isDown = false, startX, startScrollLeft;
+    carousel.addEventListener('mousedown', function(e) { isDown = true; startX = e.pageX - carousel.offsetLeft; startScrollLeft = carousel.scrollLeft; carousel.style.scrollBehavior = 'auto'; });
     carousel.addEventListener('mouseleave', function() { isDown = false; carousel.style.scrollBehavior = ''; });
     carousel.addEventListener('mouseup',    function() { isDown = false; carousel.style.scrollBehavior = ''; });
-    carousel.addEventListener('mousemove',  function(e) { if (!isDown) return; e.preventDefault(); var x = e.pageX - carousel.offsetLeft; carousel.scrollLeft = scrollLeft - (x - startX); });
+    carousel.addEventListener('mousemove',  function(e) { if (!isDown) return; e.preventDefault(); var x = e.pageX - carousel.offsetLeft; carousel.scrollLeft = startScrollLeft - (x - startX); });
   })();
 </script>
 
