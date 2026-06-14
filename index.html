@@ -119,7 +119,7 @@
   }
   .hero-content { width: 100%; }
   .eyebrow {
-    font-family: var(--display); font-size: 0.68rem; font-weight: 600;
+    font-family: var(--display); font-size: 0.9rem; font-weight: 600;
     letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
     margin-bottom: 24px;
   }
@@ -133,6 +133,7 @@
   .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; }
   .hero-tools {
     padding-top: 24px; border-top: 1px solid var(--line);
+    margin-left: -56px; margin-right: -56px;
   }
   .hero-right {
     position: absolute;
@@ -160,6 +161,8 @@
     .hero-left { border-right: none; border-bottom: 1px solid var(--line); padding: 80px 28px 56px; align-items: flex-start; }
     .hero-right { position: relative; top: 0 !important; width: 100%; min-height: 440px; }
     .terminal-clean { top: 42%; left: 8%; }
+    .hero-tools { margin-left: -28px; margin-right: -28px; }
+    .tools-label { padding-left: 28px; }
   }
 
   /* ---- figma design canvas ---- */
@@ -236,6 +239,7 @@
   .wf-toolbar {
     height: 40px; flex-shrink: 0; background: var(--paper);
     display: flex; align-items: center; z-index: 1;
+    border-bottom: 1px solid var(--line);
   }
   .wf-logo-box {
     width: 40px; height: 40px; flex-shrink: 0; background: var(--warn);
@@ -344,9 +348,9 @@
 
   /* ---- terminal: clean solution card ---- */
   .terminal-clean {
-    position: absolute; top: 50%; left: 35%; right: 0; bottom: 0;
-    background: var(--paper);
-    border: 1px solid rgba(228,234,200,0.25);
+    position: absolute; top: 50%; left: 50%; right: 0; bottom: 0;
+    background: var(--ink);
+    border: 1px solid rgba(41,93,50,0.22);
     border-right: none; border-bottom: none;
     border-radius: 10px 0 0 0;
     box-shadow: -10px -10px 52px rgba(0,0,0,0.38);
@@ -355,12 +359,19 @@
     transition: transform 0.72s cubic-bezier(0.16,1,0.3,1);
   }
   .terminal-clean.in-view { transform: translateX(0); }
-  .terminal-clean .terminal-bar { background: var(--paper-2); border-bottom: 1px solid var(--line); }
+  .terminal-clean .terminal-bar { background: rgba(41,93,50,0.1); border-bottom: 1px solid rgba(41,93,50,0.18); }
+  .terminal-clean .terminal-code { color: var(--paper); }
+  .terminal-clean .tc-cmd { color: var(--paper); }
+  .terminal-clean .tc-val { color: var(--warn); }
+  .terminal-clean .tc-ok  { color: var(--paper); }
+  .terminal-clean .tc-cmt { color: var(--muted); }
+  .terminal-clean .tc-dim { color: rgba(41,93,50,0.65); }
+  .terminal-clean .terminal-cursor { background: var(--paper); }
   .terminal-clean .terminal-body { flex: 1; padding: 14px 18px 0; overflow: hidden; position: relative; }
   .terminal-clean .terminal-body::after {
     content: '';
     position: absolute; top: 0; right: 0; bottom: 0;
-    width: 1px; background: var(--line);
+    width: 1px; background: rgba(41,93,50,0.15);
   }
 
   /* ---- shared terminal chrome ---- */
@@ -410,9 +421,9 @@
 
   /* ---- tools strip (in hero) ---- */
   .tools-label {
-    font-family: var(--display); font-size: 0.68rem; font-weight: 600;
+    font-family: var(--display); font-size: 0.9rem; font-weight: 600;
     letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
-    margin-bottom: 14px;
+    margin-bottom: 14px; padding-left: 56px;
   }
   .tools-grid {
     display: grid; grid-template-columns: repeat(7, 1fr); width: 100%; row-gap: 18px;
@@ -424,7 +435,6 @@
   }
   .tool-item img {
     width: 26px; height: 26px; object-fit: contain;
-    filter: brightness(0) invert(1) opacity(0.4);
   }
   .tool-item span {
     font-size: 0.65rem; font-weight: 500; color: var(--muted);
@@ -604,59 +614,59 @@
         <p class="tools-label">Some of the tools I use</p>
         <div class="tools-grid">
           <div class="tool-item" title="Webflow">
-            <img src="https://cdn.simpleicons.org/webflow" alt="Webflow" width="26" height="26">
+            <img src="https://cdn.simpleicons.org/webflow/D1DBB9" alt="Webflow" width="26" height="26">
             <span>Webflow</span>
           </div>
           <div class="tool-item" title="WordPress">
-            <img src="https://cdn.simpleicons.org/wordpress" alt="WordPress" width="26" height="26">
+            <img src="https://cdn.simpleicons.org/wordpress/D1DBB9" alt="WordPress" width="26" height="26">
             <span>WordPress</span>
           </div>
           <div class="tool-item" title="Google Tag Manager">
-            <img src="https://cdn.simpleicons.org/googletagmanager" alt="Google Tag Manager" width="26" height="26">
+            <img src="https://cdn.simpleicons.org/googletagmanager/D1DBB9" alt="Google Tag Manager" width="26" height="26">
             <span>Tag Manager</span>
           </div>
           <div class="tool-item" title="Google Analytics">
-            <img src="https://cdn.simpleicons.org/googleanalytics" alt="Google Analytics" width="26" height="26">
+            <img src="https://cdn.simpleicons.org/googleanalytics/D1DBB9" alt="Google Analytics" width="26" height="26">
             <span>GA4</span>
           </div>
           <div class="tool-item" title="HubSpot">
-            <img src="https://cdn.simpleicons.org/hubspot" alt="HubSpot" width="26" height="26">
+            <img src="https://cdn.simpleicons.org/hubspot/D1DBB9" alt="HubSpot" width="26" height="26">
             <span>HubSpot</span>
           </div>
           <div class="tool-item" title="SEMrush">
-            <img src="https://cdn.simpleicons.org/semrush" alt="SEMrush" width="26" height="26">
+            <img src="https://cdn.simpleicons.org/semrush/D1DBB9" alt="SEMrush" width="26" height="26">
             <span>SEMrush</span>
           </div>
           <div class="tool-item" title="Figma">
-            <img src="https://cdn.simpleicons.org/figma" alt="Figma" width="26" height="26">
+            <img src="https://cdn.simpleicons.org/figma/D1DBB9" alt="Figma" width="26" height="26">
             <span>Figma</span>
           </div>
           <div class="tool-item" title="Claude">
-            <img src="https://cdn.simpleicons.org/claude" alt="Claude" width="26" height="26">
+            <img src="https://cdn.simpleicons.org/claude/D1DBB9" alt="Claude" width="26" height="26">
             <span>Claude</span>
           </div>
           <div class="tool-item" title="Elementor">
-            <img src="https://cdn.simpleicons.org/elementor" alt="Elementor" width="26" height="26">
+            <img src="https://cdn.simpleicons.org/elementor/D1DBB9" alt="Elementor" width="26" height="26">
             <span>Elementor</span>
           </div>
           <div class="tool-item" title="PostHog">
-            <img src="https://cdn.simpleicons.org/posthog" alt="PostHog" width="26" height="26">
+            <img src="https://cdn.simpleicons.org/posthog/D1DBB9" alt="PostHog" width="26" height="26">
             <span>PostHog</span>
           </div>
           <div class="tool-item" title="GitHub">
-            <img src="https://cdn.simpleicons.org/github" alt="GitHub" width="26" height="26">
+            <img src="https://cdn.simpleicons.org/github/D1DBB9" alt="GitHub" width="26" height="26">
             <span>GitHub</span>
           </div>
           <div class="tool-item" title="Railway">
-            <img src="https://cdn.simpleicons.org/railway" alt="Railway" width="26" height="26">
+            <img src="https://cdn.simpleicons.org/railway/D1DBB9" alt="Railway" width="26" height="26">
             <span>Railway</span>
           </div>
           <div class="tool-item" title="Claude Code">
-            <img src="https://cdn.simpleicons.org/claudecode" alt="Claude Code" width="26" height="26">
+            <img src="https://cdn.simpleicons.org/claudecode/D1DBB9" alt="Claude Code" width="26" height="26">
             <span>Claude Code</span>
           </div>
           <div class="tool-item" title="Stripe">
-            <img src="https://cdn.simpleicons.org/stripe" alt="Stripe" width="26" height="26">
+            <img src="https://cdn.simpleicons.org/stripe/D1DBB9" alt="Stripe" width="26" height="26">
             <span>Stripe</span>
           </div>
         </div>
@@ -1154,10 +1164,7 @@
     if (heroPhase !== 'terminal') return;
     const output = document.getElementById('terminal-output');
     if (output) output.innerHTML = '';
-    typeClean(TERM_HTML, () => {
-      if (heroPhase !== 'terminal') return;
-      setTimeout(startExitPhase, 3500);
-    });
+    typeClean(TERM_HTML, () => {});
   }
 
   // ── Figma design canvas ───────────────────────────────────────────────────
@@ -1392,8 +1399,8 @@
     drawAnalyticsLanding(gen, () => {
       setTimeout(() => {
         if (figmaGen !== gen || heroPhase !== 'figma') return;
-        setTimeout(startWebflowPhase, 600);
-      }, 2000);
+        startWebflowPhase();
+      }, 500);
     });
   }
 
@@ -1646,7 +1653,7 @@
         if (heroPhase !== 'webflow') return;
         setTimeout(startTerminalPhase, 500);
       });
-    }, 750);
+    }, 300);
   }
 
   function startTerminalPhase() {
@@ -1696,7 +1703,7 @@
       e.target.classList.add('drawn');
       iconObs.unobserve(e.target);
     });
-  }, { threshold: 0, rootMargin: '0px 0px -50% 0px' });
+  }, { threshold: 0, rootMargin: '0px 0px -75% 0px' });
   document.querySelectorAll('.svc-icon').forEach(icon => iconObs.observe(icon));
 
   if (!reduced) {

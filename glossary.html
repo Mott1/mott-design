@@ -128,6 +128,24 @@
           <dt>Analytics (web analytics)</dt>
           <dd>The collection and measurement of user behaviour on a website — page views, sessions, events, conversions, and more. <strong>Google Analytics 4 (GA4) is the current standard.</strong> Raw analytics data is unreliable without a clean implementation: misconfigured tags, missing filters, and broken cross-domain tracking are common problems that silently distort reporting.</dd>
         </div>
+        <div class="term" id="ab-testing">
+          <dt>A/B Testing <span class="term-tag">Analytics</span></dt>
+          <dd>A controlled experiment that shows two variants of a page (or element) to split audiences and measures which performs better against a defined goal — click-through rate, form fill, revenue. Also called split testing. Tools include Google Optimize (deprecated), VWO, and Optimizely. <strong>Statistical significance matters:</strong> calling a winner too early is one of the most common A/B testing mistakes.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="glossary-section" id="B">
+      <p class="glossary-letter">B</p>
+      <dl class="term-list">
+        <div class="term" id="bounce-rate">
+          <dt>Bounce Rate <span class="term-tag">Analytics</span></dt>
+          <dd>In GA4, a bounce is a session where the user had no engagement events (clicks, scrolls past 90%, or time on site over 10 seconds). Bounce rate is the percentage of such sessions. <strong>A high bounce rate on a landing page is often a targeting or relevance problem</strong>, not purely a design issue. Compare with engagement rate, GA4's positive counterpart metric.</dd>
+        </div>
+        <div class="term" id="brand-guidelines">
+          <dt>Brand Guidelines</dt>
+          <dd>A document (or design system) defining the visual and tonal rules for a brand — logo usage, colour palette, typography, imagery style, and voice. Strong brand guidelines make web builds faster and ensure consistency across pages, campaigns, and designers. Usually delivered as a Figma file or PDF alongside a design handoff.</dd>
+        </div>
       </dl>
     </section>
 
@@ -162,6 +180,22 @@
           <dt>CTA — Call to Action</dt>
           <dd>A button, link, or prompt that asks the visitor to do something — "Request a demo", "Download the guide", "Book a call". CTA placement, copy, and contrast are among the highest-leverage items in conversion optimisation.</dd>
         </div>
+        <div class="term" id="cvr">
+          <dt>Conversion Rate (CVR) <span class="term-tag">Analytics</span></dt>
+          <dd>The percentage of visitors (or sessions) that complete a desired action — a form fill, purchase, or demo request. CVR = conversions ÷ sessions × 100. <strong>Improving CVR is often higher-ROI than increasing traffic</strong> because it multiplies the value of existing spend. Even a 0.5% lift on a high-traffic page can move revenue meaningfully.</dd>
+        </div>
+        <div class="term" id="cpc">
+          <dt>CPC — Cost Per Click <span class="term-tag">Analytics</span></dt>
+          <dd>The amount paid each time a user clicks an ad in a pay-per-click (PPC) campaign. CPC = total ad spend ÷ total clicks. Used to evaluate ad efficiency and set bids in Google Ads. Compare with CPM (cost per impression) and CPA (cost per acquisition).</dd>
+        </div>
+        <div class="term" id="cpm">
+          <dt>CPM — Cost Per Thousand Impressions <span class="term-tag">Analytics</span></dt>
+          <dd>A pricing model for display and social advertising where you pay per 1,000 impressions (views of your ad), regardless of clicks. CPM campaigns optimise for reach and brand awareness rather than direct response. Common on Meta Ads, LinkedIn, and programmatic networks.</dd>
+        </div>
+        <div class="term" id="customer-journey">
+          <dt>Customer Journey <span class="term-tag">Martech</span></dt>
+          <dd>The sequence of touchpoints a prospect moves through from first awareness to closed deal and beyond. Typically modelled as: Awareness → Consideration → Decision → Retention. A well-instrumented website maps GA4 events and CRM stages to journey phases so you can identify where people drop off and what content moves them forward.</dd>
+        </div>
       </dl>
     </section>
 
@@ -175,6 +209,14 @@
         <div class="term" id="dns">
           <dt>DNS — Domain Name System</dt>
           <dd>The internet's address book: it translates human-readable domain names (mottdesign.com) into IP addresses. DNS changes — pointing a domain to a new host, adding verification records, or setting up subdomains — are required during migrations and often have propagation delays of minutes to 48 hours.</dd>
+        </div>
+        <div class="term" id="domain-authority">
+          <dt>Domain Authority (DA) <span class="term-tag">SEO</span></dt>
+          <dd>A third-party metric (Moz) that scores a domain's likely ranking strength on a 1–100 scale, based primarily on the quality and quantity of inbound links. Not a Google signal — Google uses its own link-quality algorithms — but useful as a relative benchmark when comparing sites in the same niche. Similar metrics: Ahrefs Domain Rating (DR), SEMrush Authority Score.</dd>
+        </div>
+        <div class="term" id="drip-campaign">
+          <dt>Drip Campaign <span class="term-tag">Martech</span></dt>
+          <dd>An automated email sequence that sends messages at timed intervals after a trigger event — typically a form fill or list sign-up. The goal is to educate, nurture, or convert a lead without manual follow-up. Common in HubSpot, Klaviyo, and Mailchimp. Effectiveness depends on the trigger logic, list segmentation, and the relevance of each message to where the recipient is in the funnel.</dd>
         </div>
       </dl>
     </section>
@@ -193,6 +235,24 @@
         <div class="term" id="event-tracking">
           <dt>Event Tracking <span class="term-tag">Analytics</span></dt>
           <dd>In GA4, nearly everything is an event — page views, clicks, form submissions, video plays, scroll depth. <strong>Custom events</strong> (e.g. "demo_request_submitted") are configured via GTM to track specific interactions that matter to your business goals. Unlike Universal Analytics, GA4 has no goals — conversions are just events marked as key events.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="glossary-section" id="F">
+      <p class="glossary-letter">F</p>
+      <dl class="term-list">
+        <div class="term" id="figma">
+          <dt>Figma</dt>
+          <dd>A browser-based UI design and prototyping tool that has become the industry standard for web and product design. Supports real-time collaboration, component libraries, and auto-layout. Design handoffs from Figma to Webflow or custom development are a core part of the Mott Design workflow — components designed in Figma translate directly into the build, reducing back-and-forth.</dd>
+        </div>
+        <div class="term" id="first-party-data">
+          <dt>First-Party Data <span class="term-tag">Analytics</span></dt>
+          <dd>Data collected directly from your own audience — form fills, CRM records, email open rates, and on-site behaviour tracked with your own GA4 property. As third-party cookies are phased out and privacy regulations tighten, first-party data is increasingly the most reliable and legally sound basis for measurement and personalisation.</dd>
+        </div>
+        <div class="term" id="funnel">
+          <dt>Funnel <span class="term-tag">Martech</span></dt>
+          <dd>A model of the stages users pass through before converting — awareness, consideration, decision — with progressively fewer people at each stage. Top-of-funnel (ToFu) content attracts visitors; middle-of-funnel (MoFu) nurtures interest; bottom-of-funnel (BoFu) converts. Funnel analysis in GA4 shows where users drop off and which pages or flows have the biggest impact on conversion.</dd>
         </div>
       </dl>
     </section>
@@ -226,6 +286,20 @@
           <dt>HubSpot <span class="term-tag">Martech</span></dt>
           <dd>A CRM, marketing automation, and sales platform. Website integrations typically involve embedding HubSpot forms that create or update contacts, mapping UTM parameters to CRM fields, and triggering workflow automations based on form submissions or lifecycle stage changes. HubSpot's tracking code also enables behavioural contact scoring if enabled.</dd>
         </div>
+        <div class="term" id="heatmap">
+          <dt>Heatmap <span class="term-tag">Analytics</span></dt>
+          <dd>A visual overlay on a page that shows aggregated user behaviour — where people click (click map), how far they scroll (scroll map), or where their mouse moves (move map). Tools: Hotjar, Microsoft Clarity, PostHog. <strong>Heatmaps are qualitative data</strong> — they show what users do but not why — making them most useful when paired with session recordings and conversion data.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="glossary-section" id="I">
+      <p class="glossary-letter">I</p>
+      <dl class="term-list">
+        <div class="term" id="icp">
+          <dt>ICP — Ideal Customer Profile <span class="term-tag">Martech</span></dt>
+          <dd>A description of the company (for B2B) or individual (for B2C) that gets the most value from your product and is most likely to close, retain, and expand. Defines firmographics (company size, industry, tech stack) and behavioural signals. ICPs shape website messaging, ad targeting, landing page copy, and lead qualification criteria in the CRM.</dd>
+        </div>
       </dl>
     </section>
 
@@ -235,6 +309,16 @@
         <div class="term" id="json-ld">
           <dt>JSON-LD — Structured Data <span class="term-tag">SEO</span></dt>
           <dd>A format for embedding schema.org structured data in a page's <code>&lt;head&gt;</code> as a JSON script block. Search engines and AI answer engines use structured data to understand content — marking up your business type, services, FAQs, and articles. <strong>JSON-LD is Google's recommended format</strong> and is invisible to users but readable by crawlers.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="glossary-section" id="K">
+      <p class="glossary-letter">K</p>
+      <dl class="term-list">
+        <div class="term" id="keyword-research">
+          <dt>Keyword Research <span class="term-tag">SEO</span></dt>
+          <dd>The process of identifying the search terms your target audience uses and assessing their volume, competition, and commercial intent. Tools include SEMrush, Ahrefs, and Google Search Console. Good keyword research informs site architecture, page titles, headings, and content strategy. <strong>Search intent matters more than volume:</strong> a low-volume, high-intent keyword often drives more revenue than a high-volume informational one.</dd>
         </div>
       </dl>
     </section>
@@ -250,6 +334,14 @@
           <dt>Lifecycle Email / Email Automation <span class="term-tag">Martech</span></dt>
           <dd>Sequences of automated emails triggered by user behaviour — form submissions, lead stage changes, or elapsed time. Common sequences include post-inquiry nurture, onboarding, and re-engagement. Tools used: HubSpot, Klaviyo, Mailchimp, and Customer.io. The trigger logic lives in the CRM or ESP; the website needs to pass the right data to fire the correct sequences.</dd>
         </div>
+        <div class="term" id="lcp">
+          <dt>LCP — Largest Contentful Paint <span class="term-tag">SEO</span></dt>
+          <dd>One of Google's Core Web Vitals — the time it takes for the largest visible element on the page (usually a hero image or heading) to finish loading. <strong>Good LCP is under 2.5 seconds.</strong> Common causes of poor LCP: unoptimised images, render-blocking scripts, and slow server response times. LCP directly affects both user experience and search ranking.</dd>
+        </div>
+        <div class="term" id="ltv">
+          <dt>LTV — Lifetime Value <span class="term-tag">Martech</span></dt>
+          <dd>The total revenue expected from a customer over their entire relationship with a business. LTV is used to set acquisition cost targets (LTV:CAC ratio) and to prioritise which customer segments to focus marketing spend on. For website analytics, LTV modelling requires linking GA4 or ad data back to CRM revenue records.</dd>
+        </div>
       </dl>
     </section>
 
@@ -260,6 +352,56 @@
           <dt>MQL — Marketing Qualified Lead <span class="term-tag">Martech</span></dt>
           <dd>A contact who has engaged enough with marketing content to be worth passing to sales. The definition varies by company, but typically involves a form fill, a content download, or a behaviour score threshold in the CRM. <strong>Website tracking is what enables MQL scoring:</strong> without form-to-CRM plumbing and UTM attribution, you can't reliably identify or route MQLs.</dd>
         </div>
+        <div class="term" id="meta-pixel">
+          <dt>Meta Pixel (Facebook Pixel) <span class="term-tag">Analytics</span></dt>
+          <dd>A piece of JavaScript placed on a website that tracks visitor actions and sends them to Meta (Facebook/Instagram) Ads Manager. Used to measure conversions from Meta ads, build custom audiences for retargeting, and power Meta's ad optimisation algorithm. Since iOS 14, browser-based tracking accuracy has declined — Meta's Conversions API (CAPI) is now recommended alongside the pixel for more reliable server-side event matching.</dd>
+        </div>
+        <div class="term" id="mobile-first">
+          <dt>Mobile-First Index <span class="term-tag">SEO</span></dt>
+          <dd>Google's default crawling and indexing mode, which uses the mobile version of a page as the primary signal for ranking — even for desktop searches. Sites that are not mobile-responsive, or that show different content on mobile vs desktop, can suffer ranking penalties. All new Webflow and WordPress builds should be designed mobile-first.</dd>
+        </div>
+        <div class="term" id="mta">
+          <dt>MTA — Multi-Touch Attribution <span class="term-tag">Analytics</span></dt>
+          <dd>An attribution model that assigns conversion credit across multiple touchpoints in a customer journey, rather than to the first or last interaction alone. Common models: linear (equal credit), time decay (more credit to recent touches), data-driven (algorithmic). <strong>GA4's data-driven attribution is the current default</strong> and requires sufficient conversion data to produce reliable results.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="glossary-section" id="N">
+      <p class="glossary-letter">N</p>
+      <dl class="term-list">
+        <div class="term" id="nofollow">
+          <dt>NoFollow / DoFollow <span class="term-tag">SEO</span></dt>
+          <dd>HTML link attributes that tell search engines whether to pass link equity ("link juice") to the destination URL. A <code>rel="nofollow"</code> link signals that the linking page does not endorse the destination. <code>rel="sponsored"</code> and <code>rel="ugc"</code> are Google-specific variants. Most editorial links are dofollow by default. Paid links, affiliate links, and user-generated content should use appropriate rel attributes.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="glossary-section" id="O">
+      <p class="glossary-letter">O</p>
+      <dl class="term-list">
+        <div class="term" id="open-graph">
+          <dt>Open Graph <span class="term-tag">SEO</span></dt>
+          <dd>A set of meta tags (og:title, og:description, og:image) that control how a page appears when shared on social platforms — LinkedIn, Facebook, Slack, iMessage. Without Open Graph tags, social shares pull arbitrary text and images. <strong>Every page should have a unique og:image</strong> at a minimum; a 1200×630px image is the standard size for reliable rendering across platforms.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="glossary-section" id="P">
+      <p class="glossary-letter">P</p>
+      <dl class="term-list">
+        <div class="term" id="page-speed">
+          <dt>Page Speed <span class="term-tag">SEO</span></dt>
+          <dd>How quickly a web page loads and becomes interactive for the user. Measured by Core Web Vitals (LCP, CLS, INP), Lighthouse scores, and Time to First Byte (TTFB). Page speed affects both SEO ranking and conversion rate — even a one-second delay in load time has been shown to reduce conversions. Key optimisations: image compression, lazy loading, CDN, and eliminating render-blocking resources.</dd>
+        </div>
+        <div class="term" id="posthog">
+          <dt>PostHog <span class="term-tag">Analytics</span></dt>
+          <dd>An open-source product analytics platform that combines event tracking, session recording, feature flags, A/B testing, and heatmaps in a single tool. Can be self-hosted or cloud-hosted. Particularly well-suited to SaaS and product teams that want full data ownership and a developer-friendly API. An alternative to Mixpanel or Amplitude that doesn't require sending data to a third-party cloud.</dd>
+        </div>
+        <div class="term" id="plg">
+          <dt>PLG — Product-Led Growth <span class="term-tag">Martech</span></dt>
+          <dd>A go-to-market strategy where the product itself drives acquisition, conversion, and expansion — through free trials, freemium tiers, or viral in-product sharing. Website implications: PLG sites typically have low-friction sign-up flows, prominent free tier offers, and in-product onboarding that reduces time-to-value. Analytics focus shifts from lead forms to activation and retention events.</dd>
+        </div>
       </dl>
     </section>
 
@@ -269,6 +411,14 @@
         <div class="term" id="redirect">
           <dt>Redirect (301 / 302) <span class="term-tag">SEO</span></dt>
           <dd>A 301 redirect permanently forwards one URL to another, passing the majority of link equity. A 302 is temporary and passes less equity. <strong>During a site migration, a full redirect map is essential:</strong> every old URL needs a corresponding 301 to preserve search rankings and prevent broken links. Missing redirects are one of the most common causes of post-migration ranking drops.</dd>
+        </div>
+        <div class="term" id="retargeting">
+          <dt>Retargeting / Remarketing <span class="term-tag">Analytics</span></dt>
+          <dd>Serving ads to users who have previously visited your website or taken a specific action — viewed a product, started a checkout, or visited a pricing page. Enabled by placing a tracking pixel (Meta Pixel, Google Ads tag, LinkedIn Insight Tag) that builds a cookie-based or matched audience. Retargeting typically has higher conversion rates than cold prospecting because the audience already has brand familiarity.</dd>
+        </div>
+        <div class="term" id="roi">
+          <dt>ROI — Return on Investment <span class="term-tag">Martech</span></dt>
+          <dd>The ratio of net profit to investment cost. In marketing: (revenue attributed to campaign − campaign cost) ÷ campaign cost × 100. Requires reliable attribution — connecting website conversions to revenue in the CRM — to calculate accurately. Without UTM tracking, form-to-CRM plumbing, and closed-loop reporting, marketing ROI is a guess.</dd>
         </div>
       </dl>
     </section>
@@ -292,6 +442,24 @@
           <dt>Sitemap (XML Sitemap) <span class="term-tag">SEO</span></dt>
           <dd>An XML file that lists all the pages on a website you want search engines to index. Submitted to Google Search Console to help Googlebot discover pages efficiently. Important after a migration or whenever new pages are added. A sitemap doesn't guarantee indexing — it's a suggestion, not a command.</dd>
         </div>
+        <div class="term" id="session-recording">
+          <dt>Session Recording <span class="term-tag">Analytics</span></dt>
+          <dd>Video-like playback of individual user sessions on a website, showing mouse movements, clicks, scrolls, and rage-clicks. Tools: Hotjar, Microsoft Clarity, PostHog. Session recordings are invaluable for diagnosing UX problems — broken layouts, confusing navigation, forms users abandon. <strong>Always check your privacy policy and cookie consent before enabling session recording</strong> as it captures behavioural data that may require explicit consent under GDPR.</dd>
+        </div>
+        <div class="term" id="sql">
+          <dt>SQL — Sales Qualified Lead <span class="term-tag">Martech</span></dt>
+          <dd>A lead that the sales team has vetted and determined is ready for a direct sales conversation. The handoff point between marketing (MQL) and sales (SQL) is where most B2B revenue leaks happen. Clear definitions, CRM stage automation, and feedback loops between sales and marketing teams are needed to keep MQL→SQL conversion rates meaningful.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="glossary-section" id="T">
+      <p class="glossary-letter">T</p>
+      <dl class="term-list">
+        <div class="term" id="technical-seo">
+          <dt>Technical SEO <span class="term-tag">SEO</span></dt>
+          <dd>The subset of SEO focused on how well a website can be crawled, indexed, and rendered by search engines — independent of content quality. Covers: XML sitemaps, robots.txt, canonical tags, hreflang, structured data, Core Web Vitals, HTTPS, redirect chains, and crawl budget. <strong>Technical SEO issues can silently prevent well-written pages from ranking</strong>, making it the first thing to audit before investing in content.</dd>
+        </div>
       </dl>
     </section>
 
@@ -301,6 +469,20 @@
         <div class="term" id="utm">
           <dt>UTM Parameters <span class="term-tag">Analytics</span></dt>
           <dd>Tags appended to URLs to track the source of traffic in GA4 and the CRM. The five standard parameters: <strong>utm_source</strong> (e.g. google), <strong>utm_medium</strong> (e.g. cpc), <strong>utm_campaign</strong> (e.g. brand-q4), <strong>utm_content</strong>, and <strong>utm_term</strong>. Consistent UTM tagging is required for accurate campaign attribution — without it, paid traffic often appears as direct or organic in reports.</dd>
+        </div>
+        <div class="term" id="ux-ui">
+          <dt>UX / UI — User Experience / User Interface</dt>
+          <dd><strong>UX (User Experience)</strong> is the overall quality of a person's interaction with a product — how intuitive, efficient, and satisfying it feels. <strong>UI (User Interface)</strong> is the visual and interactive surface: buttons, typography, layout, colour. UX is the strategy; UI is the execution. A site can look beautiful (good UI) and still be confusing to use (poor UX). Effective web design addresses both.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="glossary-section" id="V">
+      <p class="glossary-letter">V</p>
+      <dl class="term-list">
+        <div class="term" id="viewport">
+          <dt>Viewport</dt>
+          <dd>The visible area of a web page within the browser window. Viewport size varies by device — desktop monitors, tablets, and phones all have different viewport widths. CSS media queries use viewport width breakpoints to apply responsive styles. In Webflow, the viewport breakpoint system (Desktop, Tablet, Mobile Landscape, Mobile Portrait) maps directly to these responsive design targets.</dd>
         </div>
       </dl>
     </section>
@@ -315,6 +497,10 @@
         <div class="term" id="wordpress">
           <dt>WordPress</dt>
           <dd>The most widely-used CMS, powering roughly 40% of the web. An open-source platform with a large plugin ecosystem. Good for sites that need custom functionality, complex integrations, or a large volume of content. Requires more maintenance than Webflow (updates, security, hosting), but offers more flexibility at scale.</dd>
+        </div>
+        <div class="term" id="wireframe">
+          <dt>Wireframe</dt>
+          <dd>A low-fidelity layout sketch that defines the structure and hierarchy of a page before visual design begins. Wireframes focus on content placement, navigation flow, and user journey — not colours or typography. In Figma, wireframes are typically created as greyscale components. They serve as the blueprint for client alignment before investing time in high-fidelity design.</dd>
         </div>
       </dl>
     </section>
