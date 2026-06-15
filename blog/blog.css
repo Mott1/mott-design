@@ -37,8 +37,8 @@ footer { padding: 40px 0; border-top: 1px solid var(--line); margin-top: 0; posi
 .foot-links a:hover { color: var(--accent); }
 
 /* Category pill */
-.cat-pill { display: inline-block; font-family: var(--display); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warn); border: 1px solid rgba(196,98,45,0.35); border-radius: 999px; padding: 3px 10px; text-decoration: none; white-space: nowrap; }
-.cat-pill:hover { background: rgba(196,98,45,0.1); }
+.cat-pill { display: inline-block; font-family: var(--display); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); background: var(--warn); border: 1px solid var(--warn); border-radius: 999px; padding: 3px 10px; text-decoration: none; white-space: nowrap; }
+.cat-pill:hover { opacity: 0.85; }
 
 /* Blog index */
 .blog-head { padding: 72px 0 56px; border-bottom: 1px solid var(--line); }
