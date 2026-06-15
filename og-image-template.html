@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px; height: 630px; overflow: hidden;
+    background: #295D32;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .grain {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.05; filter: contrast(200%);
+  }
+  .border {
+    position: absolute; inset: 32px;
+    border: 1px solid rgba(228,234,200,0.15);
+    border-radius: 4px;
+  }
+  .inner {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+    padding: 64px 72px;
+  }
+  .brand {
+    font-size: 22px; font-weight: 700; letter-spacing: -0.02em;
+    color: #E4EAC8;
+  }
+  .brand span { color: #D1DBB9; }
+  .content { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .eyebrow {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #D1DBB9; margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 72px; font-weight: 500; line-height: 1.05;
+    letter-spacing: -0.04em; color: #E4EAC8; max-width: 800px;
+  }
+  h1 em { color: #c4622d; font-style: normal; }
+  .footer {
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .tagline { font-size: 17px; color: rgba(228,234,200,0.55); max-width: 480px; line-height: 1.5; }
+  .pill {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.04em;
+    background: rgba(196,98,45,0.15); color: #c4622d;
+    border: 1px solid rgba(196,98,45,0.3);
+    padding: 8px 18px; border-radius: 999px;
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="grain"></div>
+<div class="border"></div>
+<div class="inner">
+  <div class="brand">mott<span>.</span>design</div>
+  <div class="content">
+    <p class="eyebrow">Freelance Web Studio · Monterey, CA</p>
+    <h1>Sites that ship.<br>Tracking that <em>works.</em></h1>
+  </div>
+  <div class="footer">
+    <p class="tagline">Web design, GA4, GTM, consent compliance,<br>and HubSpot for high-growth technology companies.</p>
+    <span class="pill">mott.design</span>
+  </div>
+</div>
+</body>
+</html>
