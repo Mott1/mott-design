@@ -8,20 +8,31 @@
     width: 512px; height: 512px; overflow: hidden;
     background: #295D32;
     display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
-  svg {
-    width: 280px; height: 280px;
+  .mark {
+    display: flex; align-items: baseline; gap: 0;
+    line-height: 1;
+  }
+  .m {
+    font-size: 280px; font-weight: 700;
+    color: #E4EAC8;
+    letter-spacing: -0.06em;
+    line-height: 1;
+  }
+  .dot {
+    font-size: 280px; font-weight: 700;
+    color: #c4622d;
+    line-height: 1;
+    margin-left: -0.02em;
   }
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 62 61">
-  <g vector-effect="non-scaling-stroke" fill="none" stroke="#E4EAC8" stroke-width="2.5">
-    <path d="M1,61V1h30v60"/>
-    <path d="M31,1h30v60"/>
-    <line x1="1" y1="1" x2="31" y2="31"/>
-    <line x1="61" y1="1" x2="31" y2="31"/>
-  </g>
-</svg>
+<div class="mark">
+  <span class="m">m</span><span class="dot">.</span>
+</div>
 </body>
 </html>
