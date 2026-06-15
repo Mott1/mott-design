@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mott Design — Writing on web, analytics &amp; martech</title>
+    <link>https://mott.design/blog/</link>
+    <description>Practical posts on GA4, GTM, SEO, AEO, consent compliance, HubSpot, and web design for B2B and healthcare-tech companies.</description>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 12 Jun 2026 09:00:00 +0000</lastBuildDate>
+    <atom:link href="https://mott.design/feed.xml" rel="self" type="application/rss+xml"/>
+    <image>
+      <url>https://mott.design/og-image.png</url>
+      <title>Mott Design</title>
+      <link>https://mott.design</link>
+    </image>
+  <item>
+    <title>How to Rank in AI Search: A Practical AEO Playbook</title>
+    <link>https://mott.design/blog/how-to-rank-in-ai-search.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/how-to-rank-in-ai-search.html</guid>
+    <description>Getting cited by ChatGPT, Perplexity, and Google AI Overviews requires a different approach than traditional SEO. Here is the playbook.</description>
+    <pubDate>Fri, 12 Jun 2026 09:00:00 +0000</pubDate>
+    <category>SEO &amp; AEO</category>
+  </item>
+  <item>
+    <title>The State of B2B Web Design in 2026: What's Working, What's Not</title>
+    <link>https://mott.design/blog/state-of-b2b-web-design.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/state-of-b2b-web-design.html</guid>
+    <description>B2B websites got more polished and less effective simultaneously. Here's an honest look at what's working and what's just convention without a reason.</description>
+    <pubDate>Wed, 10 Jun 2026 09:00:00 +0000</pubDate>
+    <category>Industry</category>
+  </item>
+  <item>
+    <title>Framer vs Webflow: Which Is Better for Startups and B2B Teams?</title>
+    <link>https://mott.design/blog/framer-vs-webflow.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/framer-vs-webflow.html</guid>
+    <description>Framer and Webflow are both excellent no-code site builders, but they are built for different use cases. Here is how to choose.</description>
+    <pubDate>Fri, 05 Jun 2026 09:00:00 +0000</pubDate>
+    <category>CMS Picks</category>
+  </item>
+  <item>
+    <title>Why Your Company Should Stop Relying on a Web Agency</title>
+    <link>https://mott.design/blog/why-leave-your-agency.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/why-leave-your-agency.html</guid>
+    <description>The agency model was built for a different era. Here's why it often doesn't serve B2B companies well anymore and what a better working model looks like.</description>
+    <pubDate>Wed, 03 Jun 2026 09:00:00 +0000</pubDate>
+    <category>Going Independent</category>
+  </item>
+  <item>
+    <title>Entity SEO: How Google and AI Tools Decide Who You Are</title>
+    <link>https://mott.design/blog/entity-seo-guide.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/entity-seo-guide.html</guid>
+    <description>Entity-based search is how Google and AI tools build a model of your brand. Here is what that means and how to influence it.</description>
+    <pubDate>Thu, 28 May 2026 09:00:00 +0000</pubDate>
+    <category>SEO &amp; AEO</category>
+  </item>
+  <item>
+    <title>GTM Triggers and Variables: A Plain-English Explainer</title>
+    <link>https://mott.design/blog/gtm-triggers-and-variables.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/gtm-triggers-and-variables.html</guid>
+    <description>Triggers decide when a GTM tag fires. Variables feed dynamic data into that tag. Once these two concepts click, GTM stops being a mystery.</description>
+    <pubDate>Sun, 24 May 2026 09:00:00 +0000</pubDate>
+    <category>GTM</category>
+  </item>
+  <item>
+    <title>Google AI Overviews Are Eating Your Clicks. Here Is What to Do.</title>
+    <link>https://mott.design/blog/ai-overviews-traffic-drop.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/ai-overviews-traffic-drop.html</guid>
+    <description>Google AI Overviews are reducing organic CTR on many queries. Here is what is actually happening and how to respond.</description>
+    <pubDate>Tue, 19 May 2026 09:00:00 +0000</pubDate>
+    <category>SEO &amp; AEO</category>
+  </item>
+  <item>
+    <title>GA4 vs Universal Analytics: What Actually Changed and Why It Matters</title>
+    <link>https://mott.design/blog/ga4-vs-universal-analytics.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/ga4-vs-universal-analytics.html</guid>
+    <description>GA4 isn't Universal Analytics with a new interface — it's a different data model. Understanding the shift is the prerequisite for using GA4 well.</description>
+    <pubDate>Thu, 14 May 2026 09:00:00 +0000</pubDate>
+    <category>GA4 &amp; Analytics</category>
+  </item>
+  <item>
+    <title>What Is AEO (Answer Engine Optimization)? The 2026 Guide</title>
+    <link>https://mott.design/blog/what-is-aeo.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/what-is-aeo.html</guid>
+    <description>AEO optimizes your content to be cited by ChatGPT, Perplexity, Google AI Overviews, and Bing Copilot. Here's what it is and what to do about it.</description>
+    <pubDate>Fri, 08 May 2026 09:00:00 +0000</pubDate>
+    <category>SEO &amp; AEO</category>
+  </item>
+  <item>
+    <title>GA4 Explorations: The Reports Most B2B Teams Never Build</title>
+    <link>https://mott.design/blog/ga4-explorations-guide.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/ga4-explorations-guide.html</guid>
+    <description>GA4 Explorations unlock analyses that standard reports cannot — cohort analysis, path exploration, funnel visualization, and more. Here is how to use them.</description>
+    <pubDate>Fri, 01 May 2026 09:00:00 +0000</pubDate>
+    <category>GA4 &amp; Analytics</category>
+  </item>
+  <item>
+    <title>How to Set Up GA4 for a B2B Website: Step-by-Step</title>
+    <link>https://mott.design/blog/how-to-set-up-ga4.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/how-to-set-up-ga4.html</guid>
+    <description>A practical GA4 setup guide for B2B sites — measurement plan, GTM installation, key event configuration, internal traffic filters, and DebugView verification.</description>
+    <pubDate>Wed, 29 Apr 2026 09:00:00 +0000</pubDate>
+    <category>GA4 &amp; Analytics</category>
+  </item>
+  <item>
+    <title>Headless CMS in 2026: Do You Actually Need One?</title>
+    <link>https://mott.design/blog/headless-cms-guide.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/headless-cms-guide.html</guid>
+    <description>Headless CMS is powerful for the right use case and overkill for most. Here is how to decide honestly.</description>
+    <pubDate>Sat, 25 Apr 2026 09:00:00 +0000</pubDate>
+    <category>CMS Picks</category>
+  </item>
+  <item>
+    <title>Marketing Technology for Medical Device Companies: What You Actually Need</title>
+    <link>https://mott.design/blog/martech-for-medtech.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/martech-for-medtech.html</guid>
+    <description>Medtech marketers face tighter compliance constraints than most. Here's a practical martech stack — what to use, what to avoid, and what's often missing.</description>
+    <pubDate>Wed, 22 Apr 2026 09:00:00 +0000</pubDate>
+    <category>Medtech &amp; Healthcare</category>
+  </item>
+  <item>
+    <title>Google Consent Mode v2: What It Is and How to Implement It</title>
+    <link>https://mott.design/blog/consent-mode-v2.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/consent-mode-v2.html</guid>
+    <description>Consent Mode v2 changed how GA4 and Google Ads behave when visitors decline cookies. Here's what changed, why it matters, and how to implement it.</description>
+    <pubDate>Wed, 15 Apr 2026 09:00:00 +0000</pubDate>
+    <category>Consent &amp; Privacy</category>
+  </item>
+  <item>
+    <title>HubSpot Revenue Attribution: Connecting Marketing to Pipeline</title>
+    <link>https://mott.design/blog/hubspot-revenue-attribution.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/hubspot-revenue-attribution.html</guid>
+    <description>HubSpot's attribution reports can tell you which touches drove a deal — if you've set up the plumbing correctly. Here's how to get the data you actually want.</description>
+    <pubDate>Sat, 11 Apr 2026 09:00:00 +0000</pubDate>
+    <category>HubSpot &amp; CRM</category>
+  </item>
+  <item>
+    <title>What Makes a Great B2B Homepage in 2026</title>
+    <link>https://mott.design/blog/b2b-homepage-design.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/b2b-homepage-design.html</guid>
+    <description>Most B2B homepages try to do too much and accomplish too little. Here is what the best ones get right.</description>
+    <pubDate>Wed, 08 Apr 2026 09:00:00 +0000</pubDate>
+    <category>Web Design &amp; Dev</category>
+  </item>
+  <item>
+    <title>Webflow vs WordPress in 2026: Which Is Right for Your B2B Site?</title>
+    <link>https://mott.design/blog/webflow-vs-wordpress.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/webflow-vs-wordpress.html</guid>
+    <description>Webflow and WordPress serve different needs. Here's how to choose based on your team, content cadence, and who will own the site long-term.</description>
+    <pubDate>Fri, 03 Apr 2026 09:00:00 +0000</pubDate>
+    <category>CMS Picks</category>
+  </item>
+  <item>
+    <title>Choosing a CMS in 2026: Webflow, WordPress, Squarespace, or Something Custom?</title>
+    <link>https://mott.design/blog/choosing-a-cms.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/choosing-a-cms.html</guid>
+    <description>The CMS decision is mostly about people, not technology. Here's the framework I use with every client before recommending a platform.</description>
+    <pubDate>Tue, 31 Mar 2026 09:00:00 +0000</pubDate>
+    <category>CMS Picks</category>
+  </item>
+  <item>
+    <title>GA4's Default Channel Groupings Are Wrong for B2B. Here Is How to Fix Them.</title>
+    <link>https://mott.design/blog/ga4-channel-groupings.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/ga4-channel-groupings.html</guid>
+    <description>GA4 default channel groupings misattribute a significant share of B2B traffic. Here's how to fix them with custom groupings that reflect reality.</description>
+    <pubDate>Sat, 28 Mar 2026 09:00:00 +0000</pubDate>
+    <category>GA4 &amp; Analytics</category>
+  </item>
+  <item>
+    <title>Google Tag Manager: A Plain-English Guide for Marketers</title>
+    <link>https://mott.design/blog/google-tag-manager-guide.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/google-tag-manager-guide.html</guid>
+    <description>Google Tag Manager sits between your website and every analytics or ad tool you use. Here's how it works, why it matters, and the common mistakes to avoid.</description>
+    <pubDate>Wed, 25 Mar 2026 09:00:00 +0000</pubDate>
+    <category>GTM</category>
+  </item>
+  <item>
+    <title>10 GTM Best Practices Before You Hit Publish</title>
+    <link>https://mott.design/blog/gtm-best-practices.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/gtm-best-practices.html</guid>
+    <description>A GTM container that is messy from the start gets worse over time. These 10 practices keep it clean, fast, and auditable.</description>
+    <pubDate>Wed, 18 Mar 2026 09:00:00 +0000</pubDate>
+    <category>GTM</category>
+  </item>
+  <item>
+    <title>Schema Markup for AI Answer Engines: How to Show Up in AI Overviews</title>
+    <link>https://mott.design/blog/schema-markup-ai-answers.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/schema-markup-ai-answers.html</guid>
+    <description>Schema markup gives AI tools a machine-readable version of your content. Here's which types matter most and how to implement them correctly in JSON-LD.</description>
+    <pubDate>Wed, 18 Mar 2026 09:00:00 +0000</pubDate>
+    <category>SEO &amp; AEO</category>
+  </item>
+  <item>
+    <title>How to Present Analytics Data to Executives Who Do Not Care About GA4</title>
+    <link>https://mott.design/blog/how-to-present-analytics-to-executives.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/how-to-present-analytics-to-executives.html</guid>
+    <description>Most analytics presentations fail by showing the wrong metrics to the wrong audience. Here's how to connect web data to what executives actually care about.</description>
+    <pubDate>Fri, 13 Mar 2026 09:00:00 +0000</pubDate>
+    <category>Measurement Strategy</category>
+  </item>
+  <item>
+    <title>GA4 Custom Events: What to Track and How to Name Them</title>
+    <link>https://mott.design/blog/ga4-custom-events.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/ga4-custom-events.html</guid>
+    <description>GA4's event model makes it easy to track the wrong things. Here's how to design a clean taxonomy, pick the right event names, and avoid common mistakes.</description>
+    <pubDate>Tue, 10 Mar 2026 09:00:00 +0000</pubDate>
+    <category>GA4 &amp; Analytics</category>
+  </item>
+  <item>
+    <title>How to Build a GA4 Funnel Report That Actually Tells You Something</title>
+    <link>https://mott.design/blog/ga4-funnel-report.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/ga4-funnel-report.html</guid>
+    <description>GA4 funnel reports are powerful but easy to misconfigure. Here is how to build one that gives you actionable conversion data.</description>
+    <pubDate>Sat, 07 Mar 2026 09:00:00 +0000</pubDate>
+    <category>GA4 &amp; Analytics</category>
+  </item>
+  <item>
+    <title>HIPAA and Web Analytics: What Healthcare Marketers Need to Know About GA4</title>
+    <link>https://mott.design/blog/hipaa-web-analytics.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/hipaa-web-analytics.html</guid>
+    <description>Standard GA4 setups can inadvertently collect PHI. Here's what healthcare marketers need to watch for and how to configure analytics without compliance risk.</description>
+    <pubDate>Thu, 26 Feb 2026 09:00:00 +0000</pubDate>
+    <category>Medtech &amp; Healthcare</category>
+  </item>
+  <item>
+    <title>Server-Side GTM: What It Is, What It Costs, and When It Is Worth It</title>
+    <link>https://mott.design/blog/server-side-gtm.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/server-side-gtm.html</guid>
+    <description>Server-side GTM moves tag execution off the browser and onto a server. Here is what that means, what it fixes, and when it is overkill.</description>
+    <pubDate>Thu, 26 Feb 2026 09:00:00 +0000</pubDate>
+    <category>GTM</category>
+  </item>
+  <item>
+    <title>B2B SEO Content Strategy: How to Build a Program That Drives Pipeline</title>
+    <link>https://mott.design/blog/b2b-seo-content-strategy.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/b2b-seo-content-strategy.html</guid>
+    <description>Most B2B content gets traffic but not leads. Here is how to build a content program that is actually connected to how your buyers make decisions.</description>
+    <pubDate>Sat, 21 Feb 2026 09:00:00 +0000</pubDate>
+    <category>SEO &amp; AEO</category>
+  </item>
+  <item>
+    <title>Core Web Vitals in 2026: What They Are and How to Fix Yours</title>
+    <link>https://mott.design/blog/core-web-vitals.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/core-web-vitals.html</guid>
+    <description>LCP, INP, and CLS are Google's performance metrics that affect search rankings. Here's what each one measures and how to improve your scores.</description>
+    <pubDate>Tue, 17 Feb 2026 09:00:00 +0000</pubDate>
+    <category>Web Design &amp; Dev</category>
+  </item>
+  <item>
+    <title>CookieYes vs OneTrust vs Osano: Which CMP Should You Use?</title>
+    <link>https://mott.design/blog/cmp-comparison.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/cmp-comparison.html</guid>
+    <description>A consent management platform is required for GDPR and CPRA compliance. Here is how the three most common options compare for B2B and healthcare-tech sites.</description>
+    <pubDate>Tue, 17 Feb 2026 09:00:00 +0000</pubDate>
+    <category>Consent &amp; Privacy</category>
+  </item>
+  <item>
+    <title>5 Website Mistakes Healthcare-Tech Companies Keep Making</title>
+    <link>https://mott.design/blog/healthcare-tech-site-mistakes.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/healthcare-tech-site-mistakes.html</guid>
+    <description>Healthcare-tech websites face unique challenges — regulatory constraints and compliance risk. Here are five mistakes I see most often and how to fix them.</description>
+    <pubDate>Thu, 12 Feb 2026 09:00:00 +0000</pubDate>
+    <category>Medtech &amp; Healthcare</category>
+  </item>
+  <item>
+    <title>Connecting HubSpot to GA4: The Complete Integration Guide</title>
+    <link>https://mott.design/blog/hubspot-ga4-integration.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/hubspot-ga4-integration.html</guid>
+    <description>Getting HubSpot and GA4 to share data cleanly — without double-counting, broken attribution, or missing conversions — takes more than clicking </description>
+    <pubDate>Sun, 08 Feb 2026 09:00:00 +0000</pubDate>
+    <category>HubSpot &amp; CRM</category>
+  </item>
+  <item>
+    <title>How to Audit Your Cookie Banner for GDPR and CPRA Compliance</title>
+    <link>https://mott.design/blog/cookie-banner-audit.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/cookie-banner-audit.html</guid>
+    <description>Many cookie banners look compliant but are not. This checklist covers the 10 things to verify to know for sure.</description>
+    <pubDate>Sat, 07 Feb 2026 09:00:00 +0000</pubDate>
+    <category>Consent &amp; Privacy</category>
+  </item>
+  <item>
+    <title>Privacy-First Analytics: How to Measure When Consent Rates Drop</title>
+    <link>https://mott.design/blog/privacy-first-analytics.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/privacy-first-analytics.html</guid>
+    <description>When a large share of users decline cookie consent, standard analytics breaks down. Here are the strategies that fill the gap.</description>
+    <pubDate>Thu, 29 Jan 2026 09:00:00 +0000</pubDate>
+    <category>Consent &amp; Privacy</category>
+  </item>
+  <item>
+    <title>How to Build a B2B Marketing Measurement Plan That Actually Works</title>
+    <link>https://mott.design/blog/b2b-measurement-plan.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/b2b-measurement-plan.html</guid>
+    <description>Most B2B marketing teams measure what's easy to count instead of what connects to revenue. Here's how to build a measurement plan that closes that gap.</description>
+    <pubDate>Wed, 28 Jan 2026 09:00:00 +0000</pubDate>
+    <category>Measurement Strategy</category>
+  </item>
+  <item>
+    <title>Freelancer vs Agency for Your Next Web Project: An Honest Comparison</title>
+    <link>https://mott.design/blog/freelancer-vs-agency-web.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/freelancer-vs-agency-web.html</guid>
+    <description>Choosing between a freelancer and an agency for a web project involves more than cost. Here is a straightforward look at the real tradeoffs.</description>
+    <pubDate>Tue, 20 Jan 2026 09:00:00 +0000</pubDate>
+    <category>Going Independent</category>
+  </item>
+  <item>
+    <title>GDPR vs CPRA: What B2B Marketing Teams Need to Know</title>
+    <link>https://mott.design/blog/gdpr-vs-cpra.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/gdpr-vs-cpra.html</guid>
+    <description>GDPR governs EU residents' data; CPRA governs California residents'. Both apply to your B2B site. Here's a practical comparison of what each requires.</description>
+    <pubDate>Sun, 18 Jan 2026 09:00:00 +0000</pubDate>
+    <category>Consent &amp; Privacy</category>
+  </item>
+  <item>
+    <title>What Three Years of Going Independent Taught Me About Client Work</title>
+    <link>https://mott.design/blog/what-ive-learned-freelancing.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/what-ive-learned-freelancing.html</guid>
+    <description>Honest reflections on the differences between agency, in-house, and freelance work — and what I would tell myself starting out.</description>
+    <pubDate>Sat, 10 Jan 2026 09:00:00 +0000</pubDate>
+    <category>Going Independent</category>
+  </item>
+  <item>
+    <title>Technical SEO Checklist for B2B Websites (2026 Edition)</title>
+    <link>https://mott.design/blog/technical-seo-checklist.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/technical-seo-checklist.html</guid>
+    <description>A checklist of technical SEO elements that affect B2B search rankings — canonicals, sitemaps, structured data, Core Web Vitals, and indexing controls.</description>
+    <pubDate>Wed, 07 Jan 2026 09:00:00 +0000</pubDate>
+    <category>SEO &amp; AEO</category>
+  </item>
+  <item>
+    <title>HIPAA-Compliant Analytics: A Practical Setup Guide for Healthcare-Tech Sites</title>
+    <link>https://mott.design/blog/hipaa-analytics-setup-guide.html</link>
+    <guid isPermaLink="true">https://mott.design/blog/hipaa-analytics-setup-guide.html</guid>
+    <description>Web analytics and HIPAA create genuine tension. Here is how to configure GA4 and your tracking stack to measure performance without creating PHI exposure.</description>
+    <pubDate>Sat, 03 Jan 2026 09:00:00 +0000</pubDate>
+    <category>Medtech &amp; Healthcare</category>
+  </item>
+  </channel>
+</rss>

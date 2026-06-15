@@ -147,6 +147,27 @@ footer { padding: 40px 0; position: relative; z-index: 1; }
 .related-item-title { font-family: var(--display); font-size: 0.85rem; font-weight: 500; line-height: 1.35; color: var(--ink); display: block; }
 @media (max-width: 600px) { .related-list { grid-template-columns: 1fr; } }
 
+/* Search */
+.search-row { padding: 20px 0 0; }
+.blog-search { width: 100%; max-width: 420px; font-family: var(--body); font-size: 0.92rem; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 4px; padding: 10px 14px 10px 36px; transition: border-color 0.2s; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23989E7B' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 12px center; }
+.blog-search:focus { outline: none; border-color: var(--accent); }
+.blog-search::placeholder { color: var(--muted); }
+.no-results { padding: 64px 24px; text-align: center; color: var(--muted); font-size: 0.95rem; display: none; }
+.no-results.visible { display: block; }
+
+/* Subscribe strip */
+.blog-subscribe { border-top: 1px solid var(--line); padding: 56px 0; }
+.subscribe-inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+.subscribe-copy h3 { font-family: var(--display); font-size: 1.2rem; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
+.subscribe-copy p { color: var(--muted); font-size: 0.92rem; max-width: 40ch; }
+.sub-fields { display: flex; gap: 10px; flex-wrap: wrap; }
+.sub-fields input[type="email"] { font-family: var(--body); font-size: 0.92rem; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 4px; padding: 11px 16px; width: 260px; transition: border-color 0.2s; }
+.sub-fields input[type="email"]:focus { outline: none; border-color: var(--accent); }
+.sub-fields input[type="email"]::placeholder { color: var(--muted); }
+.sub-fields button { font-family: var(--body); font-weight: 600; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; background: var(--ink); color: var(--paper); border: none; border-radius: 4px; padding: 11px 22px; cursor: pointer; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+.sub-fields button:hover { background: var(--warn); color: var(--ink); }
+@media (max-width: 600px) { .subscribe-inner { flex-direction: column; align-items: flex-start; } .sub-fields input[type="email"] { width: 100%; } .sub-fields { width: 100%; flex-direction: column; } .sub-fields button { width: 100%; } }
+
 /* Mobile blog fixes */
 @media (max-width: 600px) {
   .post-head { padding: 48px 0 36px; }

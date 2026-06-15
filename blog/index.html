@@ -43,6 +43,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/blog/blog.css">
+<link rel="alternate" type="application/rss+xml" title="Mott Design — Writing" href="/feed.xml">
 </head>
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -81,6 +82,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <h1>Writing on the web,<br>measurement, and martech.</h1>
       <p>Practical posts on GA4, GTM, SEO, AEO, consent compliance, HubSpot, and web design — written from the trenches, not from a slide deck.</p>
     </header>
+
+    <div class="search-row">
+      <input type="search" id="post-search" class="blog-search" placeholder="Search articles…" aria-label="Search articles" autocomplete="off">
+    </div>
 
     <div class="filter-row" role="group" aria-label="Filter by category">
       <button class="filter-btn active" data-cat="all">All</button>
@@ -542,7 +547,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </article>
 
   </div>
+  <p class="no-results" id="no-results">No articles match that search. Try a different term.</p>
 </main>
+
+<section class="blog-subscribe">
+  <div class="wrap">
+    <div class="subscribe-inner">
+      <div class="subscribe-copy">
+        <h3>New posts, occasionally</h3>
+        <p>One email when something worth reading goes up. No cadence, no drip sequence.</p>
+      </div>
+      <form action="https://formspree.io/f/xdavpvvb" method="POST">
+        <input type="hidden" name="_subject" value="Blog subscription — mott.design">
+        <input type="hidden" name="type" value="blog-subscribe">
+        <div class="sub-fields">
+          <input type="email" name="email" placeholder="your@email.com" required aria-label="Email address">
+          <button type="submit">Subscribe</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
 
 <footer>
   <div class="wrap foot-inner">
@@ -550,6 +575,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <nav class="foot-links">
       <a href="/privacy.html">Privacy Policy</a>
       <a href="/terms.html">Terms &amp; Conditions</a>
+      <a href="/sitemap.html">Sitemap</a>
     </nav>
     <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
   </div>
@@ -558,23 +584,52 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
 
-// Category filter
+// Category filter + keyword search
 var btns = document.querySelectorAll('.filter-btn');
 var cards = document.querySelectorAll('.post-card');
+var searchInput = document.getElementById('post-search');
+var noResults = document.getElementById('no-results');
+var activeCat = 'all';
+
+function applyFilters() {
+  var q = searchInput ? searchInput.value.trim().toLowerCase() : '';
+  var visible = 0;
+  cards.forEach(function(card) {
+    var catMatch = activeCat === 'all' || card.getAttribute('data-cat') === activeCat;
+    var textMatch = !q || (card.textContent || '').toLowerCase().indexOf(q) !== -1;
+    if (catMatch && textMatch) {
+      card.classList.remove('hidden');
+      visible++;
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+  if (noResults) {
+    if (visible === 0) noResults.classList.add('visible');
+    else noResults.classList.remove('visible');
+  }
+}
+
 btns.forEach(function(btn) {
   btn.addEventListener('click', function() {
-    var cat = btn.getAttribute('data-cat');
+    activeCat = btn.getAttribute('data-cat');
     btns.forEach(function(b) { b.classList.remove('active'); });
     btn.classList.add('active');
-    cards.forEach(function(card) {
-      if (cat === 'all' || card.getAttribute('data-cat') === cat) {
-        card.classList.remove('hidden');
-      } else {
-        card.classList.add('hidden');
-      }
-    });
+    applyFilters();
   });
 });
+
+if (searchInput) {
+  searchInput.addEventListener('input', function() {
+    // Clear category filter when user types
+    if (searchInput.value.trim()) {
+      btns.forEach(function(b) { b.classList.remove('active'); });
+      document.querySelector('.filter-btn[data-cat="all"]').classList.add('active');
+      activeCat = 'all';
+    }
+    applyFilters();
+  });
+}
 
 // CookieYes icon
 (function() {

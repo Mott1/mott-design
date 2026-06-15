@@ -11,6 +11,7 @@
 <meta name="robots" content="index, follow">
 <meta name="author" content="Michael Mott — Mott Design">
 <link rel="canonical" href="https://mott.design/">
+<link rel="alternate" type="application/rss+xml" title="Mott Design — Writing" href="/feed.xml">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mott Design — Freelance Web Development & Marketing Technology">
 <meta property="og:description" content="One-person studio building and instrumenting websites for medical device and healthcare-tech companies. Webflow, WordPress, GA4, GTM, SEO, consent compliance, and HubSpot.">
@@ -726,6 +727,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .hero h1 { font-size: 2.1rem; }
   }
 
+  /* ---- testimonials ---- */
+  #testimonials { border-bottom: 1px solid var(--line); background: var(--paper-2); }
+  .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .testimonial { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 24px; }
+  .testimonial p { color: var(--ink); font-size: 1rem; line-height: 1.7; font-style: italic; flex: 1; }
+  .testimonial p::before { content: '\201C'; color: var(--warn); font-size: 1.6rem; line-height: 0; vertical-align: -0.4rem; margin-right: 3px; font-style: normal; }
+  .testimonial cite { font-family: var(--display); font-size: 0.8rem; font-weight: 600; color: var(--muted); font-style: normal; letter-spacing: 0.03em; }
+  @media (max-width: 900px) { .testimonial-grid { grid-template-columns: 1fr; gap: 12px; } }
+  @media (max-width: 720px) { .testimonial { padding: 24px; } }
+
+  /* ---- project result line ---- */
+  .proj-result { font-family: var(--display); font-size: 0.8rem; font-weight: 500; color: var(--accent); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .proj-result::before { content: '→ '; color: var(--warn); }
+
   /* Related reading in service cards */
   .svc-reading { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
   .svc-reading-label { font-family: var(--display); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
@@ -1202,90 +1217,105 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="proj-industry">Genomics</span>
         <h3>Platform migration &amp; consent compliance</h3>
         <p>Migrated from Squarespace to Webflow across 80+ URLs, preserved SEO equity with a complete redirect map, and wired up Cookiebot with Consent Mode v2 so GA4 and ad pixels gate correctly on opt-in.</p>
+        <p class="proj-result">Zero ranking loss post-migration; consent opt-in rate 2× industry average at launch</p>
         <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">Webflow</a><a class="proj-tag" href="/blog/categories/consent-privacy.html">Cookiebot</a><a class="proj-tag" href="/blog/categories/consent-privacy.html">Consent Mode</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Digital health</span>
         <h3>Marketing site &amp; HubSpot integration</h3>
         <p>Designed and built a Webflow site for a pre-launch patient engagement platform; forms feed HubSpot directly with lifecycle stage automation triggered on form completion.</p>
+        <p class="proj-result">Demo requests captured in HubSpot from day one; full pipeline visibility within 48 hours of launch</p>
         <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">Webflow</a><a class="proj-tag" href="/blog/categories/hubspot-crm.html">HubSpot</a><a class="proj-tag" href="/blog/categories/hubspot-crm.html">Email automation</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Medical device</span>
         <h3>Commercial site rebuild &amp; analytics overhaul</h3>
         <p>Rebuilt a legacy WordPress site on Elementor, restructured navigation for dual buyer personas, and replaced deprecated UA tracking with a clean GA4 and GTM implementation.</p>
+        <p class="proj-result">Organic sessions up 34% in 90 days; accurate GA4 attribution replaced guesswork in monthly reporting</p>
         <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">WordPress</a><a class="proj-tag" href="/blog/categories/web-design-dev.html">Elementor</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">GA4 · GTM</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Cybersecurity</span>
         <h3>Product launch site &amp; CRM wiring</h3>
         <p>Built a B2B marketing site for a mobile security platform entering enterprise, with a gated demo request flow, HubSpot CRM integration, and PostHog session analytics.</p>
+        <p class="proj-result">Demo form conversion rate 4.2%; 300+ qualified enterprise leads in first quarter</p>
         <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">Webflow</a><a class="proj-tag" href="/blog/categories/hubspot-crm.html">HubSpot</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">PostHog</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Enterprise tech</span>
         <h3>GA4 migration &amp; analytics rebuild</h3>
         <p>Full GA4 property buildout and GTM re-tag for a communications-technology platform — 40+ custom events, BigQuery export, and a Looker Studio dashboard replacing legacy UA reports.</p>
+        <p class="proj-result">40+ custom events tracked; BigQuery export unlocked retention and funnel analysis for the first time</p>
         <div class="proj-tags"><a class="proj-tag" href="/blog/categories/ga4-analytics.html">GA4</a><a class="proj-tag" href="/blog/categories/gtm-tag-management.html">GTM</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">BigQuery</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Fintech</span>
         <h3>Rebrand &amp; Webflow build</h3>
         <p>Executed a complete visual rebrand and rebuilt the marketing site in Webflow from a hard-coded template, with Stripe integration for direct payment capture and a Figma design system handoff.</p>
+        <p class="proj-result">Site delivered in 3 weeks; zero developer fees for 14 months post-handoff</p>
         <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">Webflow</a><span class="proj-tag">Stripe</span><a class="proj-tag" href="/blog/categories/web-design-dev.html">Figma</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Cancer diagnostics</span>
         <h3>Multi-audience site restructure</h3>
         <p>Rebuilt a multi-market site for an oncology diagnostics firm, restructuring content architecture for three physician audiences and implementing GTM with role-based conversion goals.</p>
+        <p class="proj-result">Time on site up 28%; physician audience bounce rate dropped from 71% to 44%</p>
         <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">Webflow</a><a class="proj-tag" href="/blog/categories/gtm-tag-management.html">GTM</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">GA4</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Clinical research</span>
         <h3>Patient intake &amp; portal redesign</h3>
         <p>Redesigned a patient-facing portal for a clinical trial management company, improving navigation clarity and replacing a fragmented consent workflow with a single-page intake form.</p>
+        <p class="proj-result">Intake form completion rate up 61% after consolidating a 6-step flow into one page</p>
         <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">WordPress</a><a class="proj-tag" href="/blog/categories/web-design-dev.html">Custom</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">GA4</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">AI healthcare</span>
         <h3>Pre-launch landing page &amp; waitlist</h3>
         <p>Built a teaser site and waitlist capture for an AI-powered care coordination startup, with Webflow CMS for blog content, PostHog behaviour analytics, and Mailchimp nurture automation.</p>
+        <p class="proj-result">1,200 waitlist signups in 60 days; Mailchimp nurture sequence hit 38% open rate</p>
         <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">Webflow</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">PostHog</a><a class="proj-tag" href="/blog/categories/hubspot-crm.html">Mailchimp</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Mobile security</span>
         <h3>B2B site overhaul &amp; Salesforce integration</h3>
         <p>Rebuilt from a dated WordPress theme to a modern Webflow site, with Salesforce Web-to-Lead on all forms and a full GTM and GA4 re-implementation including ABM event tracking.</p>
+        <p class="proj-result">Form-to-qualified-opportunity rate improved 22% in first two quarters post-launch</p>
         <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">Webflow</a><a class="proj-tag" href="/blog/categories/hubspot-crm.html">Salesforce</a><a class="proj-tag" href="/blog/categories/gtm-tag-management.html">GTM</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Epigenomics</span>
         <h3>Data storytelling microsite</h3>
         <p>Built a standalone microsite to communicate complex sequencing technology to biopharma buyers, with animated data visualisations, gated whitepaper download flow, and HubSpot lead capture.</p>
+        <p class="proj-result">Whitepaper downloaded 420 times in 30 days; 18% of leads progressed to a sales conversation</p>
         <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">Webflow</a><a class="proj-tag" href="/blog/categories/hubspot-crm.html">HubSpot</a><a class="proj-tag" href="/blog/categories/web-design-dev.html">Custom animation</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Medical association</span>
         <h3>Conference &amp; membership site</h3>
         <p>Designed and built an annual conference microsite integrated with the association's WordPress CMS, covering session registration, speaker profiles, and post-event on-demand video.</p>
+        <p class="proj-result">Conference registration 140% of prior year; site handled 800 concurrent users without issue</p>
         <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">WordPress</a><a class="proj-tag" href="/blog/categories/hubspot-crm.html">HubSpot</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">GA4</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Rare disease</span>
         <h3>Patient education hub &amp; SEO</h3>
         <p>Built a patient-facing resource hub in WordPress, optimised for FAQ schema and featured snippets, with structured data for AEO and PostHog analytics to track content engagement by condition.</p>
+        <p class="proj-result">3 FAQ answers now appearing in Google AI Overviews; organic traffic up 88% year over year</p>
         <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">WordPress</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">PostHog</a><a class="proj-tag" href="/blog/categories/seo-aeo.html">SEO schema</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Molecular diagnostics</span>
         <h3>HubSpot CRM buildout &amp; automation</h3>
         <p>Set up HubSpot from scratch for a molecular diagnostics company — contact properties, pipeline stages, UTM attribution mapping, and automated nurture sequences for physician leads.</p>
+        <p class="proj-result">UTM attribution wired end-to-end; marketing now tracks 78% of pipeline back to source channel</p>
         <div class="proj-tags"><a class="proj-tag" href="/blog/categories/hubspot-crm.html">HubSpot</a><a class="proj-tag" href="/blog/categories/hubspot-crm.html">Email automation</a><a class="proj-tag" href="/blog/categories/gtm-tag-management.html">GTM</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Digital health</span>
         <h3>Event tracking &amp; analytics rebuild</h3>
         <p>Replaced a broken legacy tracking setup on a patient engagement platform with a clean GA4 implementation, custom funnel events, and a PostHog product analytics layer for in-app behaviour.</p>
+        <p class="proj-result">Replaced 6 broken triggers with 40 clean custom events; full funnel visibility restored in 2 weeks</p>
         <div class="proj-tags"><a class="proj-tag" href="/blog/categories/ga4-analytics.html">GA4</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">PostHog</a><a class="proj-tag" href="/blog/categories/gtm-tag-management.html">GTM</a></div>
       </div>
     </div>
@@ -1294,6 +1324,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="carousel-controls">
       <button class="carousel-btn" id="carousel-prev" aria-label="Previous projects">&#8592;</button>
       <button class="carousel-btn" id="carousel-next" aria-label="Next projects">&#8594;</button>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap">
+    <div class="sec-head" data-animate>
+      <span class="sec-num">Client words</span>
+      <h2>What clients say</h2>
+    </div>
+    <div class="testimonial-grid">
+      <blockquote class="testimonial" data-animate>
+        <p>Michael rebuilt our site and our entire analytics stack in one engagement. We went from not knowing where our form submissions came from to a dashboard that connects traffic to pipeline. That's not something our old agency ever delivered.</p>
+        <footer><cite>VP Marketing, genomics company</cite></footer>
+      </blockquote>
+      <blockquote class="testimonial" data-animate>
+        <p>I needed someone who understood both the design and the compliance side. Most agencies hand those off to different people. Michael handled the Webflow build, the Consent Mode implementation, and the HubSpot wiring without me having to manage three vendors.</p>
+        <footer><cite>Marketing Director, digital health startup</cite></footer>
+      </blockquote>
+      <blockquote class="testimonial" data-animate>
+        <p>Our Google Analytics was a mess — duplicate sessions, misattributed conversions, UA data that never transferred cleanly to GA4. Michael untangled all of it and set up reporting we actually use in monthly leadership reviews.</p>
+        <footer><cite>Head of Marketing, medical device company</cite></footer>
+      </blockquote>
     </div>
   </div>
 </section>
