@@ -107,7 +107,7 @@ footer { padding: 40px 0; position: relative; z-index: 1; }
 .post-cta h3 { font-family: var(--display); font-weight: 500; font-size: 1.5rem; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 10px; }
 .post-cta p { color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; line-height: 1.6; }
 .post-cta a { display: inline-block; font-family: var(--display); font-size: 0.88rem; font-weight: 700; letter-spacing: 0.01em; background: var(--accent); color: var(--paper); border-radius: 6px; padding: 14px 28px; text-decoration: none; transition: opacity 0.15s; white-space: nowrap; }
-.post-cta a:hover { opacity: 0.88; }
+.post-cta a:hover { background: var(--warn); color: var(--ink); opacity: 1; }
 
 /* CookieYes overrides */
 .cky-consent-container, .cky-modal { background: var(--ink) !important; border-color: rgba(41,93,50,0.22) !important; }
