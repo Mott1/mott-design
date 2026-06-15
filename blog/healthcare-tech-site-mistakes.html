@@ -27,7 +27,7 @@
   "description": "Healthcare-tech websites face unique challenges — regulatory constraints, clinical buyer expectations, and compliance risk. Here are the five mistakes I see most often.",
   "author": { "@type": "Person", "name": "Michael Mott", "url": "https://mott.design" },
   "publisher": { "@type": "Organization", "name": "Mott Design", "url": "https://mott.design" },
-  "datePublished": "2026-07-15",
+  "datePublished": "2026-02-12",
   "url": "https://mott.design/blog/healthcare-tech-site-mistakes.html"
 }
 </script>
@@ -65,20 +65,32 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class="nav-links">
       <a href="../index.html#services">Services</a>
       <a href="../index.html#about">About</a>
-      <a href="index.html" class="active">Blog</a>
-      <a href="../the-brief.html">The Brief</a>
-      <a href="../field-guide.html">Field Guide</a>
-      <a href="../index.html#contact">Contact</a>
+      <a href="index.html" class="active">Writing</a>
+      <a href="../the-brief.html">FAQ</a>
+      <a href="../field-guide.html">Glossary</a>
+      <a href="../index.html#contact">Work with me</a>
     </div>
     <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+    <button class="nav-burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
+<div class="nav-drawer" aria-hidden="true">
+  <button class="drawer-close" aria-label="Close menu">&#x2715;</button>
+  <a href="../index.html#services">Services</a>
+  <a href="../index.html#about">About</a>
+  <a href="index.html">Writing</a>
+  <a href="../the-brief.html">FAQ</a>
+  <a href="../field-guide.html">Glossary</a>
+  <a href="../index.html#contact">Work with me</a>
+  <a href="../index.html#contact" class="drawer-cta">Get a quote</a>
+</div>
+<div class="nav-overlay"></div>
 <main style="position:relative;z-index:1;">
   <div class="wrap">
     <header class="post-head">
       <div class="post-eyebrow">
         <a href="categories/medtech-healthcare.html" class="cat-pill">Medtech &amp; Healthcare</a>
-        <span class="post-meta">July 15, 2026 &middot; 8 min read</span>
+        <span class="post-meta">February 12, 2026 &middot; 8 min read</span>
       </div>
       <h1>5 Website Mistakes Healthcare-Tech Companies Keep Making</h1>
       <p class="intro">Healthcare-tech companies build websites in a harder environment than most B2B companies. You have regulatory constraints on what you can claim, clinical buyers who are skeptical of marketing language, HIPAA risk from analytics implementations, and a sales cycle long enough that your website is a research resource for months before it is ever a conversion tool. Most healthcare-tech sites I audit are making at least three of the same five mistakes.</p>
@@ -144,6 +156,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
     paintCkyIcon();
   })();
+</script>
+<script>
+(function(){
+  var b=document.querySelector('.nav-burger');
+  var d=document.querySelector('.nav-drawer');
+  var o=document.querySelector('.nav-overlay');
+  if(!b||!d||!o)return;
+  function open(){d.classList.add('open');o.classList.add('open');b.setAttribute('aria-expanded','true');d.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+  function close(){d.classList.remove('open');o.classList.remove('open');b.setAttribute('aria-expanded','false');d.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+  b.addEventListener('click',open);
+  o.addEventListener('click',close);
+  var x=document.querySelector('.drawer-close');
+  if(x)x.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  d.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});
+})();
 </script>
 </body>
 </html>

@@ -696,6 +696,31 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .shimmer-bg { display: none; }
     .svc-icon path, .svc-icon line, .svc-icon rect, .svc-icon circle, .svc-icon polyline { stroke-dasharray: none !important; stroke-dashoffset: 0 !important; }
   }
+
+/* Mobile nav drawer */
+.nav-burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 51; }
+.nav-burger span { display: block; width: 22px; height: 2px; background: var(--ink); transition: all 0.25s; border-radius: 1px; }
+.nav-drawer { position: fixed; top: 0; right: -100%; width: min(320px, 85vw); height: 100vh; height: 100dvh; background: var(--paper); z-index: 200; transition: right 0.32s cubic-bezier(0.16,1,0.3,1); padding: 80px 40px 40px; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--line); overflow-y: auto; }
+.nav-drawer.open { right: 0; }
+.nav-drawer a { font-family: var(--display); font-size: 1.2rem; font-weight: 500; color: var(--ink); text-decoration: none; padding: 14px 0; border-bottom: 1px solid var(--line); transition: color 0.2s; }
+.nav-drawer a:hover { color: var(--accent); }
+.nav-drawer .drawer-cta { margin-top: 24px; background: var(--warn); color: var(--ink) !important; border-radius: 4px; padding: 14px 20px; text-align: center; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: none !important; }
+.nav-drawer .drawer-cta:hover { opacity: 0.85; }
+.drawer-close { position: absolute; top: 22px; right: 24px; background: none; border: none; color: var(--ink); font-size: 1.4rem; cursor: pointer; padding: 4px; line-height: 1; opacity: 0.65; }
+.drawer-close:hover { opacity: 1; }
+.nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 150; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.nav-overlay.open { opacity: 1; pointer-events: all; }
+@media (max-width: 720px) { .nav-burger { display: flex; } .nav-cta { display: none; } }
+
+  /* Related reading in service cards */
+  .svc-reading { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .svc-reading-label { font-family: var(--display); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .svc-reading a { display: block; font-size: 0.82rem; color: var(--accent); text-decoration: none; padding: 2px 0 2px 14px; transition: color 0.15s; position: relative; line-height: 1.45; }
+  .svc-reading a::before { content: '→'; position: absolute; left: 0; color: var(--warn); font-size: 0.75rem; top: 3px; }
+  .svc-reading a:hover { color: var(--ink); }
+  /* Clickable work badges */
+  a.proj-tag { text-decoration: none; display: inline-block; transition: opacity 0.15s; }
+  a.proj-tag:hover { opacity: 0.8; }
 </style>
 </head>
 <body>
@@ -712,14 +737,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="nav-links">
       <a href="#services">Services</a>
       <a href="#about">About</a>
-      <a href="blog/index.html">Blog</a>
-      <a href="the-brief.html">The Brief</a>
-      <a href="field-guide.html">Field Guide</a>
-      <a href="#contact">Contact</a>
+      <a href="blog/index.html">Writing</a>
+      <a href="the-brief.html">FAQ</a>
+      <a href="field-guide.html">Glossary</a>
+      <a href="#contact">Work with me</a>
     </div>
     <a href="#contact" class="nav-cta">Get a quote</a>
+    <button class="nav-burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
+<div class="nav-drawer" aria-hidden="true">
+  <button class="drawer-close" aria-label="Close menu">&#x2715;</button>
+  <a href="#services">Services</a>
+  <a href="#about">About</a>
+  <a href="blog/index.html">Writing</a>
+  <a href="the-brief.html">FAQ</a>
+  <a href="field-guide.html">Glossary</a>
+  <a href="#contact">Work with me</a>
+  <a href="#contact" class="drawer-cta">Get a quote</a>
+</div>
+<div class="nav-overlay"></div>
 
 <header class="hero">
   <div class="hero-left">
@@ -943,6 +980,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="svc-key">build</span>
         <h3>Web design &amp; development</h3>
         <p>Marketing sites and landing pages designed and built to spec — clean, fast, and ready for the people who have to update them after launch.</p>
+        <div class="svc-reading">
+          <p class="svc-reading-label">Related reading</p>
+          <a href="/blog/b2b-homepage-design.html">What Makes a Great B2B Homepage</a>
+          <a href="/blog/framer-vs-webflow.html">Framer vs Webflow: Which Is Better for B2B?</a>
+          <a href="/blog/state-of-b2b-web-design.html">The State of B2B Web Design in 2026</a>
+        </div>
       </div>
       <div class="svc">
         <svg class="svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -954,6 +997,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="svc-key">platform</span>
         <h3>Webflow, WordPress &amp; custom</h3>
         <p>Production sites on the right platform — visual CMS in Webflow, WordPress with Elementor when you need the plugin ecosystem, or fully custom code built with Claude and deployed on GitHub.</p>
+        <div class="svc-reading">
+          <p class="svc-reading-label">Related reading</p>
+          <a href="/blog/webflow-vs-wordpress.html">Webflow vs WordPress in 2026</a>
+          <a href="/blog/choosing-a-cms.html">Choosing a CMS in 2026</a>
+          <a href="/blog/headless-cms-guide.html">Headless CMS: Do You Actually Need One?</a>
+        </div>
       </div>
       <div class="svc">
         <svg class="svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -964,6 +1013,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="svc-key">migrate</span>
         <h3>Site migrations &amp; rebuilds</h3>
         <p>Platform moves and full rebuilds with redirects, content, and tracking carried over intact — handed back to you with ownership clean.</p>
+        <div class="svc-reading">
+          <p class="svc-reading-label">Related reading</p>
+          <a href="/blog/why-leave-your-agency.html">Why Stop Relying on a Web Agency</a>
+          <a href="/blog/healthcare-tech-site-mistakes.html">5 Website Mistakes Healthcare-Tech Companies Make</a>
+          <a href="/blog/freelancer-vs-agency-web.html">Freelancer vs Agency: An Honest Comparison</a>
+        </div>
       </div>
       <div class="svc">
         <svg class="svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -976,6 +1031,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="svc-key">measure</span>
         <h3>Analytics &amp; tracking</h3>
         <p>GA4 and Google Tag Manager set up properly: events that map to real goals, cross-domain tracking, and filtering that keeps the data trustworthy.</p>
+        <div class="svc-reading">
+          <p class="svc-reading-label">Related reading</p>
+          <a href="/blog/how-to-set-up-ga4.html">How to Set Up GA4 for a B2B Website</a>
+          <a href="/blog/ga4-explorations-guide.html">GA4 Explorations: Reports Most B2B Teams Never Build</a>
+          <a href="/blog/ga4-channel-groupings.html">GA4 Channel Groupings Are Wrong for B2B — Fix Them</a>
+        </div>
       </div>
       <div class="svc">
         <svg class="svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -985,6 +1046,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="svc-key">rank</span>
         <h3>SEO, AEO &amp; technical audits</h3>
         <p>Indexing, structure, and Core Web Vitals audits with a prioritized fix list — plus Answer Engine Optimization so your content surfaces in AI-generated answers and featured snippets, not just traditional search results.</p>
+        <div class="svc-reading">
+          <p class="svc-reading-label">Related reading</p>
+          <a href="/blog/what-is-aeo.html">What Is AEO (Answer Engine Optimization)?</a>
+          <a href="/blog/how-to-rank-in-ai-search.html">How to Rank in AI Search: A Practical Playbook</a>
+          <a href="/blog/technical-seo-checklist.html">Technical SEO Checklist for B2B Websites</a>
+        </div>
       </div>
       <div class="svc">
         <svg class="svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -994,6 +1061,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="svc-key">consent</span>
         <h3>Cookie &amp; consent compliance</h3>
         <p>Consent-mode setups that actually gate your tags — CookieYes, Cookiebot, and GTM wired so nothing fires before opt-in.</p>
+        <div class="svc-reading">
+          <p class="svc-reading-label">Related reading</p>
+          <a href="/blog/consent-mode-v2.html">Google Consent Mode v2: What It Is and How to Implement It</a>
+          <a href="/blog/cookie-banner-audit.html">How to Audit Your Cookie Banner</a>
+          <a href="/blog/cmp-comparison.html">CookieYes vs OneTrust vs Osano: Which CMP?</a>
+        </div>
       </div>
       <div class="svc">
         <svg class="svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1002,6 +1075,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="svc-key">martech</span>
         <h3>HubSpot &amp; martech setup</h3>
         <p>Forms, contact properties, and the plumbing between your site and the tools your marketing team lives in.</p>
+        <div class="svc-reading">
+          <p class="svc-reading-label">Related reading</p>
+          <a href="/blog/hubspot-ga4-integration.html">Connecting HubSpot to GA4: Complete Integration Guide</a>
+          <a href="/blog/hubspot-revenue-attribution.html">HubSpot Revenue Attribution: Connecting Marketing to Pipeline</a>
+          <a href="/blog/martech-for-medtech.html">Martech for Medical Device Companies</a>
+        </div>
       </div>
       <div class="svc">
         <svg class="svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1011,6 +1090,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="svc-key">email</span>
         <h3>Email marketing automation</h3>
         <p>Lifecycle and nurture flows connected to your forms and CRM, with the tracking to see what converts.</p>
+        <div class="svc-reading">
+          <p class="svc-reading-label">Related reading</p>
+          <a href="/blog/hubspot-ga4-integration.html">Connecting HubSpot to GA4: Complete Integration Guide</a>
+          <a href="/blog/b2b-measurement-plan.html">How to Build a B2B Measurement Plan That Works</a>
+          <a href="/blog/privacy-first-analytics.html">Privacy-First Analytics: Measure When Consent Rates Drop</a>
+        </div>
       </div>
       <div class="svc">
         <svg class="svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1023,6 +1108,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="svc-key">design</span>
         <h3>Digital &amp; print collateral</h3>
         <p>Design and production across the full collateral stack — pitch decks, one-pagers, digital ads, print-ready files, and brand-system assets delivered to spec.</p>
+        <div class="svc-reading">
+          <p class="svc-reading-label">Related reading</p>
+          <a href="/blog/b2b-homepage-design.html">What Makes a Great B2B Homepage</a>
+          <a href="/blog/state-of-b2b-web-design.html">The State of B2B Web Design in 2026</a>
+          <a href="/blog/framer-vs-webflow.html">Framer vs Webflow: Which Is Better for B2B?</a>
+        </div>
       </div>
       <div class="svc">
         <svg class="svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1032,6 +1123,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="svc-key">automate</span>
         <h3>AI-assisted automation</h3>
         <p>Claude-powered pipelines for content generation, SEO brief automation, and internal reporting — cutting the repetitive work out of your marketing stack.</p>
+        <div class="svc-reading">
+          <p class="svc-reading-label">Related reading</p>
+          <a href="/blog/what-is-aeo.html">What Is AEO (Answer Engine Optimization)?</a>
+          <a href="/blog/how-to-rank-in-ai-search.html">How to Rank in AI Search: A Practical Playbook</a>
+          <a href="/blog/b2b-seo-content-strategy.html">B2B SEO Content Strategy: Build a Program That Drives Pipeline</a>
+        </div>
       </div>
       <div class="svc">
         <svg class="svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1047,6 +1144,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="svc-key">figma</span>
         <h3>Figma design systems</h3>
         <p>Component libraries, design tokens, and handoff-ready files that give developers and marketers a shared source of truth — built to your brand, not a generic template.</p>
+        <div class="svc-reading">
+          <p class="svc-reading-label">Related reading</p>
+          <a href="/blog/framer-vs-webflow.html">Framer vs Webflow: Which Is Better for B2B?</a>
+          <a href="/blog/b2b-homepage-design.html">What Makes a Great B2B Homepage</a>
+          <a href="/blog/headless-cms-guide.html">Headless CMS: Do You Actually Need One?</a>
+        </div>
       </div>
       <div class="svc">
         <svg class="svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1060,6 +1163,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="svc-key">retainer</span>
         <h3>Ongoing maintenance</h3>
         <p>A standing arrangement for updates, fixes, and the small things that pile up — so your site doesn't quietly rot between projects.</p>
+        <div class="svc-reading">
+          <p class="svc-reading-label">Related reading</p>
+          <a href="/blog/why-leave-your-agency.html">Why Stop Relying on a Web Agency</a>
+          <a href="/blog/freelancer-vs-agency-web.html">Freelancer vs Agency: An Honest Comparison</a>
+          <a href="/blog/what-ive-learned-freelancing.html">What Three Years of Going Independent Taught Me</a>
+        </div>
       </div>
     </div>
   </div>
@@ -1079,91 +1188,91 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="proj-industry">Genomics</span>
         <h3>Platform migration &amp; consent compliance</h3>
         <p>Migrated from Squarespace to Webflow across 80+ URLs, preserved SEO equity with a complete redirect map, and wired up Cookiebot with Consent Mode v2 so GA4 and ad pixels gate correctly on opt-in.</p>
-        <div class="proj-tags"><span class="proj-tag">Webflow</span><span class="proj-tag">Cookiebot</span><span class="proj-tag">Consent Mode</span></div>
+        <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">Webflow</a><a class="proj-tag" href="/blog/categories/consent-privacy.html">Cookiebot</a><a class="proj-tag" href="/blog/categories/consent-privacy.html">Consent Mode</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Digital health</span>
         <h3>Marketing site &amp; HubSpot integration</h3>
         <p>Designed and built a Webflow site for a pre-launch patient engagement platform; forms feed HubSpot directly with lifecycle stage automation triggered on form completion.</p>
-        <div class="proj-tags"><span class="proj-tag">Webflow</span><span class="proj-tag">HubSpot</span><span class="proj-tag">Email automation</span></div>
+        <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">Webflow</a><a class="proj-tag" href="/blog/categories/hubspot-crm.html">HubSpot</a><a class="proj-tag" href="/blog/categories/hubspot-crm.html">Email automation</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Medical device</span>
         <h3>Commercial site rebuild &amp; analytics overhaul</h3>
         <p>Rebuilt a legacy WordPress site on Elementor, restructured navigation for dual buyer personas, and replaced deprecated UA tracking with a clean GA4 and GTM implementation.</p>
-        <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">Elementor</span><span class="proj-tag">GA4 · GTM</span></div>
+        <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">WordPress</a><a class="proj-tag" href="/blog/categories/web-design-dev.html">Elementor</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">GA4 · GTM</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Cybersecurity</span>
         <h3>Product launch site &amp; CRM wiring</h3>
         <p>Built a B2B marketing site for a mobile security platform entering enterprise, with a gated demo request flow, HubSpot CRM integration, and PostHog session analytics.</p>
-        <div class="proj-tags"><span class="proj-tag">Webflow</span><span class="proj-tag">HubSpot</span><span class="proj-tag">PostHog</span></div>
+        <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">Webflow</a><a class="proj-tag" href="/blog/categories/hubspot-crm.html">HubSpot</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">PostHog</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Enterprise tech</span>
         <h3>GA4 migration &amp; analytics rebuild</h3>
         <p>Full GA4 property buildout and GTM re-tag for a communications-technology platform — 40+ custom events, BigQuery export, and a Looker Studio dashboard replacing legacy UA reports.</p>
-        <div class="proj-tags"><span class="proj-tag">GA4</span><span class="proj-tag">GTM</span><span class="proj-tag">BigQuery</span></div>
+        <div class="proj-tags"><a class="proj-tag" href="/blog/categories/ga4-analytics.html">GA4</a><a class="proj-tag" href="/blog/categories/gtm-tag-management.html">GTM</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">BigQuery</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Fintech</span>
         <h3>Rebrand &amp; Webflow build</h3>
         <p>Executed a complete visual rebrand and rebuilt the marketing site in Webflow from a hard-coded template, with Stripe integration for direct payment capture and a Figma design system handoff.</p>
-        <div class="proj-tags"><span class="proj-tag">Webflow</span><span class="proj-tag">Stripe</span><span class="proj-tag">Figma</span></div>
+        <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">Webflow</a><span class="proj-tag">Stripe</span><a class="proj-tag" href="/blog/categories/web-design-dev.html">Figma</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Cancer diagnostics</span>
         <h3>Multi-audience site restructure</h3>
         <p>Rebuilt a multi-market site for an oncology diagnostics firm, restructuring content architecture for three physician audiences and implementing GTM with role-based conversion goals.</p>
-        <div class="proj-tags"><span class="proj-tag">Webflow</span><span class="proj-tag">GTM</span><span class="proj-tag">GA4</span></div>
+        <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">Webflow</a><a class="proj-tag" href="/blog/categories/gtm-tag-management.html">GTM</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">GA4</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Clinical research</span>
         <h3>Patient intake &amp; portal redesign</h3>
         <p>Redesigned a patient-facing portal for a clinical trial management company, improving navigation clarity and replacing a fragmented consent workflow with a single-page intake form.</p>
-        <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">Custom</span><span class="proj-tag">GA4</span></div>
+        <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">WordPress</a><a class="proj-tag" href="/blog/categories/web-design-dev.html">Custom</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">GA4</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">AI healthcare</span>
         <h3>Pre-launch landing page &amp; waitlist</h3>
         <p>Built a teaser site and waitlist capture for an AI-powered care coordination startup, with Webflow CMS for blog content, PostHog behaviour analytics, and Mailchimp nurture automation.</p>
-        <div class="proj-tags"><span class="proj-tag">Webflow</span><span class="proj-tag">PostHog</span><span class="proj-tag">Mailchimp</span></div>
+        <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">Webflow</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">PostHog</a><a class="proj-tag" href="/blog/categories/hubspot-crm.html">Mailchimp</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Mobile security</span>
         <h3>B2B site overhaul &amp; Salesforce integration</h3>
         <p>Rebuilt from a dated WordPress theme to a modern Webflow site, with Salesforce Web-to-Lead on all forms and a full GTM and GA4 re-implementation including ABM event tracking.</p>
-        <div class="proj-tags"><span class="proj-tag">Webflow</span><span class="proj-tag">Salesforce</span><span class="proj-tag">GTM</span></div>
+        <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">Webflow</a><a class="proj-tag" href="/blog/categories/hubspot-crm.html">Salesforce</a><a class="proj-tag" href="/blog/categories/gtm-tag-management.html">GTM</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Epigenomics</span>
         <h3>Data storytelling microsite</h3>
         <p>Built a standalone microsite to communicate complex sequencing technology to biopharma buyers, with animated data visualisations, gated whitepaper download flow, and HubSpot lead capture.</p>
-        <div class="proj-tags"><span class="proj-tag">Webflow</span><span class="proj-tag">HubSpot</span><span class="proj-tag">Custom animation</span></div>
+        <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">Webflow</a><a class="proj-tag" href="/blog/categories/hubspot-crm.html">HubSpot</a><a class="proj-tag" href="/blog/categories/web-design-dev.html">Custom animation</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Medical association</span>
         <h3>Conference &amp; membership site</h3>
         <p>Designed and built an annual conference microsite integrated with the association's WordPress CMS, covering session registration, speaker profiles, and post-event on-demand video.</p>
-        <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">HubSpot</span><span class="proj-tag">GA4</span></div>
+        <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">WordPress</a><a class="proj-tag" href="/blog/categories/hubspot-crm.html">HubSpot</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">GA4</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Rare disease</span>
         <h3>Patient education hub &amp; SEO</h3>
         <p>Built a patient-facing resource hub in WordPress, optimised for FAQ schema and featured snippets, with structured data for AEO and PostHog analytics to track content engagement by condition.</p>
-        <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">PostHog</span><span class="proj-tag">SEO schema</span></div>
+        <div class="proj-tags"><a class="proj-tag" href="/blog/categories/web-design-dev.html">WordPress</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">PostHog</a><a class="proj-tag" href="/blog/categories/seo-aeo.html">SEO schema</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Molecular diagnostics</span>
         <h3>HubSpot CRM buildout &amp; automation</h3>
         <p>Set up HubSpot from scratch for a molecular diagnostics company — contact properties, pipeline stages, UTM attribution mapping, and automated nurture sequences for physician leads.</p>
-        <div class="proj-tags"><span class="proj-tag">HubSpot</span><span class="proj-tag">Email automation</span><span class="proj-tag">GTM</span></div>
+        <div class="proj-tags"><a class="proj-tag" href="/blog/categories/hubspot-crm.html">HubSpot</a><a class="proj-tag" href="/blog/categories/hubspot-crm.html">Email automation</a><a class="proj-tag" href="/blog/categories/gtm-tag-management.html">GTM</a></div>
       </div>
       <div class="project">
         <span class="proj-industry">Digital health</span>
         <h3>Event tracking &amp; analytics rebuild</h3>
         <p>Replaced a broken legacy tracking setup on a patient engagement platform with a clean GA4 implementation, custom funnel events, and a PostHog product analytics layer for in-app behaviour.</p>
-        <div class="proj-tags"><span class="proj-tag">GA4</span><span class="proj-tag">PostHog</span><span class="proj-tag">GTM</span></div>
+        <div class="proj-tags"><a class="proj-tag" href="/blog/categories/ga4-analytics.html">GA4</a><a class="proj-tag" href="/blog/categories/ga4-analytics.html">PostHog</a><a class="proj-tag" href="/blog/categories/gtm-tag-management.html">GTM</a></div>
       </div>
     </div>
   </div>
@@ -2139,5 +2248,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   })();
 </script>
 
+<script>
+(function(){
+  var b=document.querySelector('.nav-burger');
+  var d=document.querySelector('.nav-drawer');
+  var o=document.querySelector('.nav-overlay');
+  if(!b||!d||!o)return;
+  function open(){d.classList.add('open');o.classList.add('open');b.setAttribute('aria-expanded','true');d.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+  function close(){d.classList.remove('open');o.classList.remove('open');b.setAttribute('aria-expanded','false');d.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+  b.addEventListener('click',open);
+  o.addEventListener('click',close);
+  var x=document.querySelector('.drawer-close');
+  if(x)x.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  d.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});
+})();
+</script>
 </body>
 </html>

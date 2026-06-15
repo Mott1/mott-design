@@ -27,7 +27,7 @@
   "description": "Most analytics presentations fail because they show the wrong metrics to the wrong audience. Here is how to connect web data to what executives actually care about.",
   "author": { "@type": "Person", "name": "Michael Mott", "url": "https://mott.design" },
   "publisher": { "@type": "Organization", "name": "Mott Design", "url": "https://mott.design" },
-  "datePublished": "2026-09-12",
+  "datePublished": "2026-03-13",
   "url": "https://mott.design/blog/how-to-present-analytics-to-executives.html"
 }
 </script>
@@ -65,20 +65,32 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class="nav-links">
       <a href="../index.html#services">Services</a>
       <a href="../index.html#about">About</a>
-      <a href="index.html" class="active">Blog</a>
-      <a href="../the-brief.html">The Brief</a>
-      <a href="../field-guide.html">Field Guide</a>
-      <a href="../index.html#contact">Contact</a>
+      <a href="index.html" class="active">Writing</a>
+      <a href="../the-brief.html">FAQ</a>
+      <a href="../field-guide.html">Glossary</a>
+      <a href="../index.html#contact">Work with me</a>
     </div>
     <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+    <button class="nav-burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
+<div class="nav-drawer" aria-hidden="true">
+  <button class="drawer-close" aria-label="Close menu">&#x2715;</button>
+  <a href="../index.html#services">Services</a>
+  <a href="../index.html#about">About</a>
+  <a href="index.html">Writing</a>
+  <a href="../the-brief.html">FAQ</a>
+  <a href="../field-guide.html">Glossary</a>
+  <a href="../index.html#contact">Work with me</a>
+  <a href="../index.html#contact" class="drawer-cta">Get a quote</a>
+</div>
+<div class="nav-overlay"></div>
 <main style="position:relative;z-index:1;">
   <div class="wrap">
     <header class="post-head">
       <div class="post-eyebrow">
         <a href="categories/measurement-strategy.html" class="cat-pill">Measurement Strategy</a>
-        <span class="post-meta">September 12, 2026 &middot; 8 min read</span>
+        <span class="post-meta">March 13, 2026 &middot; 8 min read</span>
       </div>
       <h1>How to Present Analytics Data to Executives Who Do Not Care About GA4</h1>
       <p class="intro">The analytics presentation problem is not a data problem. You have enough data. It is a translation problem — the metrics that matter for managing a web analytics implementation are not the same metrics that matter for running a business, and the people who need to make resource decisions are looking at the latter, not the former.</p>
@@ -150,6 +162,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
     paintCkyIcon();
   })();
+</script>
+<script>
+(function(){
+  var b=document.querySelector('.nav-burger');
+  var d=document.querySelector('.nav-drawer');
+  var o=document.querySelector('.nav-overlay');
+  if(!b||!d||!o)return;
+  function open(){d.classList.add('open');o.classList.add('open');b.setAttribute('aria-expanded','true');d.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+  function close(){d.classList.remove('open');o.classList.remove('open');b.setAttribute('aria-expanded','false');d.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+  b.addEventListener('click',open);
+  o.addEventListener('click',close);
+  var x=document.querySelector('.drawer-close');
+  if(x)x.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  d.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});
+})();
 </script>
 </body>
 </html>

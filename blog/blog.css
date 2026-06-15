@@ -121,3 +121,19 @@ footer { padding: 40px 0; position: relative; z-index: 1; }
 .cky-btn-reject:hover, .cky-btn-customize:hover { border-color: var(--paper) !important; }
 .cky-close-btn svg path { stroke: rgba(41,93,50,0.5) !important; }
 .cky-revisit-btn, [data-cky-tag="revisit-consent"], .cky-btn-revisit { background: #c4622d !important; background-color: #c4622d !important; border-color: #c4622d !important; box-shadow: 0 2px 16px rgba(196,98,45,0.35) !important; }
+
+
+/* Mobile nav drawer */
+.nav-burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 51; }
+.nav-burger span { display: block; width: 22px; height: 2px; background: var(--ink); transition: all 0.25s; border-radius: 1px; }
+.nav-drawer { position: fixed; top: 0; right: -100%; width: min(320px, 85vw); height: 100vh; height: 100dvh; background: var(--paper); z-index: 200; transition: right 0.32s cubic-bezier(0.16,1,0.3,1); padding: 80px 40px 40px; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--line); overflow-y: auto; }
+.nav-drawer.open { right: 0; }
+.nav-drawer a { font-family: var(--display); font-size: 1.2rem; font-weight: 500; color: var(--ink); text-decoration: none; padding: 14px 0; border-bottom: 1px solid var(--line); transition: color 0.2s; }
+.nav-drawer a:hover { color: var(--accent); }
+.nav-drawer .drawer-cta { margin-top: 24px; background: var(--warn); color: var(--ink) !important; border-radius: 4px; padding: 14px 20px; text-align: center; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: none !important; }
+.nav-drawer .drawer-cta:hover { opacity: 0.85; }
+.drawer-close { position: absolute; top: 22px; right: 24px; background: none; border: none; color: var(--ink); font-size: 1.4rem; cursor: pointer; padding: 4px; line-height: 1; opacity: 0.65; }
+.drawer-close:hover { opacity: 1; }
+.nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 150; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.nav-overlay.open { opacity: 1; pointer-events: all; }
+@media (max-width: 720px) { .nav-burger { display: flex; } .nav-cta { display: none; } }
