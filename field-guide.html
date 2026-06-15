@@ -65,7 +65,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { background: var(--paper); color: var(--ink); font-family: var(--body); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--body); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
   .grain-bg {
     filter: contrast(200%);
     pointer-events: none;
@@ -190,6 +190,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 .modal-success.show { display: block; }
 .modal-success p { color: var(--accent); font-size: 1rem; line-height: 1.6; }
 @media (max-width: 600px) { .modal-box { padding: 32px 24px; } }
+@media (max-width: 720px) { .modal-field input, .modal-field textarea { font-size: 1rem !important; } }
 
 </style>
 </head>
