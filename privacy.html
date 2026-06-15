@@ -62,7 +62,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   html { scroll-behavior: smooth; }
   body { background: var(--paper); color: var(--ink); font-family: var(--body); line-height: 1.6; -webkit-font-smoothing: antialiased; }
 
-  .grain-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E"); opacity: 0.04; filter: contrast(200%); }
+  .grain-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; background-image: url('grain.png'); background-position: 50%; background-size: contain; background-attachment: fixed; background-repeat: repeat; filter: contrast(200%); }
 
   .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
