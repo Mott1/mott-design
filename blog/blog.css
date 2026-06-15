@@ -137,3 +137,12 @@ footer { padding: 40px 0; position: relative; z-index: 1; }
 .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 150; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
 .nav-overlay.open { opacity: 1; pointer-events: all; }
 @media (max-width: 720px) { .nav-burger { display: flex; } .nav-cta { display: none; } }
+
+/* Related posts */
+.related-posts { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); max-width: 720px; }
+.related-posts-label { font-family: var(--display); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+.related-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.related-item { background: var(--card); border-radius: 8px; padding: 16px; text-decoration: none; color: var(--ink); transition: background 0.15s; display: block; }
+.related-item:hover { background: rgba(84,137,93,0.38); }
+.related-item-title { font-family: var(--display); font-size: 0.85rem; font-weight: 500; line-height: 1.35; color: var(--ink); display: block; }
+@media (max-width: 600px) { .related-list { grid-template-columns: 1fr; } }
