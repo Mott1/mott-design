@@ -89,7 +89,7 @@ footer { padding: 40px 0; position: relative; z-index: 1; }
 /* Post content */
 .post-body { max-width: 720px; padding: 48px 0 80px; }
 .post-body h2 { font-family: var(--display); font-weight: 500; font-size: 1.45rem; letter-spacing: -0.025em; color: var(--ink); margin: 48px 0 16px; line-height: 1.2; }
-.post-body h3 { font-family: var(--display); font-weight: 500; font-size: 1.1rem; letter-spacing: -0.015em; color: var(--ink); margin: 32px 0 12px; }
+.post-body h3 { font-family: var(--display); font-weight: 500; font-size: 1.1rem; letter-spacing: -0.015em; color: var(--ink); margin: -2px 0 12px !important; }
 .post-body p { color: var(--muted); font-size: 0.98rem; line-height: 1.8; margin-bottom: 18px; }
 .post-body p:last-child { margin-bottom: 0; }
 .post-body strong { color: var(--accent); font-weight: 500; }
