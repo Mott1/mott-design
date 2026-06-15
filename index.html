@@ -117,7 +117,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   /* ---- nav ---- */
   nav {
     position: sticky; top: 0; z-index: 50;
-    background: rgba(41,93,50,0.92);
+    background: transparent;
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--line);
   }
@@ -729,9 +729,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
 
   /* ---- testimonials ---- */
-  #testimonials { border-bottom: 1px solid var(--line); background: var(--paper); }
+  #testimonials { border-bottom: 1px solid var(--line); background: var(--paper-2); }
   .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .testimonial { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 24px; }
+  .testimonial { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 12px; }
   .testimonial p { color: var(--ink); font-size: 1rem; line-height: 1.7; font-style: italic; flex: 1; }
   .testimonial p::before { content: '\201C'; color: var(--warn); font-size: 1.6rem; line-height: 0; vertical-align: -0.4rem; margin-right: 3px; font-style: normal; }
   .testimonial cite { font-family: var(--display); font-size: 0.8rem; font-weight: 600; color: var(--muted); font-style: normal; letter-spacing: 0.03em; }
@@ -742,12 +742,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   @media (max-width: 720px) { .testimonial { padding: 24px; } }
 
   /* ---- project result line ---- */
-  .proj-result { font-family: var(--display); font-size: 0.8rem; font-weight: 500; color: var(--accent); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
-  .proj-result::before { content: '→ '; color: var(--warn); }
+  .proj-result { font-family: var(--display); font-size: 0.82rem; font-weight: 500; color: var(--accent); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .proj-result::before { content: 'THE WIN'; display: block; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warn); margin-bottom: 4px; }
 
   /* Related reading in service cards */
-  .svc-reading { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); padding-bottom: 0; }
-  .svc-reading-label { font-family: var(--display); font-size: 0.5rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .svc-reading { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); padding-bottom: 0; }
+  .svc-reading-label { font-family: var(--display); font-size: 0.42rem !important; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
   .svc-reading a { display: block; font-size: 0.82rem; color: var(--accent); text-decoration: none; padding: 2px 0 2px 14px; transition: color 0.15s; position: relative; line-height: 1.45; }
   .svc-reading a::before { content: '→'; position: absolute; left: 0; color: var(--warn); font-size: 0.75rem; top: 3px; }
   .svc-reading a:hover { color: var(--ink); }
@@ -2212,10 +2212,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       entries.forEach(e => {
         if (!e.isIntersecting) return;
 
-        // Start from 0, scroll left by exactly half (one full set of logos)
+        // Center on Google logo, scroll left by one full set of logos
         const setW = Math.round(logoTrack.scrollWidth / 2);
-        const startX = 0;
-        const endX = -setW;
+        const googleLogo = logoTrack.querySelector('.logo-google');
+        const wrapW = logoWrap.offsetWidth;
+        const googleCenter = googleLogo ? (googleLogo.offsetLeft + googleLogo.offsetWidth / 2) : 0;
+        const startX = Math.round(wrapW / 2 - googleCenter);
+        const endX = startX - setW;
 
         // Stagger-reveal all logos left-to-right
         const items = logoTrack.querySelectorAll('.logo-item');
