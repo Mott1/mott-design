@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIPAA-Compliant Analytics: A Practical Setup Guide for Healthcare-Tech Sites — Mott Design</title>
+<meta name="description" content="Web analytics and HIPAA create genuine tension. Here is how to configure GA4 and your tracking stack to measure performance without creating PHI exposure.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/hipaa-analytics-setup-guide.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HIPAA-Compliant Analytics: A Practical Setup Guide for Healthcare-Tech Sites">
+<meta property="og:description" content="Web analytics and HIPAA create genuine tension. Here is how to configure GA4 and your tracking stack to measure performance without creating PHI exposure.">
+<meta property="og:url" content="https://mott.design/blog/hipaa-analytics-setup-guide.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "HIPAA-Compliant Analytics: A Practical Setup Guide for Healthcare-Tech Sites",
+  "description": "Web analytics and HIPAA create genuine tension. Here is how to configure GA4 and your tracking stack to measure performance without creating PHI exposure.",
+  "author": { "@type": "Person", "name": "Michael Mott", "url": "https://mott.design" },
+  "publisher": { "@type": "Organization", "name": "Mott Design", "url": "https://mott.design" },
+  "datePublished": "2026-01-03",
+  "url": "https://mott.design/blog/hipaa-analytics-setup-guide.html"
+}
+</script>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<!-- End cookieyes banner -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("consent", "default", {
+    "analytics_storage": "denied", "ad_storage": "denied",
+    "ad_user_data": "denied", "ad_personalization": "denied",
+    "functionality_storage": "denied", "security_storage": "granted",
+    "wait_for_update": 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-53HVNPWM');</script>
+<!-- End Google Tag Manager -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#about">About</a>
+      <a href="index.html" class="active">Blog</a>
+      <a href="../the-brief.html">The Brief</a>
+      <a href="../field-guide.html">Field Guide</a>
+      <a href="../index.html#contact">Contact</a>
+    </div>
+    <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/medtech-healthcare.html" class="cat-pill">Medtech &amp; Healthcare</a>
+        <span class="post-meta">January 3, 2026 &middot; 10 min read</span>
+      </div>
+      <h1>HIPAA-Compliant Analytics: A Practical Setup Guide for Healthcare-Tech Sites</h1>
+      <p class="intro">Healthcare-tech companies face a measurement problem that most B2B companies do not: their web analytics can inadvertently create protected health information, which carries significant regulatory and legal risk. The tension between "we need to know how our marketing is performing" and "we cannot expose PHI" is real, and navigating it requires specific technical configuration, not just general caution.</p>
+    </header>
+    <div class="tldr">
+      <p class="tldr-label">TL;DR</p>
+      <ul><li>PHI in web analytics most commonly arises from URL parameters containing health conditions, patient IDs, or diagnostic information — not from intentional data collection.</li><li>GA4's default configuration is not HIPAA-compliant. Specific configuration steps are required to reduce PHI exposure risk.</li><li>Google does not currently offer a Business Associate Agreement (BAA) for GA4, which creates risk for covered entities using it for analytics on health-related pages.</li><li>For the highest-risk scenarios, server-side analytics or privacy-first tools (Plausible, Fathom) may be more appropriate than GA4.</li></ul>
+    </div>
+    <div class="post-body">
+      <h2>Why HIPAA and web analytics are in tension</h2>
+      <p>HIPAA's Privacy Rule protects individually identifiable health information — information that could be used to identify a person and relates to their past, present, or future health condition, treatment, or payment. Web analytics tools, by design, collect detailed behavioral data about individual users across sessions.</p>
+      <p>The tension arises not because web analytics tools intentionally collect health information, but because the URLs and parameters on health-related websites often contain information that, combined with IP addresses and other identifiers, can constitute PHI. A URL like /patient-portal?condition=diabetes&user_id=12345 passing through GA4 is a PHI problem, even if no one intended to track health conditions.</p>
+
+      <h2>What counts as PHI in analytics data</h2>
+      <p>The specific analytics data points that create HIPAA risk:</p>
+      <ul>
+        <li><strong>URL parameters containing health information:</strong> Query strings with condition names, medication names, diagnostic codes, or treatment references.</li>
+        <li><strong>URL parameters containing identifiers:</strong> Patient IDs, member numbers, or any identifier that could be linked to a health record.</li>
+        <li><strong>IP addresses combined with health page visits:</strong> Visiting a page about a specific condition, combined with an IP address, may be sufficient to constitute PHI in some interpretations.</li>
+        <li><strong>User IDs in analytics that correspond to patient records:</strong> If your analytics user ID can be cross-referenced with a health record system, the analytics data becomes PHI.</li>
+      </ul>
+      <p>The risk level depends heavily on what your site actually does. A medical device company marketing to clinicians is in a different risk category than a patient-facing health platform. The former has limited PHI exposure; the latter has significant exposure that requires careful architecture.</p>
+
+      <h2>GA4 configuration steps for healthcare-tech sites</h2>
+
+      <h3>Redact URL query parameters</h3>
+      <p>GA4 collects the full URL of each page view, including query parameters. If those parameters contain health information, that information lands in your analytics data. In GA4's Data Settings → Data Collection, enable URL query parameter redaction to strip query parameters from URLs before they are stored. Alternatively, configure specific parameter exclusions for the parameters that contain sensitive data.</p>
+
+      <h3>Disable Google Signals</h3>
+      <p>Google Signals enables cross-device tracking and audience features by linking GA4 data to signed-in Google accounts. For healthcare-tech sites with any patient-facing components, disable Google Signals in your GA4 property. This limits the cross-device tracking capabilities but eliminates a data linkage that creates PHI risk.</p>
+
+      <h3>Shorten data retention</h3>
+      <p>GA4 allows you to set the user-data retention period. Set this to 2 months rather than the default 14 months. Less retained data means less exposure in the event of a data breach or regulatory inquiry.</p>
+
+      <h3>Disable advertising features</h3>
+      <p>Turn off all advertising personalization and remarketing features in GA4. These features involve sharing behavioral data with Google's advertising ecosystem — inappropriate for health-related behavioral data.</p>
+
+      <h2>The BAA problem with GA4</h2>
+      <p>A Business Associate Agreement (BAA) is a contract required by HIPAA between a covered entity and any vendor that handles PHI on its behalf. Google currently does not offer a BAA for GA4. This means that if your site is operated by a covered entity and GA4 is processing PHI, the arrangement is not HIPAA-compliant regardless of how you configure GA4.</p>
+      <p>For covered entities — hospitals, health plans, healthcare clearinghouses — this is a genuine constraint that configuration alone cannot resolve. The options are: use a privacy-first analytics tool that does not transmit data to Google, implement server-side analytics that keeps data within your own infrastructure, or restrict GA4 to pages that genuinely have no PHI exposure risk.</p>
+
+      <h2>Privacy-first analytics alternatives</h2>
+      <p>For healthcare-tech sites where GA4's BAA gap is a blocker, privacy-first analytics tools provide measurement without the data-sharing implications. Plausible and Fathom are the two most widely used options — both collect aggregated, cookieless traffic data without transmitting individual-level behavioral data to third-party servers.</p>
+      <p>The tradeoff is capability. Plausible and Fathom provide traffic counts, sources, top pages, and goal conversions — but not the exploration-level analysis, funnel visualization, or attribution modeling available in GA4. For marketing teams accustomed to GA4's depth, this is a significant constraint. For compliance teams concerned about PHI exposure, it is the right tradeoff.</p>
+
+      <h2>What to document</h2>
+      <p>Whatever analytics configuration you implement, document it. If regulators or auditors ever inquire about your data practices, you need to be able to demonstrate that you identified the PHI risk, made deliberate configuration decisions to mitigate it, and have controls in place. A gap analysis that identifies what data you collect, where it goes, and what mitigations are in place is the minimum defensible documentation.</p>
+      <div class="post-cta">
+        <h3>Need analytics that works within your compliance requirements?</h3>
+        <p>I have configured analytics stacks for medical device companies, genomics firms, and healthcare-tech startups — measurement that gives you the data you need without the compliance exposure you do not want.</p>
+        <a href="../index.html#contact">Get a quote</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap foot-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <nav class="foot-links">
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../terms.html">Terms &amp; Conditions</a>
+    </nav>
+    <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
+  </div>
+</footer>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty('background', '#c4622d', 'important');
+        el.style.setProperty('background-color', '#c4622d', 'important');
+        el.style.setProperty('border-color', '#c4622d', 'important');
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    paintCkyIcon();
+  })();
+</script>
+</body>
+</html>

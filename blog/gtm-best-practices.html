@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 GTM Best Practices Before You Hit Publish — Mott Design</title>
+<meta name="description" content="A GTM container that is messy from the start gets worse over time. These 10 practices keep it clean, fast, and auditable.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/gtm-best-practices.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="10 GTM Best Practices Before You Hit Publish">
+<meta property="og:description" content="A GTM container that is messy from the start gets worse over time. These 10 practices keep it clean, fast, and auditable.">
+<meta property="og:url" content="https://mott.design/blog/gtm-best-practices.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "10 GTM Best Practices Before You Hit Publish",
+  "description": "A GTM container that is messy from the start gets worse over time. These 10 practices keep it clean, fast, and auditable.",
+  "author": { "@type": "Person", "name": "Michael Mott", "url": "https://mott.design" },
+  "publisher": { "@type": "Organization", "name": "Mott Design", "url": "https://mott.design" },
+  "datePublished": "2026-03-18",
+  "url": "https://mott.design/blog/gtm-best-practices.html"
+}
+</script>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<!-- End cookieyes banner -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("consent", "default", {
+    "analytics_storage": "denied", "ad_storage": "denied",
+    "ad_user_data": "denied", "ad_personalization": "denied",
+    "functionality_storage": "denied", "security_storage": "granted",
+    "wait_for_update": 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-53HVNPWM');</script>
+<!-- End Google Tag Manager -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#about">About</a>
+      <a href="index.html" class="active">Blog</a>
+      <a href="../the-brief.html">The Brief</a>
+      <a href="../field-guide.html">Field Guide</a>
+      <a href="../index.html#contact">Contact</a>
+    </div>
+    <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/gtm-tag-management.html" class="cat-pill">GTM</a>
+        <span class="post-meta">March 18, 2026 &middot; 9 min read</span>
+      </div>
+      <h1>10 GTM Best Practices Before You Hit Publish</h1>
+      <p class="intro">Google Tag Manager is one of the most valuable tools in a marketing tech stack — and one of the easiest to turn into a liability. A well-organized GTM container is auditable, fast, and maintainable by anyone who works on it. A poorly organized one becomes a performance drag, a compliance risk, and a source of data errors that compound over time. These are the practices I enforce on every container I touch.</p>
+    </header>
+    <div class="tldr">
+      <p class="tldr-label">TL;DR</p>
+      <ul><li>GTM containers accumulate debt fast — naming conventions, folder organization, and trigger hygiene from day one prevent most long-term problems.</li><li>Never publish a tag without a firing trigger that is as specific as possible — broad triggers like "All Pages" are rarely necessary.</li><li>Test every tag in Preview mode before publishing. Check the network tab to confirm the tag is firing at the right moment, not just that GTM shows it fired.</li><li>Consent Mode integration is not optional for sites with EU or California users — every tag that sets cookies must be gated by the appropriate consent signal.</li></ul>
+    </div>
+    <div class="post-body">
+      <h2>1. Establish a naming convention before you add the first tag</h2>
+      <p>GTM naming conventions are most valuable when enforced from the beginning. The format I use consistently: [Type] — [Tool] — [Description] — [Trigger]. For example: "Tag — GA4 — Page View — All Pages" or "Tag — LinkedIn — Conversion — Demo Request Confirmation." This format makes it immediately clear what each element does without opening it.</p>
+      <p>The same convention applies to triggers and variables: "Trigger — Click — CTA Button — Homepage Hero" or "Variable — DLV — User ID." Names that require you to open the element to understand it are a maintenance problem.</p>
+
+      <h2>2. Organize with folders from the start</h2>
+      <p>GTM folders are free to create and dramatically improve container legibility. Organize by tool (GA4, LinkedIn, HubSpot, Hotjar), not by date or project. Every tag, trigger, and variable goes into the appropriate folder immediately — not "later." Containers with 50+ ungrouped elements are effectively unmanageable.</p>
+
+      <h2>3. Use the most specific trigger possible</h2>
+      <p>The temptation when setting up a new tag is to use "All Pages" as the trigger — it works, the tag fires, you move on. This is wrong for tags that should not fire on every page. An "All Pages" trigger on a tag that should only fire on a specific conversion page is a data error and a performance cost.</p>
+      <p>Build triggers that are as specific as the use case requires. Page URL contains a specific path, element ID equals a specific form, click class matches a specific button. The extra few minutes spent on specific triggers prevents hours of debugging later.</p>
+
+      <h2>4. Implement Consent Mode before adding any cookie-setting tags</h2>
+      <p>If your site has users in the EU or California, Consent Mode must be configured before you set up GA4, Google Ads, LinkedIn, or any other cookie-setting tag. The consent default must be set to denied for storage types that require consent, and tags must respect those signals.</p>
+      <p>Tags that fire and set cookies before consent is granted are a legal violation, not just a configuration preference. GTM's built-in consent overview (under Tags → Consent Settings) shows which tags have consent checks applied. Any tag without a consent check on a user-facing site is a potential liability.</p>
+
+      <h2>5. Test in Preview mode before every publish</h2>
+      <p>GTM's Preview mode shows you exactly which tags fired, which triggers activated them, and what data layer values were present at the time of firing. Use it for every change before publishing, not just complex changes. A tag that fires in an unexpected sequence, or that fires twice, is a bug that Preview mode will reveal before it corrupts your production data.</p>
+
+      <h2>6. Verify in the network tab, not just GTM</h2>
+      <p>GTM Preview showing a tag as "Fired" tells you GTM executed the tag. It does not tell you the tag sent data successfully. Open Chrome DevTools, go to the Network tab, filter by the tracking domain (google-analytics.com, px.ads.linkedin.com, etc.), and verify that requests are going out with the correct parameters at the correct moments. This is the only way to catch issues like GA4 sending events with missing event parameters or LinkedIn firing with the wrong conversion ID.</p>
+
+      <h2>7. Use the data layer for custom event data, not DOM scraping</h2>
+      <p>GTM can scrape data directly from the DOM — clicking a button label, reading a page title, extracting a price from an element. This works until the page changes. DOM scraping creates a hidden dependency between GTM and the site's HTML structure — developers change a class name and tracking breaks silently.</p>
+      <p>The robust alternative is a data layer push at the point where the relevant data exists: a form submission event that pushes the form ID, product category, and user type into the data layer, which GTM then reads cleanly. Data layer variables are explicit contracts between the site and GTM, visible and maintainable by both teams.</p>
+
+      <h2>8. Audit and remove unused tags quarterly</h2>
+      <p>Every unused tag in a GTM container has a performance cost — GTM still evaluates all triggers to determine whether to fire it. It also has a maintenance cost — future editors have to read and understand it before concluding it is inactive. A quarterly audit that removes or pauses unused tags keeps the container lean and legible. Use the "Last Modified" date and tag firing count in the overview to identify candidates for removal.</p>
+
+      <h2>9. Document non-obvious configurations in tag notes</h2>
+      <p>GTM tags have a Notes field. Use it for anything that would not be obvious to someone encountering the tag six months from now: why a specific trigger sequence was chosen, what business rule the tag implements, which team owns it. This is not for explaining what the tag does — the name should cover that — but for explaining why it was configured the way it was.</p>
+
+      <h2>10. Use version notes on every publish</h2>
+      <p>GTM's version history is your audit trail. Every published version should include a note describing what changed and why. "Added LinkedIn Insight Tag" is sufficient. "Fixed form submission trigger to exclude newsletter signups" is excellent. A version history of "Version 47," "Version 48," "Version 49" with no descriptions is a history that tells you nothing when something breaks three months later.</p>
+      <div class="post-cta">
+        <h3>Want a GTM container that is clean, fast, and auditable?</h3>
+        <p>I set up and audit GTM containers for B2B and healthcare-tech sites — naming conventions, consent integration, data layer architecture, and all of it documented.</p>
+        <a href="../index.html#contact">Get a quote</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap foot-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <nav class="foot-links">
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../terms.html">Terms &amp; Conditions</a>
+    </nav>
+    <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
+  </div>
+</footer>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty('background', '#c4622d', 'important');
+        el.style.setProperty('background-color', '#c4622d', 'important');
+        el.style.setProperty('border-color', '#c4622d', 'important');
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    paintCkyIcon();
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Headless CMS in 2026: Do You Actually Need One? — Mott Design</title>
+<meta name="description" content="Headless CMS is powerful for the right use case and overkill for most. Here is how to decide honestly.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/headless-cms-guide.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Headless CMS in 2026: Do You Actually Need One?">
+<meta property="og:description" content="Headless CMS is powerful for the right use case and overkill for most. Here is how to decide honestly.">
+<meta property="og:url" content="https://mott.design/blog/headless-cms-guide.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Headless CMS in 2026: Do You Actually Need One?",
+  "description": "Headless CMS is powerful for the right use case and overkill for most. Here is how to decide honestly.",
+  "author": { "@type": "Person", "name": "Michael Mott", "url": "https://mott.design" },
+  "publisher": { "@type": "Organization", "name": "Mott Design", "url": "https://mott.design" },
+  "datePublished": "2026-04-25",
+  "url": "https://mott.design/blog/headless-cms-guide.html"
+}
+</script>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<!-- End cookieyes banner -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("consent", "default", {
+    "analytics_storage": "denied", "ad_storage": "denied",
+    "ad_user_data": "denied", "ad_personalization": "denied",
+    "functionality_storage": "denied", "security_storage": "granted",
+    "wait_for_update": 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-53HVNPWM');</script>
+<!-- End Google Tag Manager -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#about">About</a>
+      <a href="index.html" class="active">Blog</a>
+      <a href="../the-brief.html">The Brief</a>
+      <a href="../field-guide.html">Field Guide</a>
+      <a href="../index.html#contact">Contact</a>
+    </div>
+    <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/cms-picks.html" class="cat-pill">CMS Picks</a>
+        <span class="post-meta">April 25, 2026 &middot; 9 min read</span>
+      </div>
+      <h1>Headless CMS in 2026: Do You Actually Need One?</h1>
+      <p class="intro">The pitch for headless CMS sounds compelling: separate your content from your presentation layer, publish everywhere from one source of truth, give developers complete frontend freedom. For some organizations and some content problems, it is the right call. For most B2B marketing sites, it is significant complexity in exchange for flexibility you will never use.</p>
+    </header>
+    <div class="tldr">
+      <p class="tldr-label">TL;DR</p>
+      <ul><li>Headless CMS separates content storage and editing (the "body") from presentation (the "head") — a frontend framework handles rendering.</li><li>The right use cases are multi-channel publishing, complex content models, and teams with dedicated frontend developers.</li><li>For most B2B marketing sites, a traditional or visual CMS (Webflow, WordPress) is faster to set up, cheaper to maintain, and sufficient for the actual content needs.</li><li>Popular headless options: Contentful (enterprise), Sanity (developer-friendly), Storyblok (visual editing), Hygraph (GraphQL-native).</li></ul>
+    </div>
+    <div class="post-body">
+      <h2>What "headless" actually means</h2>
+      <p>A traditional CMS (WordPress, Squarespace) bundles content management and content presentation together. You edit content in the CMS admin, and the CMS renders the pages that users see. The presentation and the content are tightly coupled.</p>
+      <p>A headless CMS decouples them. The CMS manages and stores content, exposing it via an API. A separate frontend — built in Next.js, Astro, SvelteKit, or any other framework — fetches that content and renders it however it wants. The CMS is "headless" because it has no built-in presentation layer.</p>
+      <p>The "head" — the rendered HTML users see — lives in the frontend framework, not the CMS.</p>
+
+      <h2>The real use cases for headless</h2>
+      <p>Headless makes sense when your content needs to reach multiple surfaces from a single source. If you publish to a website, a mobile app, a digital kiosk, a partner portal, and an Alexa skill, managing that content in a single headless CMS and pushing it to each surface via API is genuinely better than maintaining five separate content systems.</p>
+      <p>It also makes sense for complex, relational content models. If your content involves products that reference categories, categories that reference authors, authors that reference companies, and companies that reference locations — and you need to query that graph efficiently — a headless CMS with a robust content model and GraphQL API is built for that problem.</p>
+      <p>And it makes sense for teams with dedicated frontend developers who have strong opinions about their stack. If your developers want to build in Next.js with TypeScript and would be miserable working in WordPress themes, a headless architecture respects that preference and produces a better codebase.</p>
+
+      <h2>When it is the wrong choice</h2>
+      <p>Headless is the wrong choice for a standard B2B marketing site where the content model is: homepage, about page, services pages, team page, blog, and contact. That content model does not require relational queries, multi-channel publishing, or framework freedom. It requires a CMS that a marketing team can update without developer involvement.</p>
+      <p>The hidden cost of headless is operational complexity. You now have two systems to maintain: the CMS and the frontend. Deployments involve both. Content preview requires a custom preview configuration. Redirects, SEO metadata, and sitemap generation all need custom implementation that traditional CMSes handle out of the box.</p>
+      <p>The total cost of ownership for a headless stack on a simple marketing site is typically two to three times that of a Webflow or WordPress site — in initial build time, in ongoing maintenance, and in the developer dependency it creates.</p>
+
+      <h2>Contentful vs Sanity vs Storyblok</h2>
+
+      <h3>Contentful</h3>
+      <p>Contentful is the established enterprise headless CMS. It has the most robust content modeling tools, the best multi-team workflow features, and the most integrations. It is also expensive at scale and can feel over-engineered for teams that do not need its full feature set. Best for: large enterprises with complex content operations and dedicated CMS administrators.</p>
+
+      <h3>Sanity</h3>
+      <p>Sanity is the developer-favorite headless CMS. The content model is defined in code (TypeScript), which makes it version-controllable and highly customizable. The GROQ query language is powerful for complex content fetching. The Studio (editing interface) is React-based and fully customizable. Best for: development-led organizations that want maximum flexibility and are comfortable with code-defined schemas.</p>
+
+      <h3>Storyblok</h3>
+      <p>Storyblok sits between traditional and headless — it has a visual editor that shows content rendered in a real preview, making it more approachable for non-technical editors. It uses a component-based content model that maps well to modern frontend component architectures. Best for: teams that want headless API flexibility but need an editing experience that non-developers can use comfortably.</p>
+
+      <h2>An honest recommendation</h2>
+      <p>If you are building a B2B marketing site and your team does not include dedicated frontend developers and a content operations team, start with Webflow or WordPress. You can always migrate to headless later if your needs genuinely outgrow those platforms. The reverse — migrating from headless to a traditional CMS because the complexity was not justified — is equally common and equally painful.</p>
+      <p>The right question is not "should we use headless?" but "do our specific content requirements and team capabilities justify the tradeoffs of headless?" For most B2B marketing sites, the honest answer is no.</p>
+      <div class="post-cta">
+        <h3>Not sure which CMS is right for your project?</h3>
+        <p>I have built on Webflow, WordPress, Sanity, and custom stacks. I will give you a straight answer about what fits your team and your content model — no platform bias.</p>
+        <a href="../index.html#contact">Get a quote</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap foot-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <nav class="foot-links">
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../terms.html">Terms &amp; Conditions</a>
+    </nav>
+    <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
+  </div>
+</footer>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty('background', '#c4622d', 'important');
+        el.style.setProperty('background-color', '#c4622d', 'important');
+        el.style.setProperty('border-color', '#c4622d', 'important');
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    paintCkyIcon();
+  })();
+</script>
+</body>
+</html>

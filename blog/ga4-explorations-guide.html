@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GA4 Explorations: The Reports Most B2B Teams Never Build — Mott Design</title>
+<meta name="description" content="GA4 Explorations unlock analyses that standard reports cannot — cohort analysis, path exploration, funnel visualization, and more. Here is how to use them.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/ga4-explorations-guide.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GA4 Explorations: The Reports Most B2B Teams Never Build">
+<meta property="og:description" content="GA4 Explorations unlock analyses that standard reports cannot — cohort analysis, path exploration, funnel visualization, and more. Here is how to use them.">
+<meta property="og:url" content="https://mott.design/blog/ga4-explorations-guide.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "GA4 Explorations: The Reports Most B2B Teams Never Build",
+  "description": "GA4 Explorations unlock analyses that standard reports cannot — cohort analysis, path exploration, funnel visualization, and more. Here is how to use them.",
+  "author": { "@type": "Person", "name": "Michael Mott", "url": "https://mott.design" },
+  "publisher": { "@type": "Organization", "name": "Mott Design", "url": "https://mott.design" },
+  "datePublished": "2026-05-01",
+  "url": "https://mott.design/blog/ga4-explorations-guide.html"
+}
+</script>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<!-- End cookieyes banner -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("consent", "default", {
+    "analytics_storage": "denied", "ad_storage": "denied",
+    "ad_user_data": "denied", "ad_personalization": "denied",
+    "functionality_storage": "denied", "security_storage": "granted",
+    "wait_for_update": 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-53HVNPWM');</script>
+<!-- End Google Tag Manager -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#about">About</a>
+      <a href="index.html" class="active">Blog</a>
+      <a href="../the-brief.html">The Brief</a>
+      <a href="../field-guide.html">Field Guide</a>
+      <a href="../index.html#contact">Contact</a>
+    </div>
+    <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/ga4-analytics.html" class="cat-pill">GA4 &amp; Analytics</a>
+        <span class="post-meta">May 1, 2026 &middot; 10 min read</span>
+      </div>
+      <h1>GA4 Explorations: The Reports Most B2B Teams Never Build</h1>
+      <p class="intro">The standard GA4 reports — Acquisition, Engagement, Monetization — cover the basics. They tell you where traffic comes from and what it does at a high level. Explorations are where GA4 gets genuinely useful: custom analyses, flexible dimensions and metrics, and visualization types that the standard reports do not offer. Most B2B teams open them once, get confused, and go back to the standard reports. That is a significant missed opportunity.</p>
+    </header>
+    <div class="tldr">
+      <p class="tldr-label">TL;DR</p>
+      <ul><li>Explorations are GA4's custom analysis workspace — separate from standard reports, with more flexibility and more power.</li><li>Free-form exploration is the most versatile type: build custom tables with any combination of dimensions and metrics, with segments applied.</li><li>Funnel exploration and path exploration are the most valuable for B2B lead gen — they show where users drop off and what they do before converting.</li><li>Explorations are user-specific and not shared by default — you have to explicitly share them with your team.</li></ul>
+    </div>
+    <div class="post-body">
+      <h2>What Explorations are and why they matter</h2>
+      <p>Explorations live under the Explore tab in GA4. They are a separate analysis environment from the standard reports, built around a canvas where you can drag and drop dimensions, metrics, and segments to build custom analyses. Think of standard reports as the prebuilt dashboards and Explorations as the query editor.</p>
+      <p>The key advantage is flexibility. Standard reports give you predetermined combinations of dimensions and metrics. Explorations let you ask questions that the standard reports cannot answer — like "what path do users take through the site before submitting a contact form?" or "how does retention differ between users from paid search versus organic?"</p>
+
+      <h2>Free-form exploration: the most versatile type</h2>
+      <p>Free-form is the default exploration type and the most flexible. You get a table-based canvas where you drop dimensions into rows and columns, metrics into values, and segments into comparisons.</p>
+      <p>A useful starting configuration for B2B sites: set rows to Landing Page, columns to Session Default Channel Grouping, and values to Sessions, Engaged Sessions, and Key Events. This gives you a single table showing which landing pages drive the most high-quality sessions by channel — something the standard Acquisition reports do not show directly.</p>
+      <p>Add a segment for users who completed a key event (form submission, demo request) to filter the analysis down to converting users only. Now you can see which landing pages and channels are driving the users who actually convert, not just the users who visit.</p>
+
+      <h2>Funnel exploration: find where you are losing people</h2>
+      <p>Funnel exploration lets you define a multi-step user journey and see what percentage of users complete each step. For B2B sites, a typical funnel might be: Session Start → Pricing Page View → Contact Page View → Form Submission.</p>
+      <p>To build one: open a new exploration, select Funnel as the technique, and add steps using event or page_view conditions. Enable the "open funnel" option if you want to count users who enter the funnel at any step, not just the first. The visualization shows the drop-off at each step and lets you apply segments to compare performance across channels or user types.</p>
+      <p>The segment comparison is where funnel exploration gets genuinely powerful. Apply one segment for organic traffic and another for paid search, and you can see whether the conversion funnel performs differently for each — revealing whether paid traffic is buying you volume or buying you buyers.</p>
+
+      <h2>Path exploration: understand what users actually do</h2>
+      <p>Path exploration answers a question the standard reports cannot: what sequence of pages or events precedes or follows a specific action? Starting from a defined event or page, it shows the tree of paths users take — forward through the site or backward to understand what led to a conversion.</p>
+      <p>For B2B sites, the most useful path exploration starts from a key event (form_submit or demo_request) and works backward. What page were users on immediately before submitting? What page before that? This reveals the actual conversion path users take, which is often different from the intended path and almost always different from what stakeholders assume.</p>
+
+      <h2>User lifetime exploration</h2>
+      <p>User lifetime exploration shows aggregate behavior over a user's full history with your site — total sessions, total engaged sessions, and key events across their lifetime, not just a single session window. For B2B sites with long sales cycles, this is valuable for understanding how research behavior unfolds over weeks or months before a conversion.</p>
+      <p>Configuring this requires that you have sufficient data volume — small sites may not have enough users to produce meaningful lifetime patterns. But for any B2B site with meaningful traffic, user lifetime exploration can reveal whether conversions are typically first-visit or multi-visit events, and what the average research journey looks like in terms of sessions and time.</p>
+
+      <h2>Cohort exploration</h2>
+      <p>Cohort exploration groups users by when they first visited your site and tracks their retention over subsequent weeks or months. This is primarily a product analytics tool but has B2B applications for understanding whether content drives repeat engagement.</p>
+      <p>A simple cohort analysis: group users by acquisition week, and track what percentage return to the site over the following four weeks. High retention from organic search cohorts suggests your content program is building genuine audience relationships, not just capturing one-time visitors.</p>
+
+      <h2>Practical tips for Explorations</h2>
+      <ul>
+        <li><strong>Share explorations explicitly.</strong> Explorations are private by default. Use the share button in the top right to make them available to your team — they will appear under "Shared with me" in the Explore tab.</li>
+        <li><strong>Save snapshots, not live reports.</strong> Explorations are not stable long-term reports — they can time out and lose configurations. If an exploration is producing useful data you will want regularly, export the visualization or rebuild it as a Looker Studio report against the GA4 data source.</li>
+        <li><strong>Use date comparisons.</strong> Every exploration type supports a comparison date range. Use this to track whether the funnel or path has changed after a site update or campaign.</li>
+        <li><strong>Filter ruthlessly.</strong> B2B sites often have substantial bot and internal traffic that inflates numbers. Apply hostname filters and IP exclusions as segments in your explorations to get cleaner data.</li>
+      </ul>
+      <div class="post-cta">
+        <h3>Want GA4 set up so these reports are actually useful?</h3>
+        <p>A GA4 implementation that tracks the right events and conversions from the start — so Explorations give you signal instead of noise.</p>
+        <a href="../index.html#contact">Get a quote</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap foot-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <nav class="foot-links">
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../terms.html">Terms &amp; Conditions</a>
+    </nav>
+    <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
+  </div>
+</footer>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty('background', '#c4622d', 'important');
+        el.style.setProperty('background-color', '#c4622d', 'important');
+        el.style.setProperty('border-color', '#c4622d', 'important');
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    paintCkyIcon();
+  })();
+</script>
+</body>
+</html>

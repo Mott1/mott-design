@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GA4's Default Channel Groupings Are Wrong for B2B. Here Is How to Fix Them. — Mott Design</title>
+<meta name="description" content="GA4 default channel groupings misattribute a significant share of B2B traffic. Here is how to identify the problem and build custom groupings that reflect reality.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/ga4-channel-groupings.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GA4's Default Channel Groupings Are Wrong for B2B. Here Is How to Fix Them.">
+<meta property="og:description" content="GA4 default channel groupings misattribute a significant share of B2B traffic. Here is how to identify the problem and build custom groupings that reflect reality.">
+<meta property="og:url" content="https://mott.design/blog/ga4-channel-groupings.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "GA4's Default Channel Groupings Are Wrong for B2B. Here Is How to Fix Them.",
+  "description": "GA4 default channel groupings misattribute a significant share of B2B traffic. Here is how to identify the problem and build custom groupings that reflect reality.",
+  "author": { "@type": "Person", "name": "Michael Mott", "url": "https://mott.design" },
+  "publisher": { "@type": "Organization", "name": "Mott Design", "url": "https://mott.design" },
+  "datePublished": "2026-03-28",
+  "url": "https://mott.design/blog/ga4-channel-groupings.html"
+}
+</script>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<!-- End cookieyes banner -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("consent", "default", {
+    "analytics_storage": "denied", "ad_storage": "denied",
+    "ad_user_data": "denied", "ad_personalization": "denied",
+    "functionality_storage": "denied", "security_storage": "granted",
+    "wait_for_update": 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-53HVNPWM');</script>
+<!-- End Google Tag Manager -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#about">About</a>
+      <a href="index.html" class="active">Blog</a>
+      <a href="../the-brief.html">The Brief</a>
+      <a href="../field-guide.html">Field Guide</a>
+      <a href="../index.html#contact">Contact</a>
+    </div>
+    <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/ga4-analytics.html" class="cat-pill">GA4 &amp; Analytics</a>
+        <span class="post-meta">March 28, 2026 &middot; 8 min read</span>
+      </div>
+      <h1>GA4's Default Channel Groupings Are Wrong for B2B. Here Is How to Fix Them.</h1>
+      <p class="intro">GA4's default channel groupings are built for e-commerce and consumer traffic patterns. They work reasonably well for B2C companies. For B2B sites with significant dark social traffic, LinkedIn campaigns, email nurture sequences, and multi-touch buying journeys, the defaults produce attribution data that is actively misleading.</p>
+    </header>
+    <div class="tldr">
+      <p class="tldr-label">TL;DR</p>
+      <ul><li>GA4's default channels bucket a lot of B2B traffic into "Direct" and "Unassigned" — traffic that actually came from email, Slack, newsletters, or dark social.</li><li>Custom channel groupings let you define rules that more accurately reflect your actual traffic sources.</li><li>UTM discipline is the foundation — without consistent UTM parameters on all campaign links, even custom groupings cannot rescue the data.</li><li>The goal is not perfect attribution (impossible) but attribution that supports better decisions about where to invest.</li></ul>
+    </div>
+    <div class="post-body">
+      <h2>What GA4 defaults get wrong for B2B</h2>
+      <p>GA4's default channel groupings use a set of rules to categorize sessions by their source and medium. These rules were designed with a particular traffic mix in mind — one that includes Google Ads, Facebook Ads, organic search, and direct visits. For a consumer e-commerce company, they are a reasonable approximation.</p>
+      <p>B2B traffic looks different. A substantial share of B2B site visits come from sources the defaults handle poorly: links shared in Slack workspaces (no referrer, lands as Direct), LinkedIn posts and newsletters (often miscategorized or unassigned), internal sales team email follow-ups with missing UTMs (Direct), and social content shared in community forums (Direct or Referral, not Social).</p>
+      <p>The result is that "Direct" in GA4 for most B2B sites is not people who typed your URL — it is a catch-all for traffic Google cannot attribute. Treating it as such produces meaningfully wrong conclusions about which channels are driving results.</p>
+
+      <h2>The dark social problem</h2>
+      <p>Dark social is traffic from private channels — Slack, Teams, WhatsApp, email — where the referrer is stripped before the click reaches your site. From GA4's perspective, this traffic arrives with no source information and gets classified as Direct.</p>
+      <p>For B2B SaaS and professional services companies, dark social is often the largest driver of high-quality traffic. Word-of-mouth recommendations shared in Slack workspaces or forwarded emails convert at high rates because they come with implicit endorsement. But if that traffic is all landing in "Direct," you cannot measure it, optimize for it, or make the case for investing in the communities and content that generate it.</p>
+
+      <h2>How to identify misattribution in your data</h2>
+      <p>Open GA4's Acquisition report and look at the Direct channel's share of total sessions and conversions. If Direct is driving a disproportionately high share of conversions relative to total sessions — more than 1.5 to 2x its traffic share — you have significant dark social traffic landing in Direct.</p>
+      <p>Also look at your Unassigned channel. Any sessions in Unassigned represent a failure of either UTM tagging (campaigns that were not properly tagged) or GA4's ability to categorize the traffic. Unassigned converting sessions are particularly problematic — they represent real business outcomes you cannot attribute to any source.</p>
+
+      <h2>How to build custom channel groupings</h2>
+      <p>Custom channel groupings in GA4 live under Admin → Data Display → Channel Groups. You can create a new channel group with custom rules that override or supplement the defaults. The rules are evaluated in order — the first match wins.</p>
+      <p>For a typical B2B site, a useful custom channel grouping includes:</p>
+      <ul>
+        <li><strong>LinkedIn Organic:</strong> Source contains "linkedin" AND medium is (none) or referral</li>
+        <li><strong>LinkedIn Paid:</strong> Source contains "linkedin" AND medium contains "cpc" or "paid"</li>
+        <li><strong>Email — Internal:</strong> Medium exactly matches "email" AND source contains your company domain</li>
+        <li><strong>Email — Newsletter:</strong> Medium exactly matches "email" AND UTM campaign contains "newsletter" or "digest"</li>
+        <li><strong>Community/Dark Social:</strong> Source exactly matches "(direct)" AND medium exactly matches "(none)" AND landing page is NOT your homepage (indicating the visitor knew the exact URL they wanted — often from a shared link)</li>
+        <li><strong>Partner Referral:</strong> Source matches specific partner domain list</li>
+      </ul>
+
+      <h2>UTM discipline is the foundation</h2>
+      <p>Custom channel groupings can only categorize traffic that arrives with source and medium information. Traffic that arrives without UTM parameters and without a referrer will always land in Direct regardless of how sophisticated your channel groupings are.</p>
+      <p>The necessary infrastructure: a company-wide UTM naming convention documented and shared with everyone who sends links — marketing, sales, customer success, founders. A UTM builder spreadsheet or tool that enforces the convention. A quarterly audit of UTM usage to catch sources that have slipped back into untagged links.</p>
+      <p>This is operational discipline more than technical configuration. The technical setup is straightforward; getting consistent UTM usage across a company is the hard part.</p>
+
+      <h2>What better attribution actually enables</h2>
+      <p>The goal of fixing channel groupings is not perfect attribution — multi-touch B2B buying journeys cannot be perfectly attributed with client-side analytics regardless of how sophisticated your configuration is. The goal is attribution that is accurate enough to make better decisions.</p>
+      <p>Specifically: knowing whether LinkedIn content is driving site visits, knowing whether your newsletter is producing trial signups, and knowing which channels are contributing to pipeline at each funnel stage. These decisions cannot be made confidently from data where 40% of your conversions sit in an opaque "Direct" bucket.</p>
+      <div class="post-cta">
+        <h3>Want GA4 attribution that reflects your actual traffic?</h3>
+        <p>I set up GA4 with custom channel groupings, UTM governance frameworks, and the event tracking needed to make attribution data useful.</p>
+        <a href="../index.html#contact">Get a quote</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap foot-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <nav class="foot-links">
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../terms.html">Terms &amp; Conditions</a>
+    </nav>
+    <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
+  </div>
+</footer>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty('background', '#c4622d', 'important');
+        el.style.setProperty('background-color', '#c4622d', 'important');
+        el.style.setProperty('border-color', '#c4622d', 'important');
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    paintCkyIcon();
+  })();
+</script>
+</body>
+</html>

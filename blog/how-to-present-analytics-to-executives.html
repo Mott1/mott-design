@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Present Analytics Data to Executives Who Do Not Care About GA4 — Mott Design</title>
+<meta name="description" content="Most analytics presentations fail because they show the wrong metrics to the wrong audience. Here is how to connect web data to what executives actually care about.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/how-to-present-analytics-to-executives.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Present Analytics Data to Executives Who Do Not Care About GA4">
+<meta property="og:description" content="Most analytics presentations fail because they show the wrong metrics to the wrong audience. Here is how to connect web data to what executives actually care about.">
+<meta property="og:url" content="https://mott.design/blog/how-to-present-analytics-to-executives.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Present Analytics Data to Executives Who Do Not Care About GA4",
+  "description": "Most analytics presentations fail because they show the wrong metrics to the wrong audience. Here is how to connect web data to what executives actually care about.",
+  "author": { "@type": "Person", "name": "Michael Mott", "url": "https://mott.design" },
+  "publisher": { "@type": "Organization", "name": "Mott Design", "url": "https://mott.design" },
+  "datePublished": "2026-09-12",
+  "url": "https://mott.design/blog/how-to-present-analytics-to-executives.html"
+}
+</script>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<!-- End cookieyes banner -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("consent", "default", {
+    "analytics_storage": "denied", "ad_storage": "denied",
+    "ad_user_data": "denied", "ad_personalization": "denied",
+    "functionality_storage": "denied", "security_storage": "granted",
+    "wait_for_update": 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-53HVNPWM');</script>
+<!-- End Google Tag Manager -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#about">About</a>
+      <a href="index.html" class="active">Blog</a>
+      <a href="../the-brief.html">The Brief</a>
+      <a href="../field-guide.html">Field Guide</a>
+      <a href="../index.html#contact">Contact</a>
+    </div>
+    <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/measurement-strategy.html" class="cat-pill">Measurement Strategy</a>
+        <span class="post-meta">September 12, 2026 &middot; 8 min read</span>
+      </div>
+      <h1>How to Present Analytics Data to Executives Who Do Not Care About GA4</h1>
+      <p class="intro">The analytics presentation problem is not a data problem. You have enough data. It is a translation problem — the metrics that matter for managing a web analytics implementation are not the same metrics that matter for running a business, and the people who need to make resource decisions are looking at the latter, not the former.</p>
+    </header>
+    <div class="tldr">
+      <p class="tldr-label">TL;DR</p>
+      <ul><li>Executives care about pipeline, revenue, and customer acquisition cost — not bounce rate, sessions, or average engagement time.</li><li>The most effective analytics presentations connect a web metric to a business outcome in one clear step.</li><li>Stop showing GA4 screenshots in executive presentations — the interface creates cognitive load that distracts from the data.</li><li>Build a one-page summary that answers: what is working, what is not, what are we going to do about it, and what do we need to do it.</li></ul>
+    </div>
+    <div class="post-body">
+      <h2>The core problem with most analytics presentations</h2>
+      <p>I have sat through a lot of analytics presentations — as the person delivering them, as a consultant reviewing them, and as a stakeholder receiving them. The most common failure mode is presenting a dashboard that shows the current state of the metrics without translating them into decisions.</p>
+      <p>Sessions were up 12% this month. Organic traffic increased. The top landing page had a 68% bounce rate. This is data. It is not information. Information is what the data means for a decision someone is trying to make. An executive sitting in a monthly marketing review needs to know whether to invest more in organic content, whether to hire another person, whether to increase the paid budget. Sessions up 12% does not answer that question directly.</p>
+
+      <h2>Stop showing GA4 screenshots</h2>
+      <p>GA4's interface is designed for analysts — people who understand the metrics, know the context, and can read the filtering and date comparison details. An executive who opens a GA4 screenshot sees a foreign interface with unfamiliar metrics and a color scheme that communicates nothing. The cognitive load of parsing the interface competes with absorbing the data.</p>
+      <p>Export the data and build your own visualization, even a simple one. A table in a slide deck with three columns — Metric, This Month, Last Month — is more readable in a presentation context than a GA4 screenshot with six panels and twelve metrics. You are presenting conclusions, not showing your work.</p>
+
+      <h2>The metrics executives actually care about</h2>
+      <p>Ask a marketing executive what success looks like for the website, and they will say pipeline contribution, qualified lead volume, or customer acquisition cost — not bounce rate or session duration. The web metrics matter insofar as they explain or predict the business metrics. Surface the connection explicitly, not implicitly.</p>
+      <p>A useful translation layer:</p>
+      <ul>
+        <li>Sessions → qualified traffic (not all sessions are created equal — filter to sessions from target channels or target audience segments)</li>
+        <li>Conversion rate → lead quality indicator (conversion rate changes are proxies for messaging and audience fit)</li>
+        <li>Organic traffic growth → content program ROI signal (organic growth compounds; paid traffic stops when the budget stops)</li>
+        <li>Channel attribution → where to invest the next marketing dollar</li>
+      </ul>
+
+      <h2>How to connect web data to pipeline and revenue</h2>
+      <p>The most compelling executive analytics presentation connects web behavior to downstream business outcomes. This requires integration between your web analytics (GA4), your CRM (HubSpot, Salesforce), and your revenue data. The connection is often imperfect — multi-touch attribution is hard and the tools do not talk to each other natively — but even an approximate connection is more persuasive than web metrics in isolation.</p>
+      <p>A practical approach: tag MQL sources in your CRM with the traffic source from the first web touchpoint. Run a monthly report of MQLs by first-touch source. Share that alongside the GA4 channel data. Now organic search is not just "traffic went up 12%" — it is "organic search contributed 34% of this month's MQLs, up from 28% last month."</p>
+
+      <h2>The one-page summary format that works</h2>
+      <p>The format I have found most effective for executive analytics presentations is a single page with four sections: What happened (top-line metrics, 30-second summary), What it means (the one or two things that most explain the numbers), What we are doing about it (specific actions underway or planned), and What we need (any resource, budget, or decision required from this audience).</p>
+      <p>This format respects that the executive audience may give your analytics update three minutes of attention in a broader meeting. Three minutes is enough to absorb a one-page summary. It is not enough to absorb a 12-slide deck with GA4 screenshots and metric explanations.</p>
+
+      <h2>How to handle "the numbers look wrong"</h2>
+      <p>Every analytics presenter eventually gets this in a meeting. Conversions seem too low. Organic traffic seems too high. Something does not match what someone else was shown last week. The wrong response is to defend the numbers defensively or to immediately blame data quality.</p>
+      <p>The right response: "Let me check the configuration and come back to you by end of week with a clear explanation." Then actually investigate. Numbers that seem wrong are either a data quality issue (tracking misconfiguration, filter problems, attribution inconsistency) or a context issue (comparing to a period with a one-time event, or comparing the wrong metric). In either case, you need to know which before you present again.</p>
+      <p>Building a reputation for knowing when your data is right and when it is not is more valuable than always having a confident answer. Executives who trust your data qualify it is accurate will make better decisions from it than executives who have learned to discount everything you show them.</p>
+      <div class="post-cta">
+        <h3>Want analytics that connects to the decisions your leadership team is making?</h3>
+        <p>I build measurement frameworks that link web data to pipeline and revenue — and the reporting structures to make that data legible to non-technical stakeholders.</p>
+        <a href="../index.html#contact">Get a quote</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap foot-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <nav class="foot-links">
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../terms.html">Terms &amp; Conditions</a>
+    </nav>
+    <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
+  </div>
+</footer>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty('background', '#c4622d', 'important');
+        el.style.setProperty('background-color', '#c4622d', 'important');
+        el.style.setProperty('border-color', '#c4622d', 'important');
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    paintCkyIcon();
+  })();
+</script>
+</body>
+</html>

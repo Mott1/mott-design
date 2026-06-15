@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Build a GA4 Funnel Report That Actually Tells You Something — Mott Design</title>
+<meta name="description" content="GA4 funnel reports are powerful but easy to misconfigure. Here is how to build one that gives you actionable conversion data.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/ga4-funnel-report.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Build a GA4 Funnel Report That Actually Tells You Something">
+<meta property="og:description" content="GA4 funnel reports are powerful but easy to misconfigure. Here is how to build one that gives you actionable conversion data.">
+<meta property="og:url" content="https://mott.design/blog/ga4-funnel-report.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Build a GA4 Funnel Report That Actually Tells You Something",
+  "description": "GA4 funnel reports are powerful but easy to misconfigure. Here is how to build one that gives you actionable conversion data.",
+  "author": { "@type": "Person", "name": "Michael Mott", "url": "https://mott.design" },
+  "publisher": { "@type": "Organization", "name": "Mott Design", "url": "https://mott.design" },
+  "datePublished": "2026-03-07",
+  "url": "https://mott.design/blog/ga4-funnel-report.html"
+}
+</script>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<!-- End cookieyes banner -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("consent", "default", {
+    "analytics_storage": "denied", "ad_storage": "denied",
+    "ad_user_data": "denied", "ad_personalization": "denied",
+    "functionality_storage": "denied", "security_storage": "granted",
+    "wait_for_update": 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-53HVNPWM');</script>
+<!-- End Google Tag Manager -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#about">About</a>
+      <a href="index.html" class="active">Blog</a>
+      <a href="../the-brief.html">The Brief</a>
+      <a href="../field-guide.html">Field Guide</a>
+      <a href="../index.html#contact">Contact</a>
+    </div>
+    <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/ga4-analytics.html" class="cat-pill">GA4 &amp; Analytics</a>
+        <span class="post-meta">March 7, 2026 &middot; 9 min read</span>
+      </div>
+      <h1>How to Build a GA4 Funnel Report That Actually Tells You Something</h1>
+      <p class="intro">A GA4 funnel report is one of the most directly useful analyses you can run on a B2B site — it shows exactly where users drop off on the path to conversion and how that varies by traffic source, device, and user type. But misconfigured funnels produce numbers that are misleading in specific, dangerous ways. Here is how to build one that you can actually trust.</p>
+    </header>
+    <div class="tldr">
+      <p class="tldr-label">TL;DR</p>
+      <ul><li>GA4 funnels live in Explorations — there is no funnel report in the standard reports section.</li><li>Open funnels count users who enter at any step. Closed funnels only count users who entered at step one. Most B2B use cases should start with open funnels.</li><li>The most important configuration detail is whether steps use AND or OR logic — this changes the funnel numbers significantly.</li><li>Segment comparison (organic vs paid, mobile vs desktop) is where funnel data becomes genuinely actionable.</li></ul>
+    </div>
+    <div class="post-body">
+      <h2>Where funnel reports live in GA4</h2>
+      <p>Funnel reports in GA4 are built in Explorations — under the Explore tab — not in the standard reports. This trips up people migrating from Universal Analytics, which had a Goals funnel visualization in the standard interface. In GA4, any funnel analysis requires an Exploration.</p>
+      <p>Go to Explore, create a new exploration, and select Funnel exploration as the technique. You will get a canvas with a funnel configuration panel on the right and a visualization area in the center.</p>
+
+      <h2>Open vs closed funnels: get this right first</h2>
+      <p>A closed funnel only counts users who enter at step one. A user who lands on your pricing page without first visiting your homepage is not counted. This is appropriate for measuring a deliberately designed sequential flow — a checkout process where step one is always adding to cart.</p>
+      <p>An open funnel counts users who enter at any step. A user who lands directly on your pricing page is counted as entering at the pricing page step. This is appropriate for most B2B site analyses, where users arrive at different points in their journey and you want to understand drop-off from wherever they are, not just from a defined starting point.</p>
+      <p>GA4 defaults to closed funnels, which produces deflated numbers for most B2B analyses. Enable the "Make this funnel open" toggle for most use cases.</p>
+
+      <h2>Defining funnel steps correctly</h2>
+      <p>Funnel steps can be defined using event conditions (a specific event fires), page conditions (user views a specific page or URL pattern), or combinations. For a B2B lead generation funnel, a typical step configuration:</p>
+      <ul>
+        <li><strong>Step 1:</strong> Event is session_start (any visit begins)</li>
+        <li><strong>Step 2:</strong> Event is page_view AND page_location contains "/services" or "/pricing"</li>
+        <li><strong>Step 3:</strong> Event is page_view AND page_location contains "/contact"</li>
+        <li><strong>Step 4:</strong> Event is form_submit or your custom conversion event</li>
+      </ul>
+      <p>The AND vs OR logic within a step matters significantly. If step two uses AND to combine two page conditions, only users who visited both pages will match. If it uses OR, users who visited either page will match. For a funnel step that represents "visited any solution page," use OR across multiple page conditions.</p>
+
+      <h2>Step 5: Apply segment comparisons</h2>
+      <p>A funnel without segments tells you aggregate drop-off rates. Segments are where funnel data becomes actionable. The most useful comparisons for B2B sites:</p>
+      <p><strong>Organic search vs paid search.</strong> If paid search traffic converts at 0.8% and organic converts at 2.1%, the funnel will often show you where the difference emerges — paid search users drop off at the pricing page at much higher rates, suggesting price sensitivity or a mismatch between ad promise and page content.</p>
+      <p><strong>Mobile vs desktop.</strong> B2B sites almost universally convert better on desktop. The funnel comparison shows whether the gap is in the early stages (mobile users never get to pricing) or the late stages (mobile users reach the contact form but do not submit). These are different problems with different solutions.</p>
+      <p><strong>New vs returning users.</strong> Returning users in B2B contexts are often in a more advanced research stage. A funnel that shows returning users converting at five times the rate of new users confirms a multi-touch buying journey — which has implications for how you invest in content that brings people back.</p>
+
+      <h2>Reading the funnel visualization</h2>
+      <p>GA4's funnel visualization shows three numbers at each step: the count of users who reached that step, the percentage who moved to the next step, and the abandonment rate. The key metric is the completion rate between steps — the drop-off percentages.</p>
+      <p>High drop-off at a specific step is a signal worth investigating but not necessarily a problem to fix in isolation. A 70% drop-off from "pricing page view" to "contact form view" might indicate a pricing page problem — or it might indicate that 30% of people who see your pricing are genuinely interested, which is actually high for a B2B audience. Context and comparison matter more than the absolute numbers.</p>
+
+      <h2>Common configuration mistakes</h2>
+      <p><strong>Using the wrong date range.</strong> For B2B sites with 30- to 90-day buying cycles, a 7-day funnel date range will show artificially low conversion rates — users who started the journey within the window did not finish it within the window. Use 30- to 90-day date ranges for funnel analyses that include conversion steps.</p>
+      <p><strong>Counting sessions instead of users.</strong> GA4 funnels default to users, but some configurations count sessions. A user who visits the pricing page in three separate sessions would be counted three times in a session-based funnel. Use users for most B2B funnel analyses — you want to understand how many individuals are moving through the journey.</p>
+      <p><strong>Not accounting for direct navigation.</strong> Users who know your URL and navigate directly to the contact page will land in step three or four of the funnel without passing through earlier steps. In an open funnel, they are counted as entering at step three. In a closed funnel, they are excluded entirely. Neither is wrong — they are different questions about different user behaviors.</p>
+      <div class="post-cta">
+        <h3>Want funnel data you can actually make decisions from?</h3>
+        <p>I configure GA4 to track the events your funnels need — form submissions, page milestones, demo requests — and build the Explorations that turn that data into answers.</p>
+        <a href="../index.html#contact">Get a quote</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap foot-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <nav class="foot-links">
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../terms.html">Terms &amp; Conditions</a>
+    </nav>
+    <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
+  </div>
+</footer>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty('background', '#c4622d', 'important');
+        el.style.setProperty('background-color', '#c4622d', 'important');
+        el.style.setProperty('border-color', '#c4622d', 'important');
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    paintCkyIcon();
+  })();
+</script>
+</body>
+</html>

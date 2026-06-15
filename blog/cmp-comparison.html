@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CookieYes vs OneTrust vs Osano: Which CMP Should You Use? — Mott Design</title>
+<meta name="description" content="A consent management platform is required for GDPR and CPRA compliance. Here is how the three most common options compare for B2B and healthcare-tech sites.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/cmp-comparison.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CookieYes vs OneTrust vs Osano: Which CMP Should You Use?">
+<meta property="og:description" content="A consent management platform is required for GDPR and CPRA compliance. Here is how the three most common options compare for B2B and healthcare-tech sites.">
+<meta property="og:url" content="https://mott.design/blog/cmp-comparison.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "CookieYes vs OneTrust vs Osano: Which CMP Should You Use?",
+  "description": "A consent management platform is required for GDPR and CPRA compliance. Here is how the three most common options compare for B2B and healthcare-tech sites.",
+  "author": { "@type": "Person", "name": "Michael Mott", "url": "https://mott.design" },
+  "publisher": { "@type": "Organization", "name": "Mott Design", "url": "https://mott.design" },
+  "datePublished": "2026-02-17",
+  "url": "https://mott.design/blog/cmp-comparison.html"
+}
+</script>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<!-- End cookieyes banner -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("consent", "default", {
+    "analytics_storage": "denied", "ad_storage": "denied",
+    "ad_user_data": "denied", "ad_personalization": "denied",
+    "functionality_storage": "denied", "security_storage": "granted",
+    "wait_for_update": 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-53HVNPWM');</script>
+<!-- End Google Tag Manager -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#about">About</a>
+      <a href="index.html" class="active">Blog</a>
+      <a href="../the-brief.html">The Brief</a>
+      <a href="../field-guide.html">Field Guide</a>
+      <a href="../index.html#contact">Contact</a>
+    </div>
+    <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/consent-privacy.html" class="cat-pill">Consent &amp; Privacy</a>
+        <span class="post-meta">February 17, 2026 &middot; 10 min read</span>
+      </div>
+      <h1>CookieYes vs OneTrust vs Osano: Which CMP Should You Use?</h1>
+      <p class="intro">If your site has visitors from the EU or California, you need a consent management platform. Not a hand-rolled cookie banner — a proper CMP that blocks cookies until consent is given, logs consent records, and integrates with your tag manager. The three platforms I encounter most often are CookieYes, OneTrust, and Osano. They are not interchangeable.</p>
+    </header>
+    <div class="tldr">
+      <p class="tldr-label">TL;DR</p>
+      <ul><li>A CMP blocks cookies until consent is granted, logs who consented and when, and signals consent state to tools like GTM and GA4.</li><li>CookieYes is the best option for most small to mid-size B2B sites — lower cost, strong GTM integration, straightforward compliance.</li><li>OneTrust is enterprise-grade with enterprise complexity and enterprise pricing — appropriate when you have legal, compliance, and privacy operations teams.</li><li>Osano focuses on privacy program management beyond just cookie consent — useful if you need vendor risk assessments and DSAR management alongside the CMP.</li></ul>
+    </div>
+    <div class="post-body">
+      <h2>What a CMP actually does</h2>
+      <p>A cookie banner is cosmetic — it tells users about cookies. A consent management platform is functional — it blocks cookies from loading until the user consents, records that consent with a timestamp and the categories accepted, and signals those choices to your tag management system so tags fire appropriately.</p>
+      <p>GDPR and CPRA both require that non-essential cookies (analytics, advertising, personalization) are not set until after consent is granted. A banner that discloses cookies but does not block them is not compliant. The CMP is the enforcement mechanism, not the disclosure mechanism.</p>
+
+      <h2>CookieYes</h2>
+      <p>CookieYes is the option I implement for most B2B and healthcare-tech clients who need solid GDPR and CPRA compliance without enterprise complexity. It is well-documented, integrates cleanly with GTM via the consent signal API, and the automatic cookie scanner handles the tedious work of identifying what cookies your site is actually setting.</p>
+      <p>The pricing is reasonable — plans start around 10 dollars per month for small sites and scale to around 100 dollars per month for higher-traffic or multi-domain deployments. The consent logs are GDPR-compliant, and the reporting shows consent rates by geography, which is useful for understanding how your consent configuration is affecting your analytics coverage.</p>
+      <p>Limitations: the UI customization options are adequate but not exceptional, the A/B testing tools for banner copy are limited, and enterprise-grade features like SSO, dedicated support, and DPA execution require custom plans. For complex enterprise environments with multiple brands and regulatory regimes, you will outgrow it.</p>
+
+      <h2>OneTrust</h2>
+      <p>OneTrust is the dominant enterprise consent and privacy management platform. It covers far more than cookie consent: data subject access request (DSAR) management, vendor risk assessments, privacy impact assessments, policy management, and enterprise workflow tools. It is a privacy program platform, not just a CMP.</p>
+      <p>The cookie consent module is robust and supports complex multi-jurisdiction scenarios — different consent configurations for different country groups, integration with multiple tag management systems, and detailed audit trails that satisfy enterprise legal requirements.</p>
+      <p>The cost is enterprise-grade. OneTrust does not publish pricing publicly, but expect to pay several thousand dollars per year at minimum, with contracts for large enterprises running to tens of thousands. You also need people to configure and maintain it — OneTrust is complex, and a misconfigured OneTrust deployment can be harder to debug than a misconfigured smaller CMP.</p>
+      <p>OneTrust makes sense if you are a company with dedicated legal, compliance, and privacy operations functions, multiple products or brands, regulatory requirements beyond GDPR and CPRA, and the budget to support enterprise software. It is overkill for a 20-person B2B SaaS company with a single marketing site.</p>
+
+      <h2>Osano</h2>
+      <p>Osano occupies an interesting middle position. Its cookie consent functionality is comparable to CookieYes — solid compliance coverage, GTM integration, reasonable pricing. Where it differentiates is in its broader privacy program features: a vendor monitoring service that tracks the privacy practices of your SaaS vendors, DSAR workflow tools, and a privacy law database that tracks regulatory changes across jurisdictions.</p>
+      <p>If your company is actively building out a privacy program — not just trying to get compliant with GDPR, but proactively managing vendor risk and privacy obligations — Osano provides more infrastructure for that than CookieYes does at a lower entry point than OneTrust.</p>
+      <p>For companies whose primary need is "compliant cookie consent that works with GTM," Osano is not significantly better than CookieYes and starts at a higher price point. The value is in the additional privacy program features, which require someone to actually use them.</p>
+
+      <h2>How to choose</h2>
+      <p>For most B2B and healthcare-tech companies with a single site, fewer than 500,000 monthly sessions, and a small marketing and legal team: CookieYes. It handles GDPR and CPRA compliance correctly, integrates well with GTM and GA4, and costs less than 100 dollars per month.</p>
+      <p>If you have a dedicated privacy operations team and compliance requirements beyond cookie consent — vendor risk, DSARs, privacy impact assessments — evaluate Osano as a middle-ground option before committing to OneTrust's complexity.</p>
+      <p>If you are a large enterprise with multiple brands, multiple jurisdictions, and an established legal and privacy team: OneTrust. The complexity is justified at that scale.</p>
+
+      <h2>One thing all three require</h2>
+      <p>Every CMP on this list requires the same thing to actually work: GTM Consent Mode integration. Without it, your tags fire regardless of what the user chose. The CMP records consent, GTM ignores it, and cookies get set anyway. The integration is straightforward but requires deliberate configuration — it does not happen automatically just because you installed the CMP script.</p>
+      <div class="post-cta">
+        <h3>Want compliant consent management that actually works with your analytics?</h3>
+        <p>I configure CMP integration with GTM Consent Mode, verify the consent signals are being respected by all tags, and document the setup for your legal and compliance teams.</p>
+        <a href="../index.html#contact">Get a quote</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap foot-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <nav class="foot-links">
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../terms.html">Terms &amp; Conditions</a>
+    </nav>
+    <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
+  </div>
+</footer>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty('background', '#c4622d', 'important');
+        el.style.setProperty('background-color', '#c4622d', 'important');
+        el.style.setProperty('border-color', '#c4622d', 'important');
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    paintCkyIcon();
+  })();
+</script>
+</body>
+</html>

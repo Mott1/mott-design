@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Audit Your Cookie Banner for GDPR and CPRA Compliance — Mott Design</title>
+<meta name="description" content="Many cookie banners look compliant but are not. This checklist covers the 10 things to verify to know for sure.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/cookie-banner-audit.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Audit Your Cookie Banner for GDPR and CPRA Compliance">
+<meta property="og:description" content="Many cookie banners look compliant but are not. This checklist covers the 10 things to verify to know for sure.">
+<meta property="og:url" content="https://mott.design/blog/cookie-banner-audit.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Audit Your Cookie Banner for GDPR and CPRA Compliance",
+  "description": "Many cookie banners look compliant but are not. This checklist covers the 10 things to verify to know for sure.",
+  "author": { "@type": "Person", "name": "Michael Mott", "url": "https://mott.design" },
+  "publisher": { "@type": "Organization", "name": "Mott Design", "url": "https://mott.design" },
+  "datePublished": "2026-02-07",
+  "url": "https://mott.design/blog/cookie-banner-audit.html"
+}
+</script>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<!-- End cookieyes banner -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("consent", "default", {
+    "analytics_storage": "denied", "ad_storage": "denied",
+    "ad_user_data": "denied", "ad_personalization": "denied",
+    "functionality_storage": "denied", "security_storage": "granted",
+    "wait_for_update": 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-53HVNPWM');</script>
+<!-- End Google Tag Manager -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#about">About</a>
+      <a href="index.html" class="active">Blog</a>
+      <a href="../the-brief.html">The Brief</a>
+      <a href="../field-guide.html">Field Guide</a>
+      <a href="../index.html#contact">Contact</a>
+    </div>
+    <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/consent-privacy.html" class="cat-pill">Consent &amp; Privacy</a>
+        <span class="post-meta">February 7, 2026 &middot; 9 min read</span>
+      </div>
+      <h1>How to Audit Your Cookie Banner for GDPR and CPRA Compliance</h1>
+      <p class="intro">A cookie banner that does not actually block cookies is a liability, not a compliance solution. The appearance of a consent mechanism and the function of one are different things — and the gap between them is exactly what regulators look for. This is the checklist I run through when auditing a site's consent implementation.</p>
+    </header>
+    <div class="tldr">
+      <p class="tldr-label">TL;DR</p>
+      <ul><li>A compliant cookie banner must block non-essential cookies until consent is granted — not just display a notice about them.</li><li>You can verify cookie blocking by opening DevTools before accepting the banner and checking which cookies are already set.</li><li>GTM Consent Mode must be configured to honor consent signals — without it, tags fire regardless of what the user chose.</li><li>Consent logs must be stored and accessible — you need to be able to demonstrate who consented to what and when.</li></ul>
+    </div>
+    <div class="post-body">
+      <h2>Why audits are necessary</h2>
+      <p>Most cookie banners were implemented by a developer or marketing team following a tutorial, not a privacy lawyer reviewing the regulatory requirements. The result is often a banner that discloses what cookies are used — which is a GDPR requirement — but does not actually prevent those cookies from being set before consent is given — which is also a GDPR requirement.</p>
+      <p>Regulators, particularly in Germany, France, and Ireland, have been actively enforcing this distinction. Fines for non-compliant cookie implementations are increasingly common, and the "we have a banner" defense does not hold up when the cookies were already set.</p>
+
+      <h2>The 10-point audit checklist</h2>
+
+      <h3>1. Cookies are blocked before consent</h3>
+      <p>Open your site in a private browser window. Before clicking anything on the cookie banner, open DevTools (Application → Cookies). Are any non-essential cookies already set? GA4 cookies (_ga, _ga_XXXXXXX), advertising cookies, and analytics tool cookies should not appear before consent. If they do, your implementation is non-compliant.</p>
+
+      <h3>2. Reject all is as prominent as Accept all</h3>
+      <p>GDPR requires that declining consent is as easy as accepting it. A banner with a large "Accept All" button and a small grey "Manage Preferences" link does not satisfy this requirement in most EU jurisdictions. "Reject All" should appear at the same visual level as "Accept All."</p>
+
+      <h3>3. Consent is specific to categories</h3>
+      <p>Users must be able to consent to analytics separately from advertising separately from personalization. A binary Accept/Decline that bundles all cookie types is not GDPR-compliant. The banner must offer granular category-level controls.</p>
+
+      <h3>4. Consent can be withdrawn easily</h3>
+      <p>Users who have consented must be able to withdraw that consent at any time, as easily as they gave it. There should be a persistent mechanism — typically the CookieYes floating icon or an equivalent — that opens the preference center without requiring the user to clear their cookies or find a buried settings page.</p>
+
+      <h3>5. Consent records are being stored</h3>
+      <p>Check with your CMP provider that consent logs are being stored and are accessible. GDPR requires that you can demonstrate, on request, that a specific user consented to specific categories at a specific date and time. Most CMPs handle this automatically, but it requires the CMP to be configured with a consent log storage mechanism.</p>
+
+      <h3>6. GTM Consent Mode is configured</h3>
+      <p>In your GTM container, check that the Consent Initialization trigger is being used for tags that should be gated by consent. In the GTM overview, look at each tag's Consent Settings — tags that set cookies should require the relevant storage type (analytics_storage, ad_storage, etc.). If tags are not gated, the CMP is recording consent but GTM is ignoring it.</p>
+
+      <h3>7. Consent defaults are set to denied</h3>
+      <p>GTM Consent Mode requires that you set default consent states before the CMP has initialized. This is typically done with a gtag("consent", "default", {...}) call in the document head. All storage types should default to "denied" — the CMP then updates them to "granted" if the user accepts. If defaults are "granted," cookies are set before the banner even appears.</p>
+
+      <h3>8. The banner appears for returning visitors who have not consented</h3>
+      <p>Test in a private browsing window (which starts with no prior consent record). The banner should appear. Then accept the banner, close the window, open a new regular window, and visit the site. The banner should not appear again — the consent was stored. If the banner appears on every visit regardless of prior consent, the consent storage mechanism is broken.</p>
+
+      <h3>9. Non-EU users receive appropriate treatment</h3>
+      <p>Many CMPs support geo-targeting — showing a full consent banner to EU users, a CPRA-style opt-out notice to California users, and no banner to users in jurisdictions without applicable law. If your CMP is showing a full GDPR-style banner to all users regardless of location, you may be over-collecting consent and over-complicating the experience for users who are not subject to consent requirements.</p>
+
+      <h3>10. The privacy policy accurately describes cookie use</h3>
+      <p>The cookie banner and the privacy policy must be consistent. If your banner discloses that you use analytics, advertising, and personalization cookies, but your privacy policy only mentions analytics cookies, you have a documentation inconsistency that creates legal exposure. Run a comparison of what your CMP's cookie scan identifies and what your privacy policy discloses.</p>
+      <div class="post-cta">
+        <h3>Not confident your consent implementation is actually compliant?</h3>
+        <p>I audit consent implementations against GDPR and CPRA requirements, configure GTM Consent Mode correctly, and document the setup for your legal team.</p>
+        <a href="../index.html#contact">Get a quote</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap foot-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <nav class="foot-links">
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../terms.html">Terms &amp; Conditions</a>
+    </nav>
+    <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
+  </div>
+</footer>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty('background', '#c4622d', 'important');
+        el.style.setProperty('background-color', '#c4622d', 'important');
+        el.style.setProperty('border-color', '#c4622d', 'important');
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    paintCkyIcon();
+  })();
+</script>
+</body>
+</html>
