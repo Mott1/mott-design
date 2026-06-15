@@ -79,11 +79,11 @@ footer { padding: 40px 0; position: relative; z-index: 1; }
 .post-head .intro { color: var(--muted); font-size: 1.05rem; max-width: 58ch; line-height: 1.7; }
 
 /* TL;DR box */
-.tldr { background: rgba(228,234,200,0.06); border: 1px solid var(--line); border-left: 3px solid var(--ink); border-radius: 4px; padding: 24px 28px; margin: 40px 0; max-width: 720px; }
-.tldr-label { font-family: var(--display); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); margin-bottom: 12px; }
+.tldr { background: rgba(228,234,200,0.06); border: 1px solid var(--line); border-left: 3px solid var(--warn); border-radius: 4px; padding: 24px 28px; margin: 40px 0; max-width: 720px; }
+.tldr-label { font-family: var(--display); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warn); margin-bottom: 12px; }
 .tldr ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
 .tldr ul li { font-size: 0.95rem; color: var(--ink); padding-left: 16px; position: relative; line-height: 1.5; }
-.tldr ul li::before { content: '→'; position: absolute; left: 0; color: var(--ink); font-size: 0.8rem; top: 2px; }
+.tldr ul li::before { content: '→'; position: absolute; left: 0; color: var(--warn); font-size: 0.8rem; top: 2px; }
 
 /* Post content */
 .post-body { max-width: 720px; padding: 48px 0 80px; }
