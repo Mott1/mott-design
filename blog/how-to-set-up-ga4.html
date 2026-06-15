@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Set Up GA4 for a B2B Website: Step-by-Step — Mott Design</title>
+<meta name="description" content="A practical GA4 setup guide for B2B sites — measurement plan, GTM installation, key event configuration, internal traffic filters, and DebugView verification.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/how-to-set-up-ga4.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Set Up GA4 for a B2B Website: Step-by-Step">
+<meta property="og:description" content="A practical GA4 setup guide for B2B sites — measurement plan, GTM installation, key event configuration, internal traffic filters, and DebugView verification.">
+<meta property="og:url" content="https://mott.design/blog/how-to-set-up-ga4.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Set Up GA4 for a B2B Website: Step-by-Step","description":"A practical GA4 setup guide for B2B sites — measurement plan, GTM installation, key event configuration, internal traffic filters, and DebugView verification.","author":{"@type":"Person","name":"Michael Mott","url":"https://mott.design"},"publisher":{"@type":"Organization","name":"Mott Design","url":"https://mott.design"},"datePublished":"2026-04-29","url":"https://mott.design/blog/how-to-set-up-ga4.html"}</script>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<!-- End cookieyes banner -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("consent", "default", {
+    "analytics_storage": "denied", "ad_storage": "denied",
+    "ad_user_data": "denied", "ad_personalization": "denied",
+    "functionality_storage": "denied", "security_storage": "granted",
+    "wait_for_update": 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-53HVNPWM');</script>
+<!-- End Google Tag Manager -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#contact">Contact</a>
+      <a href="index.html" class="active">Blog</a>
+      <a href="../the-brief.html">The Brief</a>
+      <a href="../field-guide.html">Field Guide</a>
+    </div>
+    <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/ga4-analytics.html" class="cat-pill">GA4 &amp; Analytics</a>
+        <span class="post-meta">April 29, 2026 &middot; 11 min read</span>
+      </div>
+      <h1>How to Set Up GA4 for a B2B Website: Step-by-Step</h1>
+      <p class="intro">Most GA4 setups I inherit are technically installed but practically useless — tracking everything, measuring nothing that matters. The problem usually starts before anyone opens the GA4 interface. Here's how to do it right from the start.</p>
+    </header>
+    <div class="tldr">
+      <p class="tldr-label">TL;DR</p>
+      <ul>
+        <li>Start with a measurement plan — decide what to track and why before touching GA4.</li>
+        <li>Install via Google Tag Manager, not the gtag snippet directly. You'll thank yourself later.</li>
+        <li>Configure key events (conversions) for the actions that actually matter to your business.</li>
+        <li>Filter out internal traffic and verify everything in DebugView before trusting your reports.</li>
+      </ul>
+    </div>
+    <div class="post-body">
+      <h2>Why most GA4 setups fail before they start</h2>
+      <p>GA4 is installed on millions of websites. A much smaller number of those installations are actually useful. The gap between "GA4 is on the site" and "GA4 is telling us something valuable" is almost always caused by the same two mistakes: no measurement plan, and no verification step.</p>
+      <p>A measurement plan answers three questions before any tracking is implemented: What business decisions are we trying to make? What user actions connect to those decisions? How will we name and structure those events? Without it, you end up with a GA4 property full of auto-collected events that don't map to anything meaningful.</p>
+
+      <h2>Step 1: Write your measurement plan</h2>
+      <p>A measurement plan doesn't need to be elaborate. It can be a simple document or spreadsheet with three columns: the business objective, the user action that signals progress toward that objective, and the event name you'll use in GA4.</p>
+      <p>For a typical B2B site, the objectives might be: generate qualified leads, understand which content attracts the right audience, and measure engagement with key product or service pages. The corresponding events might be: form submission (contact or demo request), scroll depth on pillar content pages, and outbound click to a sales deck or case study.</p>
+      <p>Name your events clearly and consistently. GA4 uses snake_case by convention (<code>form_submit</code>, <code>content_download</code>). Avoid vague names like <code>click</code> or <code>interaction</code> — they'll be meaningless six months from now.</p>
+
+      <h2>Step 2: Install via Google Tag Manager</h2>
+      <p>You can install GA4 directly with a gtag snippet, but I recommend installing it through Google Tag Manager instead. GTM gives you a single place to manage all your marketing tags, makes it easy to add and modify tracking without touching the codebase, and integrates cleanly with Consent Mode v2.</p>
+      <p>To install GA4 via GTM: create a new tag in your GTM container, choose "Google Tag" as the tag type, enter your GA4 Measurement ID (it starts with <code>G-</code>), and set the trigger to "All Pages." Publish the container.</p>
+      <p>If you don't have GTM yet, set that up first. See my <a href="google-tag-manager-guide.html">Google Tag Manager guide</a> for a full walkthrough.</p>
+
+      <h2>Step 3: Configure key events (conversions)</h2>
+      <p>GA4 distinguishes between events (any action you track) and key events (the subset of events you designate as conversions). Key events appear in conversion reports and can be imported into Google Ads for bidding.</p>
+      <p>For most B2B sites, your key events should include form submissions — specifically your contact form, demo request form, or any gated content download. In GA4, go to Admin → Events → find the event → toggle "Mark as key event."</p>
+      <p>Don't mark everything as a key event. If every page view and every scroll is a conversion, your conversion data becomes meaningless. Be selective: only the actions that a human sales or marketing person would actually call a win.</p>
+
+      <h2>Step 4: Filter out your own traffic</h2>
+      <p>Internal traffic from your own team, your developers, and your agency will inflate your numbers and pollute your data if you don't filter it out. In GA4, go to Admin → Data Streams → your stream → Configure tag settings → Define internal traffic. Enter your IP addresses (and your agency's, if applicable).</p>
+      <p>Then go to Admin → Data Filters → Create filter → Internal Traffic filter → set to Active. Note that it takes 24–48 hours for this filter to start affecting your data.</p>
+
+      <h2>Step 5: Set up Consent Mode v2</h2>
+      <p>If your site has visitors in the EU or California, you need Consent Mode v2 configured before you go live with GA4. Without it, you're either collecting data from users who haven't consented (a compliance risk) or losing all visibility into non-consenting users (a data gap).</p>
+      <p>Consent Mode v2 works by having GA4 operate in a restricted mode for users who decline cookies — no identifiers are stored, but Google's modeling can still estimate aggregate behavior. See my <a href="consent-mode-v2.html">Consent Mode v2 guide</a> for implementation steps.</p>
+
+      <h2>Step 6: Verify in DebugView</h2>
+      <p>Before you declare your GA4 setup complete, verify it in DebugView. In GA4, go to Configure → DebugView. Then open your website in Chrome and add the Chrome extension "Google Analytics Debugger," or add <code>?gtm_debug=x</code> to your URL to trigger GTM preview mode.</p>
+      <p>In DebugView you should see: a <code>page_view</code> event firing on each page load, your custom events firing when you trigger the corresponding actions, and your key events marked with a star.</p>
+      <p>If events aren't appearing, check GTM preview mode to see whether tags are firing. The most common culprit is a trigger condition that isn't being met, or a variable that's returning undefined.</p>
+
+      <h2>What to look at first in your reports</h2>
+      <p>Once GA4 is collecting clean data, resist the urge to live in the real-time report. The most useful views for B2B sites:</p>
+      <ul>
+        <li><strong>Acquisition → Traffic acquisition</strong> — Where is traffic coming from? Organic, paid, direct, referral? This tells you which channels are working.</li>
+        <li><strong>Engagement → Pages and screens</strong> — Which pages are getting the most engaged visits? Filter by "Engagement rate" rather than just sessions.</li>
+        <li><strong>Advertising → Conversions</strong> — Which sessions resulted in key events? Segment by source to understand which traffic converts.</li>
+        <li><strong>Explore → Funnel exploration</strong> — Build a custom funnel from your key pages (e.g., homepage → services page → contact form → thank you) to see where drop-off happens.</li>
+      </ul>
+      <p>Give your data two to four weeks to accumulate before drawing conclusions. GA4 needs volume to show meaningful patterns, and early data is often noisy while the internal traffic filter and consent mode settle in.</p>
+      <div class="post-cta">
+        <h3>Need GA4 set up correctly the first time?</h3>
+        <p>I implement GA4 via GTM with a full measurement plan, consent compliance, conversion tracking, and verified DebugView signoff — so you're collecting clean data from day one.</p>
+        <a href="../index.html#contact">Get a quote</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap foot-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <nav class="foot-links">
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../terms.html">Terms &amp; Conditions</a>
+    </nav>
+    <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
+  </div>
+</footer>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty('background', '#c4622d', 'important');
+        el.style.setProperty('background-color', '#c4622d', 'important');
+        el.style.setProperty('border-color', '#c4622d', 'important');
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    paintCkyIcon();
+  })();
+</script>
+</body>
+</html>

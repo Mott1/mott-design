@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Tag Manager: A Plain-English Guide for Marketers — Mott Design</title>
+<meta name="description" content="Google Tag Manager puts a layer between your website and every analytics or ad tool you use. Here's how it works, why it matters, and the common mistakes to avoid.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/google-tag-manager-guide.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Google Tag Manager: A Plain-English Guide for Marketers">
+<meta property="og:description" content="Google Tag Manager puts a layer between your website and every analytics or ad tool you use. Here's how it works, why it matters, and the common mistakes to avoid.">
+<meta property="og:url" content="https://mott.design/blog/google-tag-manager-guide.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Google Tag Manager: A Plain-English Guide for Marketers","description":"Google Tag Manager puts a layer between your website and every analytics or ad tool you use. Here's how it works, why it matters, and the common mistakes to avoid.","author":{"@type":"Person","name":"Michael Mott","url":"https://mott.design"},"publisher":{"@type":"Organization","name":"Mott Design","url":"https://mott.design"},"datePublished":"2026-03-25","url":"https://mott.design/blog/google-tag-manager-guide.html"}</script>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<!-- End cookieyes banner -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("consent", "default", {
+    "analytics_storage": "denied", "ad_storage": "denied",
+    "ad_user_data": "denied", "ad_personalization": "denied",
+    "functionality_storage": "denied", "security_storage": "granted",
+    "wait_for_update": 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-53HVNPWM');</script>
+<!-- End Google Tag Manager -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#contact">Contact</a>
+      <a href="index.html" class="active">Blog</a>
+      <a href="../the-brief.html">The Brief</a>
+      <a href="../field-guide.html">Field Guide</a>
+    </div>
+    <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/gtm-tag-management.html" class="cat-pill">GTM</a>
+        <span class="post-meta">March 25, 2026 &middot; 8 min read</span>
+      </div>
+      <h1>Google Tag Manager: A Plain-English Guide for Marketers</h1>
+      <p class="intro">Most marketers know GTM exists and that their developers set it up. Fewer understand how it works well enough to use it effectively, request the right changes, or notice when something is broken. This guide covers the mental model, not the click-by-click.</p>
+    </header>
+    <div class="tldr">
+      <p class="tldr-label">TL;DR</p>
+      <ul>
+        <li>GTM is a container that manages tracking code for your website — one snippet, many tools.</li>
+        <li>Tags are the code snippets. Triggers decide when they fire. Variables feed dynamic data into tags.</li>
+        <li>GTM's preview mode lets you verify tracking before publishing, which prevents data disasters.</li>
+        <li>GTM should be managed by someone who understands data quality — not anyone who can log in.</li>
+      </ul>
+    </div>
+    <div class="post-body">
+      <h2>What problem GTM actually solves</h2>
+      <p>Before tag managers existed, adding any tracking to a website meant adding code directly to the site's HTML. Google Analytics snippet goes in the header. Facebook pixel goes in the header. LinkedIn Insight Tag goes in the header. Google Ads conversion tracking goes on the thank-you page. Hotjar goes in the header. Every new tool means a developer edit, a deployment cycle, and another piece of third-party JavaScript loading on every page.</p>
+      <p>GTM replaces that with a single snippet of code — the GTM container — added to your site once. After that, every tracking tag, pixel, and script is managed inside GTM's interface, not in the site's codebase. Marketers can add and modify tracking without developer deploys. Tags can be tested before going live. Everything is versioned, so you can roll back if something breaks.</p>
+
+      <h2>The three core concepts: Tags, Triggers, Variables</h2>
+
+      <h3>Tags</h3>
+      <p>A tag is a piece of code that GTM injects into your page. It might be a GA4 event, a Google Ads conversion, a LinkedIn Insight Tag, or a custom HTML snippet. GTM has built-in templates for the most common tools, so you don't have to write the JavaScript yourself — you fill in fields and GTM generates the code.</p>
+
+      <h3>Triggers</h3>
+      <p>A trigger tells GTM when to fire a tag. Common triggers: on every page view, on clicks matching a specific CSS selector, when a form is submitted, when a custom event is pushed to the data layer, or when a user scrolls to a certain depth on a page.</p>
+      <p>Triggers are where most of the logic lives. A GA4 "page_view" tag fires on an "All Pages" trigger. A GA4 "generate_lead" event fires on a "Form Submission" trigger scoped to a specific form ID. Getting triggers right is the difference between accurate tracking and garbage data.</p>
+
+      <h3>Variables</h3>
+      <p>Variables capture dynamic values that get passed into tags. The URL of the current page. The text content of the element that was clicked. The value of a data layer variable pushed by your application. Without variables, every tag would be hardcoded — you'd need a separate GA4 tag for every page, instead of one tag that passes the current page URL dynamically.</p>
+      <p>GTM has built-in variables (page URL, click text, referrer) and lets you define custom variables that read from the data layer. The data layer is a JavaScript array on your page that your site can write to, and GTM can read from. It's how your application communicates with GTM.</p>
+
+      <h2>The data layer</h2>
+      <p>The data layer is the communication channel between your website and GTM. When something meaningful happens on your site — a form is submitted, a product is viewed, a user logs in — your site can push an object to the data layer describing what happened. GTM picks that up, triggers can listen for it, and variables can extract values from it.</p>
+      <p>A simple data layer push looks like this:</p>
+      <pre style="background:rgba(228,234,200,0.06);border:1px solid var(--line);border-radius:4px;padding:16px;overflow-x:auto;font-size:0.82rem;color:var(--accent);font-family:'SF Mono','Fira Code',monospace;line-height:1.6;margin-bottom:18px;">window.dataLayer = window.dataLayer || [];
+window.dataLayer.push({
+  event: 'form_submit',
+  form_name: 'contact',
+  lead_type: 'demo_request'
+});</pre>
+      <p>GTM can trigger a tag when it sees the <code>form_submit</code> event, and a variable can read the <code>lead_type</code> value and pass it to GA4 as an event parameter.</p>
+
+      <h2>Preview mode: the most important feature</h2>
+      <p>Before you publish any changes in GTM, you can preview them. GTM's preview mode opens your website in a special debugging session where you can see every tag that fired, which trigger caused it to fire, and what data was passed. This lets you verify that your tracking is working correctly before it affects real data.</p>
+      <p>I never publish a GTM container change without going through preview mode first. The consequences of getting it wrong — double-counting conversions, firing tags on the wrong pages, missing key events — can corrupt weeks of data before anyone notices.</p>
+
+      <h2>Versioning and rollbacks</h2>
+      <p>Every published GTM container is a version. If a change you publish causes a problem, you can roll back to the previous version in seconds. This is a significant advantage over managing tracking code directly in your website — if you push broken JavaScript to production and don't have an easy rollback mechanism, you're in trouble.</p>
+
+      <h2>What should and shouldn't go in GTM</h2>
+      <p>GTM can inject any JavaScript into your page, which means it can technically be used for almost anything. But not everything should be in GTM.</p>
+      <p><strong>Good for GTM:</strong> Analytics tracking (GA4), ad pixels (Google Ads, Meta, LinkedIn), conversion tracking, chat widget snippets, A/B testing tools, heatmap tools, consent management integrations.</p>
+      <p><strong>Not good for GTM:</strong> Core site functionality (navigation, forms, anything user-facing). Security-sensitive code. Code that needs to execute before the page renders — GTM loads asynchronously, so anything in GTM fires after the page has begun loading. Performance-critical scripts that need to be server-side or inline.</p>
+
+      <h2>Who should manage GTM</h2>
+      <p>GTM access should be controlled. Anyone who can log into GTM and publish a container can inject arbitrary JavaScript into your website. That's a significant security surface. Limit publish permissions to people who understand what they're doing.</p>
+      <p>The ideal GTM administrator is someone who understands HTML and JavaScript at a basic level, thinks carefully about data quality, and tests every change in preview mode before publishing. "Our marketing intern set it up" is a phrase I've heard before seeing some genuinely broken tracking setups.</p>
+      <div class="post-cta">
+        <h3>Need GTM set up properly?</h3>
+        <p>I set up GTM containers with clean tagging architecture, data layer standards, consent mode integration, and documentation — so whoever manages it next can understand what's there and why.</p>
+        <a href="../index.html#contact">Get a quote</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap foot-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <nav class="foot-links">
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../terms.html">Terms &amp; Conditions</a>
+    </nav>
+    <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
+  </div>
+</footer>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty('background', '#c4622d', 'important');
+        el.style.setProperty('background-color', '#c4622d', 'important');
+        el.style.setProperty('border-color', '#c4622d', 'important');
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    paintCkyIcon();
+  })();
+</script>
+</body>
+</html>

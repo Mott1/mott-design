@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIPAA and Web Analytics: What Healthcare Marketers Need to Know About GA4 — Mott Design</title>
+<meta name="description" content="Standard GA4 setups can inadvertently collect PHI. Here's what healthcare marketers need to watch for and how to configure analytics in a way that doesn't create compliance exposure.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/hipaa-web-analytics.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HIPAA and Web Analytics: What Healthcare Marketers Need to Know About GA4">
+<meta property="og:description" content="Standard GA4 setups can inadvertently collect PHI. Here's what healthcare marketers need to watch for and how to configure analytics in a way that doesn't create compliance exposure.">
+<meta property="og:url" content="https://mott.design/blog/hipaa-web-analytics.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"HIPAA and Web Analytics: What Healthcare Marketers Need to Know About GA4","author":{"@type":"Person","name":"Michael Mott","url":"https://mott.design"},"publisher":{"@type":"Organization","name":"Mott Design","url":"https://mott.design"},"datePublished":"2026-02-26","url":"https://mott.design/blog/hipaa-web-analytics.html"}</script>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("consent", "default", {
+    "analytics_storage": "denied", "ad_storage": "denied",
+    "ad_user_data": "denied", "ad_personalization": "denied",
+    "functionality_storage": "denied", "security_storage": "granted",
+    "wait_for_update": 500
+  });
+</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-53HVNPWM');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#contact">Contact</a>
+      <a href="index.html" class="active">Blog</a>
+      <a href="../the-brief.html">The Brief</a>
+      <a href="../field-guide.html">Field Guide</a>
+    </div>
+    <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/medtech-healthcare.html" class="cat-pill">Medtech &amp; Healthcare</a>
+        <span class="post-meta">February 26, 2026 &middot; 9 min read</span>
+      </div>
+      <h1>HIPAA and Web Analytics: What Healthcare Marketers Need to Know About GA4</h1>
+      <p class="intro">Healthcare and life science organizations face a compliance constraint that most marketing teams don't: the possibility that standard web analytics tools might constitute unauthorized disclosure of protected health information. The risk is real, often misunderstood, and manageable if you know what to watch for.</p>
+    </header>
+    <div class="tldr"><p class="tldr-label">TL;DR</p><ul><li>GA4 can collect PHI inadvertently through URL parameters, form field data, and user identifiers — each of which can trigger HIPAA exposure.</li>
+        <li>The HHS's 2022 bulletin clarified that tracking pixels on healthcare sites can constitute impermissible disclosure under HIPAA.</li>
+        <li>Mitigation involves both technical configuration (stripping URLs, avoiding personal identifiers) and legal agreements (BAA with analytics vendor).</li>
+        <li>Google does not sign Business Associate Agreements for GA4 — which creates a gap for covered entities that use it.</li></ul></div>
+    <div class="post-body">
+      <h2>The regulatory landscape</h2>
+      <p>HIPAA (the Health Insurance Portability and Accountability Act) protects individually identifiable health information — called Protected Health Information (PHI). HIPAA applies to covered entities (healthcare providers, insurers, clearinghouses) and their business associates. Marketing technology vendors who receive PHI on behalf of a covered entity are typically considered business associates and must sign a Business Associate Agreement (BAA).</p>
+      <p>In December 2022, the HHS Office for Civil Rights issued a bulletin specifically addressing tracking technologies on healthcare websites and apps. The key finding: when a tracking pixel or analytics tool collects data that could be used to identify an individual in connection with their health condition or healthcare-seeking behavior, that collection may constitute an impermissible disclosure of PHI — even without any intentional action on the organization's part.</p>
+      <p>This isn't theoretical. Several healthcare systems and hospital networks received OCR investigation notices following the 2022 bulletin. The risk is specific and documented.</p>
+
+      <h2>How GA4 can collect PHI inadvertently</h2>
+      <p>Most healthcare organizations don't intend to send PHI to Google Analytics. But standard GA4 configurations can collect it through several channels:</p>
+      <p><strong>URL parameters.</strong> If your site uses URL parameters to carry patient identifiers, appointment details, or health condition information (common with patient portal integrations, appointment booking systems, or condition-specific landing pages), GA4 collects those URLs as part of standard page_view events. Example: <code>yourhospital.com/conditions/diabetes/resources?patient_id=12345&diagnosis=T2DM</code>.</p>
+      <p><strong>Search queries on health portals.</strong> If GA4 is installed on a patient portal or health information portal with internal search tracking, those search queries — "metformin side effects," "oncologist near me," "HIV treatment options" — can be collected as event parameters and arguably constitute health information linked to a site session.</p>
+      <p><strong>Form field values.</strong> GTM can be configured to capture form field values. If someone at your agency or on your team implemented form field capture without carefully scoping it, you may be collecting names, email addresses, health conditions, or other PHI from intake forms.</p>
+      <p><strong>Custom user IDs.</strong> GA4's user_id feature lets you associate analytics sessions with internal user identifiers. If those identifiers map to patient records in your EHR or CRM, the combination can constitute PHI.</p>
+
+      <h2>The BAA gap</h2>
+      <p>Google does not offer Business Associate Agreements for Google Analytics 4. This is a documented fact. Google's documentation explicitly states that GA4 is not intended for use in contexts where PHI is present, and that BAAs are not available for the product.</p>
+      <p>This creates a structural problem for covered entities: even if you configure GA4 carefully to minimize PHI exposure, if any PHI reaches GA4 — even inadvertently — you may lack the legal framework to make that transfer permissible under HIPAA.</p>
+      <p>By contrast, several analytics alternatives do offer BAAs: Matomo (self-hosted), Mixpanel (with a signed BAA), and some enterprise-tier analytics platforms. For covered entities with patient-facing digital properties, these may be the more defensible choice.</p>
+
+      <h2>Practical risk mitigation for GA4 users</h2>
+      <p>If you're a healthcare organization currently using GA4 — and many are — the goal is to reduce PHI exposure to the extent possible while you evaluate longer-term options. Practical steps:</p>
+      <ul>
+        <li><strong>Audit what you're collecting.</strong> Use GA4's DebugView and the event stream to see exactly what data is being sent. Look specifically at page_location values for URL parameters and any custom events that may capture form data.</li>
+        <li><strong>Redact URL parameters.</strong> In GA4's data stream settings, you can configure URL parameter exclusions to prevent specific parameter names from being included in collected URLs. Identify any parameters that could carry identifiers and exclude them.</li>
+        <li><strong>Do not implement form field tracking.</strong> Avoid any GTM configuration that captures values from form fields on patient-facing pages.</li>
+        <li><strong>Limit GA4 to marketing pages only.</strong> If your patient portal runs on a separate domain or subdomain, ensure GA4 is not present on that domain. Keep analytics strictly on public marketing pages where no authentication or health transactions occur.</li>
+        <li><strong>Consult legal counsel.</strong> The OCR's 2022 bulletin represents regulatory guidance, not a final rule. The appropriate response to your specific situation depends on your organization's status as a covered entity, the nature of your digital properties, and your existing BAA landscape. This is not legal advice — it's a technical framework for a conversation with your compliance team.</li>
+      </ul>
+
+      <h2>For medical device companies specifically</h2>
+      <p>Medical device companies are often not covered entities themselves — they're not providing healthcare, they're selling to healthcare providers. In that case, HIPAA typically doesn't apply directly to your website analytics. Your website visitors are procurement teams, clinical staff, and biomedical engineers, not patients.</p>
+      <p>However, if you run a patient registry, a device companion app, or any property where end users are patients, the calculus changes. And if you're a contractor to a covered entity handling PHI in that capacity, business associate rules apply regardless of your primary business.</p>
+      <p>Understanding your organization's HIPAA status — covered entity, business associate, or neither — is the prerequisite for making the right technology choices. Start there.</p>
+      <div class="post-cta"><h3>Need help navigating analytics compliance for a healthcare or medtech site?</h3><p>I work with medical device and healthcare-tech companies on analytics implementations that balance data needs with compliance constraints — and I know what questions to ask your legal team.</p><a href="../index.html#contact">Get a quote</a></div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap foot-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <nav class="foot-links">
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../terms.html">Terms &amp; Conditions</a>
+    </nav>
+    <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
+  </div>
+</footer>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty('background', '#c4622d', 'important');
+        el.style.setProperty('background-color', '#c4622d', 'important');
+        el.style.setProperty('border-color', '#c4622d', 'important');
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    paintCkyIcon();
+  })();
+</script>
+</body>
+</html>

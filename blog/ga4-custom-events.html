@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GA4 Custom Events: What to Track and How to Name Them — Mott Design</title>
+<meta name="description" content="GA4's flexible event model makes it easy to track the wrong things. Here's how to design a clean event taxonomy, pick the right event names, and avoid the most common measurement mistakes.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/ga4-custom-events.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GA4 Custom Events: What to Track and How to Name Them">
+<meta property="og:description" content="GA4's flexible event model makes it easy to track the wrong things. Here's how to design a clean event taxonomy, pick the right event names, and avoid the most common measurement mistakes.">
+<meta property="og:url" content="https://mott.design/blog/ga4-custom-events.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"GA4 Custom Events: What to Track and How to Name Them","author":{"@type":"Person","name":"Michael Mott","url":"https://mott.design"},"publisher":{"@type":"Organization","name":"Mott Design","url":"https://mott.design"},"datePublished":"2026-03-10","url":"https://mott.design/blog/ga4-custom-events.html"}</script>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("consent", "default", {
+    "analytics_storage": "denied", "ad_storage": "denied",
+    "ad_user_data": "denied", "ad_personalization": "denied",
+    "functionality_storage": "denied", "security_storage": "granted",
+    "wait_for_update": 500
+  });
+</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-53HVNPWM');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#contact">Contact</a>
+      <a href="index.html" class="active">Blog</a>
+      <a href="../the-brief.html">The Brief</a>
+      <a href="../field-guide.html">Field Guide</a>
+    </div>
+    <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/ga4-analytics.html" class="cat-pill">GA4 &amp; Analytics</a>
+        <span class="post-meta">March 10, 2026 &middot; 8 min read</span>
+      </div>
+      <h1>GA4 Custom Events: What to Track and How to Name Them</h1>
+      <p class="intro">GA4 gives you almost complete freedom over what you track and what you call it. That freedom is genuinely useful for experienced practitioners and genuinely dangerous for everyone else. The consequence of a poorly designed event schema isn't just messy reports — it's months of data you can't trust and can't clean up retroactively.</p>
+    </header>
+    <div class="tldr"><p class="tldr-label">TL;DR</p><ul><li>GA4's event model is flexible — you define custom events for anything that matters, beyond what's auto-collected.</li>
+        <li>Event naming follows snake_case convention and should be descriptive enough to understand without a decoder ring.</li>
+        <li>Event parameters add dimension to events — they're the "what" and "how much" that make raw event counts meaningful.</li>
+        <li>Design your event taxonomy before implementing, and document it so the next person isn't guessing what "click_7" means.</li></ul></div>
+    <div class="post-body">
+      <h2>How GA4 events actually work</h2>
+      <p>GA4 is event-based, which means everything that happens on your site is recorded as an event. A page view is an event. A scroll is an event. A form submission is an event. Unlike Universal Analytics, which had a separate concept of "hits" (pageview, event, transaction, social), GA4 treats everything as events with parameters.</p>
+      <p>GA4 collects some events automatically without any configuration: <code>page_view</code>, <code>session_start</code>, <code>first_visit</code>, <code>scroll</code> (fires at 90% page depth), <code>click</code> (for outbound links), <code>file_download</code>, and a few others. These auto-collected events are useful but rarely sufficient for a real measurement strategy.</p>
+      <p>Beyond auto-collected events, GA4 has "recommended events" — events Google suggests you implement in specific ways, with specific parameter names, because they unlock features like e-commerce reporting. And then there are custom events: anything you define yourself for your specific measurement needs.</p>
+
+      <h2>Event naming conventions</h2>
+      <p>GA4 event names use snake_case (lowercase with underscores): <code>form_submit</code>, <code>content_download</code>, <code>demo_request</code>. There are a few rules worth knowing:</p>
+      <ul>
+        <li>Event names are case-sensitive. <code>Form_Submit</code> and <code>form_submit</code> are different events in GA4.</li>
+        <li>Names can't start with numbers or contain spaces or special characters (aside from underscores).</li>
+        <li>Names are limited to 40 characters.</li>
+        <li>You can't delete events from GA4 after they've been collected — you can only archive them. Bad names persist.</li>
+      </ul>
+      <p>The most important rule isn't technical: <strong>name events so a stranger can understand what happened without any context.</strong> <code>cta_click</code> is not a good event name. <code>nav_cta_click</code> is better. <code>contact_form_submit</code> is better still.</p>
+
+      <h2>Event parameters: the "what" that makes events useful</h2>
+      <p>An event by itself tells you something happened. Event parameters tell you what specifically happened. A <code>form_submit</code> event without parameters tells you someone submitted a form. With parameters, it tells you which form, on which page, after how many sessions, with what referral source.</p>
+      <p>Parameters are key-value pairs attached to events. GA4 has some built-in parameters (like <code>page_location</code> and <code>page_title</code>, which are automatically included in most events), and you can define custom parameters for anything specific to your business.</p>
+      <p>For a contact form submission, useful custom parameters might include: <code>form_name</code> (contact, demo, download), <code>form_id</code> (if you have multiple forms on the site), and <code>lead_source</code> (if you're passing CRM attribution data through the form).</p>
+      <p>Important: custom parameters need to be registered in GA4 (Admin → Custom definitions → Create custom dimensions) before they appear in reports. Unregistered parameters are collected but not accessible in the standard reporting interface.</p>
+
+      <h2>What to actually track on a B2B site</h2>
+      <p>For a typical B2B marketing site, the event taxonomy I recommend usually covers three tiers:</p>
+      <p><strong>Tier 1 — Conversion events (key events):</strong> Form submissions (contact, demo, download), direct contact actions (phone click, email click), calendar booking clicks. These become your GA4 key events and should be the primary metrics in any report.</p>
+      <p><strong>Tier 2 — Engagement events:</strong> Scroll milestones on long-form content (50%, 75%, 100%), time on page milestones, video play and completion, PDF opens, outbound link clicks to partner or investor sites.</p>
+      <p><strong>Tier 3 — Navigation events:</strong> Internal search queries, tab or filter interactions on product or pricing pages, accordion expansions on FAQ pages. These tell you about intent and confusion patterns.</p>
+      <p>Most B2B sites don't need more than 15–20 custom events total. More than that and you start measuring noise.</p>
+
+      <h2>The event schema document</h2>
+      <p>Before implementing anything, write your event schema. A simple spreadsheet works: event name, event category, what triggers it, what parameters it carries, whether it's a key event, and where it's implemented (GTM tag name). This document is your contract with your analytics implementation.</p>
+      <p>Without this document, your GA4 property becomes a mystery box inside six months. I've audited properties where no one on the current team knew what half the events were or whether they were still firing correctly.</p>
+      <p>The document also serves as the brief for whoever implements the tracking — whether that's your developer pushing data layer events, or you building triggers in GTM. Ambiguous briefs produce ambiguous data.</p>
+
+      <h2>Testing before you trust</h2>
+      <p>Every new event should be verified in GA4's DebugView before you start using it in reports. Check that the event fires at the right time, carries the right parameters, and doesn't fire more than once per intended action. Double-firing is a common issue with form submit tracking — the event fires once on submission and once on page navigation, leading to inflated conversion numbers.</p>
+      <p>Also check GA4's Realtime report after publishing. If an event should fire every time a certain page loads, visit that page a few times and verify you see the events appearing with a one-to-two minute delay.</p>
+      <div class="post-cta"><h3>Need clean GA4 event tracking?</h3><p>I design measurement plans, implement event tracking through GTM, and document everything so your data is trustworthy and your team knows what they're looking at.</p><a href="../index.html#contact">Get a quote</a></div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap foot-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <nav class="foot-links">
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../terms.html">Terms &amp; Conditions</a>
+    </nav>
+    <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
+  </div>
+</footer>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty('background', '#c4622d', 'important');
+        el.style.setProperty('background-color', '#c4622d', 'important');
+        el.style.setProperty('border-color', '#c4622d', 'important');
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    paintCkyIcon();
+  })();
+</script>
+</body>
+</html>

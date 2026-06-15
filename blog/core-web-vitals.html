@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Core Web Vitals in 2025: What They Are and How to Fix Yours — Mott Design</title>
+<meta name="description" content="LCP, INP, and CLS are Google's performance benchmarks that affect search rankings and user experience. Here's what each one measures and what to do when your scores are poor.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/core-web-vitals.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Core Web Vitals in 2025: What They Are and How to Fix Yours">
+<meta property="og:description" content="LCP, INP, and CLS are Google's performance benchmarks that affect search rankings and user experience. Here's what each one measures and what to do when your scores are poor.">
+<meta property="og:url" content="https://mott.design/blog/core-web-vitals.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Core Web Vitals in 2025: What They Are and How to Fix Yours","author":{"@type":"Person","name":"Michael Mott","url":"https://mott.design"},"publisher":{"@type":"Organization","name":"Mott Design","url":"https://mott.design"},"datePublished":"2026-02-17","url":"https://mott.design/blog/core-web-vitals.html"}</script>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("consent", "default", {
+    "analytics_storage": "denied", "ad_storage": "denied",
+    "ad_user_data": "denied", "ad_personalization": "denied",
+    "functionality_storage": "denied", "security_storage": "granted",
+    "wait_for_update": 500
+  });
+</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-53HVNPWM');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#contact">Contact</a>
+      <a href="index.html" class="active">Blog</a>
+      <a href="../the-brief.html">The Brief</a>
+      <a href="../field-guide.html">Field Guide</a>
+    </div>
+    <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/web-design-dev.html" class="cat-pill">Web Design &amp; Dev</a>
+        <span class="post-meta">February 17, 2026 &middot; 8 min read</span>
+      </div>
+      <h1>Core Web Vitals in 2025: What They Are and How to Fix Yours</h1>
+      <p class="intro">Core Web Vitals became a Google ranking factor in 2021, and the metrics have been updated since — most notably with INP replacing FID in March 2024. If you haven't revisited your site's performance scores recently, there's a meaningful chance the benchmarks have shifted under you.</p>
+    </header>
+    <div class="tldr"><p class="tldr-label">TL;DR</p><ul><li>The three Core Web Vitals are LCP (Largest Contentful Paint), INP (Interaction to Next Paint), and CLS (Cumulative Layout Shift).</li>
+        <li>Google uses field data from Chrome users — not just lab scores — which means PageSpeed Insights scores and real performance can differ.</li>
+        <li>LCP is usually image-related. INP is usually JavaScript-related. CLS is usually layout-related. The fixes follow those root causes.</li>
+        <li>Passing Core Web Vitals doesn't guarantee rankings, but failing them is a ranking disadvantage versus equivalent pages that pass.</li></ul></div>
+    <div class="post-body">
+      <h2>What Core Web Vitals measure</h2>
+      <p>Core Web Vitals are a set of performance metrics defined by Google that measure specific aspects of user experience. They're called "core" because Google has determined they represent the most important user-facing performance dimensions, and has incorporated them as ranking signals via the Page Experience algorithm.</p>
+
+      <h3>LCP — Largest Contentful Paint</h3>
+      <p>LCP measures how long it takes for the largest visible element on the page to finish rendering. This is typically a hero image, a large text block, or a video thumbnail. The target is under 2.5 seconds on a slow connection. Over 4 seconds is "Poor."</p>
+      <p>LCP is the most commonly failed metric and the most commonly fixable one. The biggest culprit is almost always the hero image: too large, not compressed, loaded without priority hints, or served without a CDN.</p>
+
+      <h3>INP — Interaction to Next Paint</h3>
+      <p>INP replaced FID (First Input Delay) in March 2024. Where FID measured the delay before the browser could respond to the first user interaction, INP measures the delay of <em>all</em> interactions throughout a page session — not just the first one. It captures click, tap, and keyboard interactions, and reports the worst interaction in a session (excluding outliers).</p>
+      <p>The target is under 200 milliseconds. Over 500ms is "Poor." INP failures are almost always caused by long JavaScript tasks blocking the main thread.</p>
+
+      <h3>CLS — Cumulative Layout Shift</h3>
+      <p>CLS measures visual stability — how much page content moves unexpectedly after it loads. A layout shift score of under 0.1 is "Good." Over 0.25 is "Poor." CLS is the metric most affected by ads, embeds, fonts, and images that load without reserved space.</p>
+
+      <h2>How to check your scores</h2>
+      <p>There are two types of data to look at: lab data and field data.</p>
+      <p><strong>Lab data</strong> is what tools like PageSpeed Insights, Lighthouse (in Chrome DevTools), and WebPageTest measure in a controlled, simulated environment. It's useful for diagnosing specific issues but doesn't always match what real users experience.</p>
+      <p><strong>Field data</strong> comes from the Chrome User Experience Report (CrUX) — real performance data collected from Chrome users who visit your site. Google uses field data for ranking, not lab data. You can see your field data in PageSpeed Insights (scroll down to "Discover what your real users are experiencing"), Google Search Console (Experience → Core Web Vitals), and Chrome UX Report on BigQuery.</p>
+      <p>If your lab score is 90 but your field data shows "Needs Improvement," the field data is what matters for rankings.</p>
+
+      <h2>Fixing LCP</h2>
+      <p>For most sites, improving LCP means improving how quickly the hero image loads. In order of impact:</p>
+      <ul>
+        <li><strong>Preload the LCP image.</strong> Add <code>&lt;link rel="preload" as="image" href="hero.webp"&gt;</code> to your <code>&lt;head&gt;</code>. This tells the browser to fetch the image early, before it's discovered in the HTML.</li>
+        <li><strong>Convert images to WebP or AVIF.</strong> Modern formats are significantly smaller than JPEG or PNG at equivalent quality.</li>
+        <li><strong>Add <code>fetchpriority="high"</code> to the hero img tag.</strong> This is a newer hint that tells the browser this image is high priority.</li>
+        <li><strong>Serve images from a CDN.</strong> Reducing geographic latency for image delivery often has an outsized impact on LCP, especially for international visitors.</li>
+        <li><strong>Eliminate render-blocking resources.</strong> CSS and synchronous JavaScript in the <code>&lt;head&gt;</code> delay the browser from rendering anything. Defer non-critical scripts.</li>
+      </ul>
+
+      <h2>Fixing INP</h2>
+      <p>INP issues are rooted in JavaScript. When the main thread is busy processing JavaScript, user interactions have to wait. The fixes:</p>
+      <ul>
+        <li><strong>Identify long tasks.</strong> Use Chrome DevTools Performance panel to record a session and look for tasks taking over 50ms. These are blocking the main thread.</li>
+        <li><strong>Break up long tasks.</strong> Long synchronous JavaScript can often be split into smaller chunks with <code>setTimeout</code> or <code>scheduler.postTask()</code> to yield control back to the browser between operations.</li>
+        <li><strong>Defer third-party scripts.</strong> Analytics, chat widgets, and ad scripts are frequent INP culprits. Loading them with <code>defer</code> or <code>async</code>, or waiting until after user interaction, can significantly improve scores.</li>
+        <li><strong>Remove unused JavaScript.</strong> Audit your bundle for dependencies that aren't used and remove them.</li>
+      </ul>
+
+      <h2>Fixing CLS</h2>
+      <p>CLS is usually the most fixable metric because the causes are structural:</p>
+      <ul>
+        <li><strong>Set explicit width and height on images.</strong> Without dimensions, the browser can't reserve space for images before they load, causing content to shift down when they appear.</li>
+        <li><strong>Reserve space for ads and embeds.</strong> If ad slots appear and push content down, set explicit minimum heights on ad containers.</li>
+        <li><strong>Use <code>font-display: optional</code> or preload web fonts.</strong> Fonts loading late and causing text to reflow is a common CLS source. Preloading the font or using <code>font-display: optional</code> (which falls back to a system font if the web font isn't ready) eliminates the shift.</li>
+        <li><strong>Avoid inserting content above existing content.</strong> Dynamically injecting banners, cookie notices, or alerts above the fold after page load causes CLS. Position these elements so they don't push content down.</li>
+      </ul>
+      <div class="post-cta"><h3>Want your site's performance and Core Web Vitals improved?</h3><p>I audit and fix LCP, INP, and CLS issues as part of site builds and standalone performance projects — with before/after PageSpeed Insights scores and GSC monitoring.</p><a href="../index.html#contact">Get a quote</a></div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap foot-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <nav class="foot-links">
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../terms.html">Terms &amp; Conditions</a>
+    </nav>
+    <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
+  </div>
+</footer>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty('background', '#c4622d', 'important');
+        el.style.setProperty('background-color', '#c4622d', 'important');
+        el.style.setProperty('border-color', '#c4622d', 'important');
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    paintCkyIcon();
+  })();
+</script>
+</body>
+</html>

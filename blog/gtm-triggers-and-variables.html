@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GTM Triggers and Variables: A Plain-English Explainer — Mott Design</title>
+<meta name="description" content="Triggers decide when a GTM tag fires. Variables feed dynamic data into that tag. Once these two concepts click, GTM stops being a mystery and becomes a tool you can actually use.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/gtm-triggers-and-variables.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GTM Triggers and Variables: A Plain-English Explainer">
+<meta property="og:description" content="Triggers decide when a GTM tag fires. Variables feed dynamic data into that tag. Once these two concepts click, GTM stops being a mystery and becomes a tool you can actually use.">
+<meta property="og:url" content="https://mott.design/blog/gtm-triggers-and-variables.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"GTM Triggers and Variables: A Plain-English Explainer","author":{"@type":"Person","name":"Michael Mott","url":"https://mott.design"},"publisher":{"@type":"Organization","name":"Mott Design","url":"https://mott.design"},"datePublished":"2025-11-27","url":"https://mott.design/blog/gtm-triggers-and-variables.html"}</script>
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("consent","default",{"analytics_storage":"denied","ad_storage":"denied","ad_user_data":"denied","ad_personalization":"denied","functionality_storage":"denied","security_storage":"granted","wait_for_update":500});</script><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src="https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);})(window,document,"script","dataLayer","GTM-53HVNPWM");</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav><div class="wrap nav-inner"><a href="../index.html" class="brand">mott<span>.</span>design</a><div class="nav-links"><a href="../index.html#services">Services</a><a href="../index.html#about">About</a><a href="../index.html#contact">Contact</a><a href="index.html" class="active">Blog</a><a href="../the-brief.html">The Brief</a><a href="../field-guide.html">Field Guide</a></div><a href="../index.html#contact" class="nav-cta">Get a quote</a></div></nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/gtm-tag-management.html" class="cat-pill">GTM</a>
+        <span class="post-meta">November 27, 2025 &middot; 9 min read</span>
+      </div>
+      <h1>GTM Triggers and Variables: A Plain-English Explainer</h1>
+      <p class="intro">Most people who have GTM access can create a tag. Far fewer understand triggers and variables well enough to implement accurate, maintainable tracking. This is the post I'd hand someone before asking them to work in a GTM container.</p>
+    </header>
+    <div class="tldr"><p class="tldr-label">TL;DR</p><ul><li>Triggers define the conditions under which a tag fires — they're the "when" of tag management.</li>
+<li>Variables capture and pass dynamic values into tags and trigger conditions — they're the "what" that makes one tag work across many scenarios.</li>
+<li>The data layer is the communication channel between your website and GTM — learning to use it unlocks sophisticated tracking without touching site code repeatedly.</li>
+<li>Bad trigger logic is the most common source of inaccurate analytics data. Test every trigger in preview mode before publishing.</li></ul></div>
+    <div class="post-body">
+      <h2>Triggers: the "when" of tag management</h2>
+      <p>A trigger in GTM is a rule that says: "fire this tag when these conditions are true." Every tag requires at least one trigger — without a trigger, a tag never fires. With a poorly configured trigger, a tag fires at the wrong time, on the wrong pages, or more times than intended.</p>
+      <p>GTM has several built-in trigger types:</p>
+      <p><strong>Page View triggers</strong> fire when a page loads. The "All Pages" trigger fires on every page view. You can scope it more narrowly — "fires on page views where the URL contains /blog/" — to limit a tag to specific pages.</p>
+      <p><strong>Click triggers</strong> fire when an element on the page is clicked. GTM listens for click events on the DOM and can be filtered by element ID, class, text content, or the URL the click leads to. "All Clicks" fires on every click. "All Links" fires only on clicks that navigate to a new URL. Both can be scoped with conditions.</p>
+      <p><strong>Form triggers</strong> fire when a form is submitted. The "All Forms" trigger fires on every HTML form submission. Scoped form triggers filter by form ID, form action URL, or other form attributes.</p>
+      <p><strong>Custom Event triggers</strong> fire when a specific event name is pushed to the data layer. This is the most powerful trigger type — it lets your website explicitly tell GTM "something important just happened" without relying on GTM to infer it from DOM observation.</p>
+      <p><strong>Timer triggers</strong> fire on a schedule — every X seconds after page load. Useful for time-on-page milestones, but should be used carefully as they can inflate session data if misconfigured.</p>
+      <p><strong>Element Visibility triggers</strong> fire when a specific element enters the viewport. Useful for tracking whether a key section of a page was actually seen, not just scrolled past.</p>
+
+      <h2>Trigger conditions: where accuracy lives</h2>
+      <p>A trigger fires "all the time" or "only when conditions are met." Conditions are the filters that scope a trigger to the right situations.</p>
+      <p>Common conditions: Page URL contains/equals/matches regex a specific value. Click Text equals a specific string. Click Classes contains a specific class name. Data Layer Variable equals a specific value.</p>
+      <p>The most important condition-writing discipline is specificity. "All Clicks" without conditions is almost never the right trigger — it fires on navigation links, image clicks, button clicks, and anything else that emits a click event. "Clicks on elements where Click ID equals contact-form-submit" is specific enough to be accurate.</p>
+      <p>Always ask: "What else could trigger this condition that I don't want to track?" If you can't think of a false positive, the trigger is probably specific enough.</p>
+
+      <h2>Variables: the "what" that makes tags flexible</h2>
+      <p>If triggers are the "when," variables are the "what." A variable captures a value at the time an event occurs and makes that value available to tags and trigger conditions.</p>
+      <p>GTM has built-in variables that are always available: Page URL, Page Hostname, Page Path, Referrer, Click URL, Click Text, Click Classes, Form Element (the form that was submitted), and several others. Enable these in the Variables panel — many are disabled by default.</p>
+      <p>Custom variables let you read any value from the page. The three most important custom variable types:</p>
+      <p><strong>Data Layer Variables</strong> read values pushed to the data layer by your website. If your site pushes <code>{'{'}'event': 'form_submit', 'form_name': 'contact'{'}'}</code>, a Data Layer Variable configured to read <code>form_name</code> will return "contact" when the event fires.</p>
+      <p><strong>DOM Element variables</strong> read the text or attribute value of a specific HTML element. Useful for reading form field values, product prices, or any text content that doesn't come through the data layer.</p>
+      <p><strong>JavaScript Variable variables</strong> execute a JavaScript expression and return its value. For reading values from JavaScript objects on the page, reading cookies, or computing derived values.</p>
+
+      <h2>The data layer: the proper way to pass information to GTM</h2>
+      <p>The data layer is a JavaScript array that sits on your page and serves as the communication channel between your website's application code and GTM. Your site pushes events and associated data to it. GTM listens, fires triggers, and uses variables to extract the data.</p>
+      <p>The alternative to the data layer is DOM scraping — having GTM read values directly from the HTML. DOM scraping works but is fragile. If a developer changes a class name, an element ID, or the DOM structure, your tracking breaks silently. Data layer pushes are intentional and explicit — they're less likely to break on site changes because they're written by developers who know they're part of the tracking architecture.</p>
+      <p>A typical data layer push pattern for a form submission:</p>
+      <pre style="background:rgba(228,234,200,0.06);border:1px solid var(--line);border-radius:4px;padding:16px;overflow-x:auto;font-size:0.82rem;color:var(--accent);font-family:'SF Mono','Fira Code',monospace;line-height:1.6;margin-bottom:18px;">// In your application code, after form submission:
+window.dataLayer = window.dataLayer || [];
+window.dataLayer.push({
+  event: 'form_submit',
+  form_name: 'contact',
+  form_id: 'main-contact-form'
+});</pre>
+      <p>In GTM: a Custom Event trigger listening for the event name "form_submit," Data Layer Variables reading "form_name" and "form_id," and a GA4 event tag that sends those as parameters.</p>
+
+      <h2>Testing everything in preview mode</h2>
+      <p>GTM's preview mode is the single most important feature for anyone configuring triggers and variables. It opens a debug panel alongside your website showing every event that fires, which triggers activated on each event, and the values of every variable at each point.</p>
+      <p>Before publishing any container change, go through these steps in preview mode: trigger the action you're tracking, verify the correct trigger fired, verify the correct tag fired (and fired exactly once), verify the variable values are what you expect. Only publish when you've verified all four.</p>
+      <p>The most common error I find in GTM audits is untested triggers firing too broadly. An "All Forms" trigger that should have been scoped to a specific form ID fires on newsletter sign-ups, search bars, and comment forms — inflating conversion data and making everything untrustworthy.</p>
+      <div class="post-cta"><h3>Need your GTM container audited or rebuilt?</h3><p>I audit GTM containers for trigger accuracy, variable correctness, and data quality — and rebuild them with clean architecture, consistent naming, and preview-verified implementation.</p><a href="../index.html#contact">Get a quote</a></div>
+    </div>
+  </div>
+</main>
+<footer><div class="wrap foot-inner"><a href="../index.html" class="brand">mott<span>.</span>design</a><nav class="foot-links"><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms &amp; Conditions</a></nav><p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p></div></footer><script>document.getElementById("yr").textContent=new Date().getFullYear();(function(){function p(){document.querySelectorAll('[class*="revisit"],[data-cky-tag="revisit-consent"]').forEach(function(el){el.style.setProperty("background","#c4622d","important");el.style.setProperty("background-color","#c4622d","important");el.style.setProperty("border-color","#c4622d","important");});}var o=new MutationObserver(p);o.observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:["style"]});p();})();</script>
+</body>
+</html>

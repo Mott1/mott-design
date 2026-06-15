@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Consent Mode v2: What It Is and How to Implement It — Mott Design</title>
+<meta name="description" content="Consent Mode v2 changed how GA4 and Google Ads behave when visitors decline cookies. Here's what changed, why it matters for your data, and how to implement it correctly.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/consent-mode-v2.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Google Consent Mode v2: What It Is and How to Implement It">
+<meta property="og:description" content="Consent Mode v2 changed how GA4 and Google Ads behave when visitors decline cookies. Here's what changed, why it matters for your data, and how to implement it correctly.">
+<meta property="og:url" content="https://mott.design/blog/consent-mode-v2.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Google Consent Mode v2: What It Is and How to Implement It","description":"Consent Mode v2 changed how GA4 and Google Ads behave when visitors decline cookies. Here's what changed, why it matters for your data, and how to implement it correctly.","author":{"@type":"Person","name":"Michael Mott","url":"https://mott.design"},"publisher":{"@type":"Organization","name":"Mott Design","url":"https://mott.design"},"datePublished":"2026-04-15","url":"https://mott.design/blog/consent-mode-v2.html"}</script>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<!-- End cookieyes banner -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("consent", "default", {
+    "analytics_storage": "denied", "ad_storage": "denied",
+    "ad_user_data": "denied", "ad_personalization": "denied",
+    "functionality_storage": "denied", "security_storage": "granted",
+    "wait_for_update": 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-53HVNPWM');</script>
+<!-- End Google Tag Manager -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#contact">Contact</a>
+      <a href="index.html" class="active">Blog</a>
+      <a href="../the-brief.html">The Brief</a>
+      <a href="../field-guide.html">Field Guide</a>
+    </div>
+    <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/consent-privacy.html" class="cat-pill">Consent &amp; Privacy</a>
+        <span class="post-meta">April 15, 2026 &middot; 10 min read</span>
+      </div>
+      <h1>Google Consent Mode v2: What It Is and How to Implement It</h1>
+      <p class="intro">Consent Mode v2 isn't optional for sites with EU or California visitors. But most implementations I see are either missing entirely, misconfigured, or firing too late to actually do anything. Here's the full picture and how to get it right.</p>
+    </header>
+    <div class="tldr">
+      <p class="tldr-label">TL;DR</p>
+      <ul>
+        <li>Consent Mode v2 tells Google's tags how to behave when a visitor hasn't consented to cookies — restricted mode instead of full tracking.</li>
+        <li>It adds two new consent signals: ad_user_data and ad_personalization, required for Google Ads since March 2024.</li>
+        <li>Consent defaults must be set before the GTM snippet loads — a GTM tag firing after page load is too late.</li>
+        <li>Google's modeling fills in estimated behavior for non-consenting users so you don't lose all visibility into that traffic.</li>
+      </ul>
+    </div>
+    <div class="post-body">
+      <h2>What Consent Mode v2 actually does</h2>
+      <p>Consent Mode is a framework that lets you pass consent signals to Google's tags (GA4, Google Ads, Floodlight) so they can adjust their behavior based on what a visitor has and hasn't agreed to. When a visitor declines analytics cookies, Consent Mode tells GA4 to operate without setting persistent identifiers — no <code>_ga</code> cookie, no user identification. Google can still receive a "ping" that a page was viewed, but without any data that could identify the individual.</p>
+      <p>Version 2, which Google required for all advertisers in the EU by March 2024, added two new consent types: <strong>ad_user_data</strong> (whether the user consents to their data being used for advertising) and <strong>ad_personalization</strong> (whether the user consents to personalized ads). Without these signals, Google Ads can't run remarketing campaigns to EU users.</p>
+
+      <h2>The four consent signals you need to set</h2>
+      <p>Consent Mode v2 works with six consent types in total, though four are the most important for most sites:</p>
+      <ul>
+        <li><strong>analytics_storage</strong> — Controls whether GA4 can store cookies and collect analytics data. Deny this and GA4 stops setting the <code>_ga</code> cookie.</li>
+        <li><strong>ad_storage</strong> — Controls whether Google Ads cookies can be set. Required for conversion tracking and remarketing.</li>
+        <li><strong>ad_user_data</strong> — New in v2. Controls whether user data can be sent to Google for advertising purposes.</li>
+        <li><strong>ad_personalization</strong> — New in v2. Controls whether data can be used for personalized ad targeting.</li>
+      </ul>
+      <p>The other two — <code>functionality_storage</code> and <code>security_storage</code> — cover functional cookies (language preferences, login state) and security cookies. <code>security_storage</code> is typically granted by default since it covers things like CSRF protection.</p>
+
+      <h2>The critical timing issue</h2>
+      <p>This is where most implementations go wrong. Consent Mode defaults must be set before Google's tags load — not after. If you configure consent defaults inside a GTM Custom HTML tag that fires on page load, you've already missed the window. GA4 will have already initialized with its default behavior, potentially setting cookies before the consent signal arrives.</p>
+      <p>The correct implementation places the consent default settings in an inline script in the HTML <code>&lt;head&gt;</code>, before the GTM snippet:</p>
+      <pre style="background:rgba(228,234,200,0.06);border:1px solid var(--line);border-radius:4px;padding:16px;overflow-x:auto;font-size:0.82rem;color:var(--accent);font-family:'SF Mono','Fira Code',monospace;line-height:1.6;margin-bottom:18px;">&lt;script&gt;
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("consent", "default", {
+    "analytics_storage": "denied",
+    "ad_storage": "denied",
+    "ad_user_data": "denied",
+    "ad_personalization": "denied",
+    "functionality_storage": "denied",
+    "security_storage": "granted",
+    "wait_for_update": 500
+  });
+&lt;/script&gt;
+&lt;!-- GTM snippet goes here, AFTER the consent defaults --&gt;</pre>
+      <p>The <code>wait_for_update: 500</code> parameter tells GA4 to wait up to 500 milliseconds for a consent update before sending any data. This gives the CMP (consent management platform) time to check for a stored consent preference and update the signals before GA4 makes any network calls.</p>
+
+      <h2>Consent updates: when the user accepts</h2>
+      <p>When a visitor accepts cookies — either when first shown the banner or later via your cookie settings — your consent management platform (CookieYes, Cookiebot, OneTrust, etc.) needs to push a consent update to the data layer. In GTM, you then need a trigger listening for that update event and a tag that fires <code>gtag("consent", "update", {...})</code> with the granted signals.</p>
+      <p>In CookieYes specifically, the data layer event that fires on consent update is <code>cookie_consent_update</code> (underscores, not hyphens — this matters). Your GTM trigger should listen for a Custom Event with that exact name.</p>
+      <p>The consent update tag sends the updated signals to GA4 and Google Ads. Only after this fires will those tags begin operating in full mode — setting cookies, sending full event data, and enabling remarketing.</p>
+
+      <h2>Google's behavioral modeling</h2>
+      <p>One of the key benefits of Consent Mode is that Google uses machine learning to model the behavior of non-consenting users — estimating conversion rates and traffic patterns based on the consenting population. This means your reports aren't showing a 40% gap where EU visitors used to be; instead, Google fills in estimated aggregate data.</p>
+      <p>This modeling only works if you have Consent Mode properly implemented. Without it, you either lose all visibility into non-consenting users, or you're collecting data you're not allowed to collect. Neither is acceptable.</p>
+
+      <h2>How to verify your implementation</h2>
+      <p>Use GTM's preview mode and GA4's DebugView to verify consent mode is working correctly:</p>
+      <ul>
+        <li>Open your site in GTM preview mode. Before accepting the cookie banner, check the data layer — you should see the consent defaults have been pushed with all signals denied.</li>
+        <li>Accept the cookie banner. Check the data layer again — you should see a <code>cookie_consent_update</code> event, and your consent update tag should fire in GTM preview.</li>
+        <li>In GA4 DebugView, events should only appear after banner acceptance, not before.</li>
+        <li>Check your browser DevTools (Application → Cookies) — the <code>_ga</code> cookie should not be present before consent is given.</li>
+      </ul>
+
+      <h2>Consent Mode and your CMP</h2>
+      <p>Most reputable CMPs — CookieYes, Cookiebot, OneTrust, TrustArc — support Consent Mode v2 natively. They handle the consent update push to the data layer. Your job is to configure GTM to listen for it and respond correctly.</p>
+      <p>What they don't handle automatically is the inline consent defaults in your HTML. That inline script is your responsibility, and it needs to be on every page of your site — not just the homepage.</p>
+      <div class="post-cta">
+        <h3>Need Consent Mode v2 implemented correctly?</h3>
+        <p>I handle the full consent stack — CMP setup, GTM consent configuration, inline defaults, and DebugView verification — so you're compliant and not leaking data.</p>
+        <a href="../index.html#contact">Get a quote</a>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap foot-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <nav class="foot-links">
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../terms.html">Terms &amp; Conditions</a>
+    </nav>
+    <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
+  </div>
+</footer>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty('background', '#c4622d', 'important');
+        el.style.setProperty('background-color', '#c4622d', 'important');
+        el.style.setProperty('border-color', '#c4622d', 'important');
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    paintCkyIcon();
+  })();
+</script>
+</body>
+</html>

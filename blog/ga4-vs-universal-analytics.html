@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GA4 vs Universal Analytics: What Actually Changed and Why It Matters — Mott Design</title>
+<meta name="description" content="GA4 isn't Universal Analytics with a new interface — it's a fundamentally different data model. Understanding the shift is the prerequisite for using GA4 effectively.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/ga4-vs-universal-analytics.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GA4 vs Universal Analytics: What Actually Changed and Why It Matters">
+<meta property="og:description" content="GA4 isn't Universal Analytics with a new interface — it's a fundamentally different data model. Understanding the shift is the prerequisite for using GA4 effectively.">
+<meta property="og:url" content="https://mott.design/blog/ga4-vs-universal-analytics.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"GA4 vs Universal Analytics: What Actually Changed and Why It Matters","author":{"@type":"Person","name":"Michael Mott","url":"https://mott.design"},"publisher":{"@type":"Organization","name":"Mott Design","url":"https://mott.design"},"datePublished":"2025-11-14","url":"https://mott.design/blog/ga4-vs-universal-analytics.html"}</script>
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("consent","default",{"analytics_storage":"denied","ad_storage":"denied","ad_user_data":"denied","ad_personalization":"denied","functionality_storage":"denied","security_storage":"granted","wait_for_update":500});</script><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src="https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);})(window,document,"script","dataLayer","GTM-53HVNPWM");</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav><div class="wrap nav-inner"><a href="../index.html" class="brand">mott<span>.</span>design</a><div class="nav-links"><a href="../index.html#services">Services</a><a href="../index.html#about">About</a><a href="../index.html#contact">Contact</a><a href="index.html" class="active">Blog</a><a href="../the-brief.html">The Brief</a><a href="../field-guide.html">Field Guide</a></div><a href="../index.html#contact" class="nav-cta">Get a quote</a></div></nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/ga4-analytics.html" class="cat-pill">GA4 &amp; Analytics</a>
+        <span class="post-meta">November 14, 2025 &middot; 9 min read</span>
+      </div>
+      <h1>GA4 vs Universal Analytics: What Actually Changed and Why It Matters</h1>
+      <p class="intro">Universal Analytics sunset in July 2023. For many organizations, the transition to GA4 involved porting the old setup as closely as possible and hoping the reports looked similar. They didn't, and chasing the familiar numbers from UA in GA4 has caused no end of confusion. Here's why the two are fundamentally different and what that means for how you use GA4.</p>
+    </header>
+    <div class="tldr"><p class="tldr-label">TL;DR</p><ul><li>Universal Analytics used a session-and-hit model; GA4 uses a purely event-based model where everything is an event with parameters.</li>
+<li>Session definitions differ between UA and GA4, which is why session counts look different even with identical traffic.</li>
+<li>GA4's "Engaged sessions" and "Engagement rate" replaced bounce rate as the primary engagement metric.</li>
+<li>GA4's flexible event model requires more intentional implementation but enables significantly richer analysis than UA allowed.</li></ul></div>
+    <div class="post-body">
+      <h2>The fundamental model shift</h2>
+      <p>Universal Analytics organized data around sessions and hits. A session was a container of activity — everything a user did in a single visit. Hits were the things inside sessions: pageview hits, event hits, transaction hits, social hits. UA's reports were built around this hierarchy: users made sessions, sessions contained hits, hits had categories/actions/labels.</p>
+      <p>GA4 abandoned this hierarchy. In GA4, everything is an event. A page view is an event (<code>page_view</code>). A session start is an event (<code>session_start</code>). A form submission is an event. A purchase is an event. There's no separate concept of a "pageview hit" versus an "event hit" — they're all just events with different names and parameters.</p>
+      <p>This matters because it changes how you think about data collection and how you query data. In UA, you tracked "events" (category/action/label) as distinct from pageviews. In GA4, you track everything as events and use parameters to add context. The mental model requires adjustment.</p>
+
+      <h2>Why session counts look different</h2>
+      <p>One of the first things people notice when comparing GA4 and UA side-by-side is that session counts are different — often significantly. This isn't a bug. The session definitions are different.</p>
+      <p>In Universal Analytics, a session expired after 30 minutes of inactivity or at midnight. A new campaign parameter (UTM) during an existing session triggered a new session. This meant a single user who visited in the morning, left for an hour, and came back in the afternoon generated two sessions.</p>
+      <p>In GA4, a session is created by the <code>session_start</code> event. Sessions don't reset at midnight. A new UTM source doesn't automatically create a new session. And GA4 sessions expire after 30 minutes of inactivity, similar to UA, but some edge cases are handled differently.</p>
+      <p>The result: GA4 typically shows fewer sessions than UA for the same traffic. This doesn't mean traffic decreased — it means the definition changed. Don't benchmark GA4 session counts against historical UA session counts. They're not the same metric.</p>
+
+      <h2>Bounce rate is gone (sort of)</h2>
+      <p>Universal Analytics's bounce rate measured the percentage of sessions where the user viewed only one page and then left without triggering any other hits. High bounce rate was generally bad; low bounce rate was generally good — though context mattered significantly (a blog post with a high bounce rate is fine if readers found their answer).</p>
+      <p>GA4 replaced bounce rate with <strong>engagement rate</strong> — the percentage of sessions that were "engaged." An engaged session is one that lasted more than 10 seconds, had more than one page view, or resulted in a conversion event. Bounce rate in GA4 is simply the inverse: the percentage of sessions that were not engaged.</p>
+      <p>This is a better metric in most cases. A user who reads your entire blog post and leaves after 8 minutes is a bounce in UA but an engaged session in GA4. The engagement rate tells you something more meaningful about content performance.</p>
+
+      <h2>The event model requires more intentional setup</h2>
+      <p>UA had a fixed hierarchy that required minimal configuration for basic reporting. Install the tracking code, and you had sessions, pageviews, bounce rate, and geographic/device/source reports — all automatically.</p>
+      <p>GA4 auto-collects more events than UA did (page views, scrolls, outbound clicks, file downloads, video engagement with YouTube videos) but gives you less out-of-the-box business intelligence. The data model is more flexible, but "more flexible" means "requires more decisions."</p>
+      <p>You need to decide what to track, what to name events and parameters, what to mark as key events (conversions), and what custom dimensions to register in GA4 so your parameters appear in reports. Without these decisions — backed by a measurement plan — GA4 produces a lot of event data and very little insight.</p>
+
+      <h2>User identification and cross-device tracking</h2>
+      <p>UA's user identification relied primarily on cookies — the <code>_ga</code> cookie identified a browser, and UA treated that as a "user." Cross-device behavior (someone who visited on mobile and then converted on desktop) was largely invisible unless you implemented User ID tracking.</p>
+      <p>GA4 uses a blended identity model by default. It can use cookies, User IDs (if you implement them), Google Signals (aggregated cross-device data from signed-in Google users who have opted into personalization), and device IDs. In Reporting Identity settings, you can choose how GA4 combines these signals.</p>
+      <p>This means GA4's user counts are more accurate but also more complex. Two sessions that UA counted as two users might be one user in GA4 if Google Signals identifies them as the same person across devices. This contributes to GA4 often showing fewer users than UA for the same traffic.</p>
+
+      <h2>The reporting interface difference</h2>
+      <p>Even setting aside the data model, GA4's reporting interface is substantively different from UA's. UA had a rich standard report library — hundreds of pre-built reports covering every combination of dimension and metric. GA4's standard reports are fewer and less flexible, with more of the analytical power moved to the Explore section (ad-hoc analysis).</p>
+      <p>GA4 Explore (previously Analysis Hub) is genuinely more powerful than anything UA offered — funnel exploration, path analysis, cohort analysis, and segment overlap analysis are all available. But it requires more active use. The default reports won't surface the same insights UA's standard reports did.</p>
+      <p>The practical advice: don't spend time trying to recreate UA's reports in GA4. Invest that time in building GA4 Explore analyses that answer the questions you actually need answered. The interface is different, but the analytical capability is higher if you use it as designed rather than as a UA replacement.</p>
+      <div class="post-cta"><h3>Want GA4 implemented the way it's meant to be used?</h3><p>I set up GA4 with a measurement plan, clean event taxonomy, Explore templates for your key analyses, and documentation — so you get insights, not just data.</p><a href="../index.html#contact">Get a quote</a></div>
+    </div>
+  </div>
+</main>
+<footer><div class="wrap foot-inner"><a href="../index.html" class="brand">mott<span>.</span>design</a><nav class="foot-links"><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms &amp; Conditions</a></nav><p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p></div></footer><script>document.getElementById("yr").textContent=new Date().getFullYear();(function(){function p(){document.querySelectorAll('[class*="revisit"],[data-cky-tag="revisit-consent"]').forEach(function(el){el.style.setProperty("background","#c4622d","important");el.style.setProperty("background-color","#c4622d","important");el.style.setProperty("border-color","#c4622d","important");});}var o=new MutationObserver(p);o.observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:["style"]});p();})();</script>
+</body>
+</html>

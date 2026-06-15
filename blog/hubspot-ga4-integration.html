@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connecting HubSpot to GA4: The Complete Integration Guide — Mott Design</title>
+<meta name="description" content="Getting HubSpot and GA4 to share data cleanly — without double-counting, broken attribution, or missing conversions — takes more than clicking "connect." Here's the full integration.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mott.design/blog/hubspot-ga4-integration.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Connecting HubSpot to GA4: The Complete Integration Guide">
+<meta property="og:description" content="Getting HubSpot and GA4 to share data cleanly — without double-counting, broken attribution, or missing conversions — takes more than clicking "connect." Here's the full integration.">
+<meta property="og:url" content="https://mott.design/blog/hubspot-ga4-integration.html">
+<meta property="og:image" content="https://mott.design/og-image.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://mott.design/og-image.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Connecting HubSpot to GA4: The Complete Integration Guide","author":{"@type":"Person","name":"Michael Mott","url":"https://mott.design"},"publisher":{"@type":"Organization","name":"Mott Design","url":"https://mott.design"},"datePublished":"2026-02-08","url":"https://mott.design/blog/hubspot-ga4-integration.html"}</script>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/6463ebd4f590e1cfb13ac367a59721e5/script.js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("consent", "default", {
+    "analytics_storage": "denied", "ad_storage": "denied",
+    "ad_user_data": "denied", "ad_personalization": "denied",
+    "functionality_storage": "denied", "security_storage": "granted",
+    "wait_for_update": 500
+  });
+</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-53HVNPWM');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53HVNPWM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="grain-bg" aria-hidden="true"></div>
+<nav>
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <div class="nav-links">
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#contact">Contact</a>
+      <a href="index.html" class="active">Blog</a>
+      <a href="../the-brief.html">The Brief</a>
+      <a href="../field-guide.html">Field Guide</a>
+    </div>
+    <a href="../index.html#contact" class="nav-cta">Get a quote</a>
+  </div>
+</nav>
+<main style="position:relative;z-index:1;">
+  <div class="wrap">
+    <header class="post-head">
+      <div class="post-eyebrow">
+        <a href="categories/hubspot-crm.html" class="cat-pill">HubSpot &amp; CRM</a>
+        <span class="post-meta">February 8, 2026 &middot; 10 min read</span>
+      </div>
+      <h1>Connecting HubSpot to GA4: The Complete Integration Guide</h1>
+      <p class="intro">HubSpot and GA4 are independently useful. Connected correctly, they tell a more complete story: which marketing channels brought the lead, what content they engaged with before converting, and how those leads progressed through the pipeline. Connected incorrectly, they produce contradictory numbers that nobody trusts.</p>
+    </header>
+    <div class="tldr"><p class="tldr-label">TL;DR</p><ul><li>The native HubSpot-Google Analytics connection sends HubSpot form submission data to GA4 but doesn't replace proper GTM event tracking.</li>
+        <li>UTM parameters are the bridge between GA4 session attribution and HubSpot contact properties — both systems need to read them consistently.</li>
+        <li>Cross-domain tracking is required if your HubSpot landing pages are on a different domain than your main site.</li>
+        <li>The goal is a single view of the customer journey from first touch (GA4) through qualified lead and closed deal (HubSpot).</li></ul></div>
+    <div class="post-body">
+      <h2>Why this integration is harder than it looks</h2>
+      <p>HubSpot and GA4 both track user behavior, but they use different data models, different identity resolution approaches, and different attribution logic. HubSpot tracks contacts — it knows who filled out a form, what emails they opened, and what pages they visited after becoming a known contact. GA4 tracks sessions — it knows how many people visited certain pages, what they clicked, and how long they stayed, but typically doesn't know who they are.</p>
+      <p>The integration challenge is connecting these two views of the same user journey. When someone visits your site three times over two weeks, reads a case study, then fills out a contact form, both HubSpot and GA4 should be able to tell that story coherently.</p>
+
+      <h2>UTM parameters: the critical link</h2>
+      <p>UTM parameters are the foundation of any multi-tool attribution setup. They're URL parameters (<code>utm_source</code>, <code>utm_medium</code>, <code>utm_campaign</code>, <code>utm_content</code>, <code>utm_term</code>) that tag inbound links so analytics tools can attribute sessions to specific campaigns.</p>
+      <p>Both GA4 and HubSpot read UTM parameters. GA4 uses them for session attribution in acquisition reports. HubSpot stores them as contact properties (Original Source, Latest Source, and their drill-downs) when a contact converts. If you're using UTMs consistently on all paid and email links, both systems will have consistent source data.</p>
+      <p>Common mistakes: not using UTMs on email links (HubSpot sends without them by default unless you configure them), inconsistent campaign naming across channels (GA4 and HubSpot show different values because different team members tagged the same campaign differently), and UTMs being stripped by redirects before reaching the landing page.</p>
+
+      <h2>Setting up the native connection</h2>
+      <p>HubSpot has a native Google Analytics integration in Settings → Tracking &amp; Analytics → Google Analytics. This connection:</p>
+      <ul>
+        <li>Embeds the GA4 tracking code on HubSpot-hosted pages (landing pages, blog, knowledge base) so you don't need GTM on those pages separately.</li>
+        <li>Can push HubSpot form submission events to GA4 as conversions.</li>
+        <li>Passes HubSpot contact data to GA4 user properties (if you enable this — note privacy implications).</li>
+      </ul>
+      <p>What the native connection doesn't do: it doesn't handle the full custom event tracking you'd configure via GTM on your main site. If your contact form is on your main site (not a HubSpot landing page), you still need GTM tracking there. And if you want rich GA4 event data for things like video plays, scroll depth, or navigation patterns, GTM is still the right tool regardless of the native connection.</p>
+
+      <h2>Cross-domain tracking</h2>
+      <p>Many B2B companies have their main site on one domain (company.com) and their HubSpot landing pages on a different subdomain or domain (pages.company.com or company.hs-sites.com). When a user moves between these domains, GA4 treats it as a new session by default — losing the referral source and breaking the attribution chain.</p>
+      <p>Cross-domain tracking in GA4 tells it to treat specified domains as the same property and carry the session across. Configure this in GA4's data stream settings under "Configure tag settings" → "Configure your domains." List every domain that should be treated as the same site.</p>
+      <p>You also need to ensure your GTM container is on the HubSpot pages. For HubSpot-hosted pages, you can add custom code in Settings → Website → Pages → Custom Code to include GTM. Then your GA4 cross-domain configuration applies consistently.</p>
+
+      <h2>Passing the HubSpot contact record to GA4</h2>
+      <p>When a visitor fills out a HubSpot form and becomes a known contact, you can pass that contact's HubSpot ID or lifecycle stage to GA4 as a user property. This allows you to segment GA4 data by CRM lifecycle stage — showing, for example, which content pages are most visited by contacts who went on to become SQL (Sales Qualified Lead) or Customer.</p>
+      <p>This is done via a HubSpot workflow that fires a data layer event after form submission, which GTM picks up and uses to set a GA4 user property. The implementation requires coordination between HubSpot workflows, GTM, and GA4 custom dimensions.</p>
+      <p>Important caveat: sending CRM identifiers to GA4 creates a bridge between your analytics data and your CRM data. This has privacy implications under GDPR and CCPA — you should review this with your legal team and ensure it's covered in your privacy policy and consent flows.</p>
+
+      <h2>What a well-integrated setup looks like</h2>
+      <p>In an ideal setup, here's what you can answer with HubSpot + GA4 working together:</p>
+      <ul>
+        <li><strong>GA4:</strong> Which channels drove sessions? What pages do pre-conversion visitors read? What content do high-intent visitors engage with?</li>
+        <li><strong>HubSpot:</strong> Which contacts converted from which channel (via UTM properties)? What was their path from MQL to SQL to Closed Won? Which content assets influenced deal progression?</li>
+        <li><strong>Combined:</strong> Which traffic sources produce contacts that close? What is the time-to-close by acquisition channel? Which content pages correlate with higher deal values?</li>
+      </ul>
+      <p>Getting to that combined view takes deliberate setup. But once it's working, it's the closest thing to full-funnel visibility that a typical B2B marketing stack can provide.</p>
+      <div class="post-cta"><h3>Need HubSpot and GA4 integrated cleanly?</h3><p>I set up the full integration — UTM standards, cross-domain tracking, event taxonomy alignment, and CRM-to-analytics connectors — so both systems tell the same story.</p><a href="../index.html#contact">Get a quote</a></div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap foot-inner">
+    <a href="../index.html" class="brand">mott<span>.</span>design</a>
+    <nav class="foot-links">
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../terms.html">Terms &amp; Conditions</a>
+    </nav>
+    <p>&copy; <span id="yr"></span> Mott Design LLC &middot; Monterey, California</p>
+  </div>
+</footer>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  (function() {
+    function paintCkyIcon() {
+      document.querySelectorAll('[class*="revisit"], [data-cky-tag="revisit-consent"]').forEach(function(el) {
+        el.style.setProperty('background', '#c4622d', 'important');
+        el.style.setProperty('background-color', '#c4622d', 'important');
+        el.style.setProperty('border-color', '#c4622d', 'important');
+      });
+    }
+    var obs = new MutationObserver(paintCkyIcon);
+    obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+    paintCkyIcon();
+  })();
+</script>
+</body>
+</html>
