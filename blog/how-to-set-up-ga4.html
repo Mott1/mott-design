@@ -88,6 +88,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <main style="position:relative;z-index:1;">
   <div class="wrap">
     <header class="post-head">
+      <svg class="post-svc-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="7" y1="6" x2="7" y2="36" stroke="var(--accent)" stroke-width="1.5"/><line x1="5" y1="36" x2="37" y2="36" stroke="var(--accent)" stroke-width="1.5"/><rect x="10" y="22" width="6" height="14" rx="1" stroke="var(--accent)" stroke-width="1.5"/><rect x="19" y="14" width="6" height="22" rx="1" stroke="var(--accent)" stroke-width="1.5"/><rect x="28" y="18" width="6" height="18" rx="1" stroke="var(--accent)" stroke-width="1.5"/></svg>
       <div class="post-eyebrow">
         <a href="categories/ga4-analytics.html" class="cat-pill">GA4 &amp; Analytics</a>
         <span class="post-meta">April 29, 2026 &middot; 11 min read</span>
@@ -202,6 +203,77 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   if(x)x.addEventListener('click',close);
   document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
   d.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});
+})();
+</script>
+<div class="modal-overlay" id="quote-modal" role="dialog" aria-modal="true" aria-label="Get a quote">
+  <div class="modal-box">
+    <button class="modal-close" id="modal-close" aria-label="Close">&#x2715;</button>
+    <h2>Get a quote</h2>
+    <p class="modal-sub">Tell me what you're working on and I'll get back to you within one business day.</p>
+    <form class="modal-form" action="https://formspree.io/f/xdavpvvb" method="POST" id="quote-modal-form">
+      <input type="hidden" name="_subject" value="New enquiry — mott.design">
+      <div class="modal-field">
+        <label for="modal-name">Name</label>
+        <input type="text" id="modal-name" name="name" required>
+      </div>
+      <div class="modal-field">
+        <label for="modal-company">Company</label>
+        <input type="text" id="modal-company" name="company">
+      </div>
+      <div class="modal-field">
+        <label for="modal-email">Email</label>
+        <input type="email" id="modal-email" name="email" required>
+      </div>
+      <div class="modal-field">
+        <label for="modal-message">What are you working on?</label>
+        <textarea id="modal-message" name="message" required placeholder="A new build, a migration, tracking that's misfiring…"></textarea>
+      </div>
+      <button type="submit" class="modal-submit">Send →</button>
+    </form>
+    <div class="modal-success" id="modal-success">
+      <p>Message sent — I'll be in touch within one business day.</p>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var overlay = document.getElementById('quote-modal');
+  if (!overlay) return;
+  function openModal(e) {
+    var href = this.getAttribute('href') || '';
+    // Don't intercept same-page anchor links (homepage #contact)
+    if (href === '#contact') return;
+    e.preventDefault();
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function(){ document.getElementById('modal-name') && document.getElementById('modal-name').focus(); }, 100);
+  }
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // Trigger on nav-cta, drawer-cta, and post-cta links
+  document.querySelectorAll('.nav-cta, .drawer-cta, .post-cta a').forEach(function(el) {
+    el.addEventListener('click', openModal);
+  });
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e){ if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeModal(); });
+  // Handle form submission
+  var form = document.getElementById('quote-modal-form');
+  if (form) {
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+        .then(function(r){
+          if (r.ok) {
+            form.style.display = 'none';
+            document.getElementById('modal-success').classList.add('show');
+            setTimeout(closeModal, 3000);
+          }
+        });
+    });
+  }
 })();
 </script>
 </body>

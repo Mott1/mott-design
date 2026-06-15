@@ -176,11 +176,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   .btn-primary {
     font-family: var(--body); font-weight: 600; font-size: 0.75rem;
-    background: var(--ink); color: var(--paper); padding: 14px 28px;
-    border-radius: 4px; text-decoration: none; transition: background 0.2s, color 0.2s;
+    background: var(--warn); color: var(--ink); padding: 14px 28px;
+    border-radius: 4px; text-decoration: none; transition: background 0.2s, color 0.2s, opacity 0.2s;
     text-transform: uppercase; letter-spacing: 0.08em;
   }
-  .btn-primary:hover { background: var(--warn); color: var(--ink); }
+  .btn-primary:hover { opacity: 0.82; }
   .btn-ghost {
     font-family: var(--body); font-weight: 600; font-size: 0.75rem;
     color: var(--ink); padding: 14px 24px; border-radius: 4px;
@@ -515,6 +515,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .svc {
     padding: 32px; border-radius: 2px;
     background: var(--card); transition: background 0.2s, transform 0.22s cubic-bezier(0.16,1,0.3,1), box-shadow 0.22s;
+    display: flex; flex-direction: column;
   }
   .svc:hover { background: rgba(84,137,93,0.38); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.22); }
   .svc-key { font-family: var(--display); font-size: 0.82rem; font-weight: 600; color: var(--accent); letter-spacing: 0.08em; }
@@ -597,7 +598,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
 
   /* ---- about ---- */
-  #about { background: var(--paper-2); color: var(--ink); }
+  #about { color: var(--ink); border-bottom: 1px solid var(--line); }
   #about .sec-head h2 { color: var(--ink); }
   #about .sec-num { color: var(--accent); }
   .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px; }
@@ -610,7 +611,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; gap: 36px; } }
 
   /* ---- contact ---- */
-  #contact { border-bottom: 1px solid var(--line); }
+  #contact { background: var(--paper-2); border-bottom: 1px solid var(--line); }
   .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
   .contact-side h3 { font-family: var(--display); font-size: 1.15rem; font-weight: 600; margin-bottom: 8px; }
   .contact-side p { color: var(--muted); margin-bottom: 28px; }
@@ -728,13 +729,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
 
   /* ---- testimonials ---- */
-  #testimonials { border-bottom: 1px solid var(--line); background: var(--paper-2); }
+  #testimonials { border-bottom: 1px solid var(--line); background: var(--paper); }
   .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .testimonial { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 24px; }
   .testimonial p { color: var(--ink); font-size: 1rem; line-height: 1.7; font-style: italic; flex: 1; }
   .testimonial p::before { content: '\201C'; color: var(--warn); font-size: 1.6rem; line-height: 0; vertical-align: -0.4rem; margin-right: 3px; font-style: normal; }
   .testimonial cite { font-family: var(--display); font-size: 0.8rem; font-weight: 600; color: var(--muted); font-style: normal; letter-spacing: 0.03em; }
   @media (max-width: 900px) { .testimonial-grid { grid-template-columns: 1fr; gap: 12px; } }
+  .testimonial-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--card); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .testimonial-avatar svg { width: 18px; height: 18px; }
+  .testimonial footer { display: flex; align-items: center; gap: 12px; }
   @media (max-width: 720px) { .testimonial { padding: 24px; } }
 
   /* ---- project result line ---- */
@@ -742,8 +746,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .proj-result::before { content: '→ '; color: var(--warn); }
 
   /* Related reading in service cards */
-  .svc-reading { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
-  .svc-reading-label { font-family: var(--display); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .svc-reading { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); padding-bottom: 0; }
+  .svc-reading-label { font-family: var(--display); font-size: 0.5rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
   .svc-reading a { display: block; font-size: 0.82rem; color: var(--accent); text-decoration: none; padding: 2px 0 2px 14px; transition: color 0.15s; position: relative; line-height: 1.45; }
   .svc-reading a::before { content: '→'; position: absolute; left: 0; color: var(--warn); font-size: 0.75rem; top: 3px; }
   .svc-reading a:hover { color: var(--ink); }
@@ -1337,15 +1341,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="testimonial-grid">
       <blockquote class="testimonial">
         <p>Michael rebuilt our site and our entire analytics stack in one engagement. We went from not knowing where our form submissions came from to a dashboard that connects traffic to pipeline. That's not something our old agency ever delivered.</p>
-        <footer><cite>VP Marketing, genomics company</cite></footer>
+        <footer><div class="testimonial-avatar"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="var(--muted)" stroke-width="1.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round"/></svg></div><cite>VP Marketing, genomics company</cite></footer>
       </blockquote>
       <blockquote class="testimonial">
         <p>I needed someone who understood both the design and the compliance side. Most agencies hand those off to different people. Michael handled the Webflow build, the Consent Mode implementation, and the HubSpot wiring without me having to manage three vendors.</p>
-        <footer><cite>Marketing Director, digital health startup</cite></footer>
+        <footer><div class="testimonial-avatar"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="var(--muted)" stroke-width="1.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round"/></svg></div><cite>Marketing Director, digital health startup</cite></footer>
       </blockquote>
       <blockquote class="testimonial">
         <p>Our Google Analytics was a mess — duplicate sessions, misattributed conversions, UA data that never transferred cleanly to GA4. Michael untangled all of it and set up reporting we actually use in monthly leadership reviews.</p>
-        <footer><cite>Head of Marketing, medical device company</cite></footer>
+        <footer><div class="testimonial-avatar"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="var(--muted)" stroke-width="1.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round"/></svg></div><cite>Head of Marketing, medical device company</cite></footer>
       </blockquote>
     </div>
   </div>
@@ -2208,39 +2212,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       entries.forEach(e => {
         if (!e.isIntersecting) return;
 
-        // Use the duplicate Google's actual offsetLeft for pixel-perfect centering
-        const wrapW = logoWrap.offsetWidth;
-        const allGoogles = logoTrack.querySelectorAll('.logo-google');
-        const dupGoogle = allGoogles[1] || allGoogles[0];
-        const googleW = dupGoogle.offsetWidth;
-        const dupLeft = dupGoogle.offsetLeft;
-        const startX = Math.round(wrapW / 2 - googleW / 2 - dupLeft);
+        // Start from 0, scroll left by exactly half (one full set of logos)
         const setW = Math.round(logoTrack.scrollWidth / 2);
-        const endX = startX - setW;
-        logoTrack.style.transform = 'translateX(' + startX + 'px)';
+        const startX = 0;
+        const endX = -setW;
 
-        // Step 1: let browser commit opacity:0 first, then fade in Google
+        // Stagger-reveal all logos left-to-right
+        const items = logoTrack.querySelectorAll('.logo-item');
         requestAnimationFrame(function() {
           requestAnimationFrame(function() {
-            logoTrack.querySelectorAll('.logo-google').forEach(function(g) { g.classList.add('reveal'); });
+            items.forEach(function(item, i) {
+              setTimeout(function() { item.classList.add('reveal'); }, i * 40);
+            });
+            // After reveal completes, hand off to seamless scroll
+            setTimeout(function() {
+              logoTrack.style.setProperty('--scroll-from', startX + 'px');
+              logoTrack.style.setProperty('--scroll-to', endX + 'px');
+              void logoTrack.offsetWidth;
+              logoTrack.classList.add('is-scrolling');
+            }, items.length * 40 + 700);
           });
         });
-
-        // Step 2: 1 s later — fade in all other logos
-        setTimeout(function() {
-          logoTrack.querySelectorAll('.logo-item:not(.logo-google)').forEach(function(item) {
-            item.classList.add('reveal');
-          });
-
-          // Step 3: after fade completes, hand off to scroll animation
-          setTimeout(function() {
-            logoTrack.style.setProperty('--scroll-from', startX + 'px');
-            logoTrack.style.setProperty('--scroll-to', endX + 'px');
-            logoTrack.style.transform = '';
-            void logoTrack.offsetWidth; // force reflow so animation picks up CSS vars
-            logoTrack.classList.add('is-scrolling');
-          }, 700);
-        }, 1000);
 
         logoBarObs.unobserve(e.target);
       });

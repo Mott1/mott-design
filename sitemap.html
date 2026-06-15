@@ -99,6 +99,29 @@ footer { padding: 40px 0; position: relative; z-index: 1; }
 .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 150; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
 .nav-overlay.open { opacity: 1; pointer-events: all; }
 @media (max-width: 720px) { .nav-burger { display: flex; } .nav-cta { display: none; } }
+
+/* Get a quote lightbox */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.72); z-index: 999; opacity: 0; pointer-events: none; transition: opacity 0.25s; display: flex; align-items: center; justify-content: center; padding: 24px; }
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal-box { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; padding: 48px; position: relative; transform: translateY(20px); transition: transform 0.28s cubic-bezier(0.16,1,0.3,1); }
+.modal-overlay.open .modal-box { transform: translateY(0); }
+.modal-close { position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--ink); font-size: 1.3rem; cursor: pointer; opacity: 0.55; padding: 4px; line-height: 1; }
+.modal-close:hover { opacity: 1; }
+.modal-box h2 { font-family: var(--display); font-size: 1.5rem; font-weight: 500; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 8px; }
+.modal-box .modal-sub { color: var(--muted); font-size: 0.92rem; margin-bottom: 32px; }
+.modal-form { display: flex; flex-direction: column; gap: 18px; }
+.modal-field label { display: block; font-family: var(--display); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+.modal-field input, .modal-field textarea { width: 100%; font-family: var(--body); font-size: 0.96rem; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 4px; padding: 11px 14px; transition: border-color 0.2s; }
+.modal-field input:focus, .modal-field textarea:focus { outline: none; border-color: var(--accent); }
+.modal-field input::placeholder, .modal-field textarea::placeholder { color: var(--muted); }
+.modal-field textarea { resize: vertical; min-height: 110px; }
+.modal-submit { font-family: var(--body); font-weight: 600; font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; background: var(--warn); color: var(--ink); border: none; border-radius: 4px; padding: 14px; cursor: pointer; transition: opacity 0.2s; }
+.modal-submit:hover { opacity: 0.82; }
+.modal-success { display: none; text-align: center; padding: 20px 0; }
+.modal-success.show { display: block; }
+.modal-success p { color: var(--accent); font-size: 1rem; line-height: 1.6; }
+@media (max-width: 600px) { .modal-box { padding: 32px 24px; } }
+
 </style>
 </head>
 <body>
@@ -294,6 +317,77 @@ footer { padding: 40px 0; position: relative; z-index: 1; }
   if(x)x.addEventListener('click',close);
   document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
   d.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});
+})();
+</script>
+<div class="modal-overlay" id="quote-modal" role="dialog" aria-modal="true" aria-label="Get a quote">
+  <div class="modal-box">
+    <button class="modal-close" id="modal-close" aria-label="Close">&#x2715;</button>
+    <h2>Get a quote</h2>
+    <p class="modal-sub">Tell me what you're working on and I'll get back to you within one business day.</p>
+    <form class="modal-form" action="https://formspree.io/f/xdavpvvb" method="POST" id="quote-modal-form">
+      <input type="hidden" name="_subject" value="New enquiry — mott.design">
+      <div class="modal-field">
+        <label for="modal-name">Name</label>
+        <input type="text" id="modal-name" name="name" required>
+      </div>
+      <div class="modal-field">
+        <label for="modal-company">Company</label>
+        <input type="text" id="modal-company" name="company">
+      </div>
+      <div class="modal-field">
+        <label for="modal-email">Email</label>
+        <input type="email" id="modal-email" name="email" required>
+      </div>
+      <div class="modal-field">
+        <label for="modal-message">What are you working on?</label>
+        <textarea id="modal-message" name="message" required placeholder="A new build, a migration, tracking that's misfiring…"></textarea>
+      </div>
+      <button type="submit" class="modal-submit">Send →</button>
+    </form>
+    <div class="modal-success" id="modal-success">
+      <p>Message sent — I'll be in touch within one business day.</p>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var overlay = document.getElementById('quote-modal');
+  if (!overlay) return;
+  function openModal(e) {
+    var href = this.getAttribute('href') || '';
+    // Don't intercept same-page anchor links (homepage #contact)
+    if (href === '#contact') return;
+    e.preventDefault();
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function(){ document.getElementById('modal-name') && document.getElementById('modal-name').focus(); }, 100);
+  }
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // Trigger on nav-cta, drawer-cta, and post-cta links
+  document.querySelectorAll('.nav-cta, .drawer-cta, .post-cta a').forEach(function(el) {
+    el.addEventListener('click', openModal);
+  });
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e){ if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeModal(); });
+  // Handle form submission
+  var form = document.getElementById('quote-modal-form');
+  if (form) {
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+        .then(function(r){
+          if (r.ok) {
+            form.style.display = 'none';
+            document.getElementById('modal-success').classList.add('show');
+            setTimeout(closeModal, 3000);
+          }
+        });
+    });
+  }
 })();
 </script>
 </body>
