@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mott Test Page</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #295D32; color: #E4EAC8; font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; }
+  .bar { background: #c4622d; color: #fff; text-align: center; padding: 14px; font-weight: 700; font-size: 18px; }
+  .topnav { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; border-bottom: 1px solid rgba(228,234,200,0.2); }
+  .brand { font-weight: 700; font-size: 20px; }
+  /* Minimal CSS-only hamburger */
+  #t-toggle { position: absolute; opacity: 0; pointer-events: none; }
+  .burger { font-size: 26px; cursor: pointer; padding: 6px 10px; border: 1px solid #E4EAC8; border-radius: 6px; }
+  .drawer { position: fixed; top: 0; right: -100%; width: 75%; height: 100%; background: #1e4425; padding: 70px 24px; transition: right .3s; z-index: 100; }
+  #t-toggle:checked ~ .drawer { right: 0; }
+  .drawer a { display: block; color: #E4EAC8; padding: 14px 0; font-size: 20px; border-bottom: 1px solid rgba(228,234,200,0.2); text-decoration: none; }
+  .drawer .close { position: absolute; top: 18px; right: 22px; font-size: 26px; cursor: pointer; }
+  section { padding: 40px 24px; border-bottom: 1px solid rgba(228,234,200,0.2); }
+  h1 { font-size: 28px; margin-bottom: 12px; }
+  h2 { font-size: 22px; margin-bottom: 10px; }
+  p { color: #cfd6b4; margin-bottom: 10px; }
+  .card { background: rgba(84,137,93,0.3); border: 1px solid rgba(228,234,200,0.2); border-radius: 6px; padding: 20px; margin-top: 14px; }
+  .logos { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 16px; }
+  .logos span { background: rgba(228,234,200,0.12); padding: 10px 16px; border-radius: 4px; font-weight: 600; }
+  .end { background: #284B2F; text-align: center; padding: 30px; }
+</style>
+</head>
+<body>
+  <div class="bar">TEST PAGE — TOP</div>
+
+  <input type="checkbox" id="t-toggle">
+  <div class="topnav">
+    <span class="brand">mott.design (test)</span>
+    <label class="burger" for="t-toggle">&#9776;</label>
+  </div>
+  <div class="drawer">
+    <label class="close" for="t-toggle">&#10005;</label>
+    <a href="#s1">Section 1</a>
+    <a href="#s3">Services</a>
+    <a href="#end">Bottom</a>
+  </div>
+
+  <section id="s1">
+    <h1>Section 1 — Hero</h1>
+    <p>If you can read this, basic rendering works. This page has NO JavaScript and loads NO external files (no fonts, no images, no cookie script, no analytics).</p>
+    <p><strong>Tap the &#9776; button at the top right</strong> — a menu should slide in. That tests whether a plain CSS menu works on your phone.</p>
+  </section>
+
+  <section>
+    <h2>Section 2 — Trusted By (static logo grid)</h2>
+    <div class="logos">
+      <span>Google</span><span>23andMe</span><span>Freenome</span><span>Zimperium</span>
+      <span>Avant Bio</span><span>DNAScript</span><span>Agendia</span><span>Quokka</span>
+    </div>
+  </section>
+
+  <section id="s3">
+    <h2>Section 3 — Services</h2>
+    <div class="card"><h2>Web design &amp; development</h2><p>Marketing sites built to spec.</p></div>
+    <div class="card"><h2>Analytics &amp; tracking</h2><p>GA4, GTM, and clean reporting.</p></div>
+    <div class="card"><h2>SEO &amp; consent</h2><p>Technical SEO and cookie compliance.</p></div>
+  </section>
+
+  <section>
+    <h2>Section 4 — More content</h2>
+    <p>Extra content so the page scrolls like the real site.</p>
+    <div class="card"><p>Card A</p></div>
+    <div class="card"><p>Card B</p></div>
+    <div class="card"><p>Card C</p></div>
+  </section>
+
+  <div class="end" id="end">TEST PAGE — BOTTOM. If you see this, the whole page loaded.</div>
+</body>
+</html>
