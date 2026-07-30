@@ -13,7 +13,11 @@
 <script>
   try {
     var mq = window.matchMedia;
-    if (mq && !mq('(prefers-reduced-motion: reduce)').matches && !mq('(max-width: 720px)').matches) {
+    // Only a true mouse-driven desktop gets JS entrance animations. Any touch
+    // device (phone/tablet, ANY width, incl. "Request Desktop Site") stays on
+    // the always-visible, no-heavy-animation path.
+    if (mq && mq('(hover: hover) and (pointer: fine)').matches
+           && !mq('(prefers-reduced-motion: reduce)').matches) {
       document.documentElement.className += ' anim';
     }
   } catch (e) {}
@@ -720,18 +724,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
 
 /* Mobile nav drawer */
+.nav-toggle { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; clip: rect(0 0 0 0); }
 .nav-burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 51; }
 .nav-burger span { display: block; width: 22px; height: 2px; background: var(--ink); transition: all 0.25s; border-radius: 1px; }
 .nav-drawer { position: fixed; top: 0; right: -100%; width: min(320px, 85vw); height: 100vh; height: 100dvh; background: var(--paper); z-index: 200; transition: right 0.32s cubic-bezier(0.16,1,0.3,1); padding: 80px 40px 40px; display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--line); overflow-y: auto; }
-.nav-drawer.open { right: 0; }
+.nav-drawer.open,
+#nav-toggle:checked ~ .nav-drawer { right: 0; }
 .nav-drawer a { font-family: var(--display); font-size: 1.2rem; font-weight: 500; color: var(--ink); text-decoration: none; padding: 14px 0; border-bottom: 1px solid var(--line); transition: color 0.2s; }
 .nav-drawer a:hover { color: var(--accent); }
 .nav-drawer .drawer-cta { margin-top: 24px; background: var(--warn); color: var(--ink) !important; border-radius: 4px; padding: 14px 20px; text-align: center; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: none !important; }
 .nav-drawer .drawer-cta:hover { opacity: 0.85; }
 .drawer-close { position: absolute; top: 22px; right: 24px; background: none; border: none; color: var(--ink); font-size: 1.4rem; cursor: pointer; padding: 4px; line-height: 1; opacity: 0.65; }
 .drawer-close:hover { opacity: 1; }
-.nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 150; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
-.nav-overlay.open { opacity: 1; pointer-events: all; }
+.nav-overlay { display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 150; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.nav-overlay.open,
+#nav-toggle:checked ~ .nav-overlay { opacity: 1; pointer-events: all; }
 @media (max-width: 720px) { .nav-burger { display: flex; } .nav-cta { display: none; } }
 
   /* Mobile layout fixes */
@@ -740,12 +747,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .hero-left { padding: 56px 24px 40px; }
     .hero-tools { margin-left: -24px; margin-right: -24px; }
     .tools-label { padding-left: 24px; }
-    /* Hide the decorative animated design canvas on mobile entirely — it's the
-       heaviest/most fragile element and adds nothing to the mobile experience. */
-    .hero-right { display: none; }
     .sec-head { margin-bottom: 36px; }
     /* Drop the 416KB grain overlay + fixed background-attachment on mobile —
        background-attachment: fixed is a known rendering/perf killer on iOS Safari. */
+    .grain-bg { display: none; }
+  }
+  /* Hide the heavy decorative design canvas + grain overlay on ANY touch device
+     (phone/tablet, any width, incl. desktop-site mode). It's the most fragile
+     element and the mobile experience doesn't need it. */
+  @media (hover: none), (pointer: coarse) {
+    .hero-right { display: none; }
     .grain-bg { display: none; }
   }
   @media (max-width: 480px) {
@@ -789,6 +800,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="grain-bg" aria-hidden="true"></div>
 <div class="shimmer-bg" aria-hidden="true"></div>
 
+<!-- CSS-only mobile menu: this checkbox drives the drawer via :checked, so the
+     menu opens/closes with no JavaScript at all. -->
+<input type="checkbox" id="nav-toggle" class="nav-toggle">
 <nav>
   <div class="wrap nav-inner">
     <div class="brand">mott<span>.</span>design</div>
@@ -801,11 +815,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="#contact">Work with me</a>
     </div>
     <a href="#contact" class="nav-cta">Get a quote</a>
-    <button class="nav-burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <label class="nav-burger" for="nav-toggle" aria-label="Open menu" role="button" tabindex="0"><span></span><span></span><span></span></label>
   </div>
 </nav>
 <div class="nav-drawer" aria-hidden="true">
-  <button class="drawer-close" aria-label="Close menu">&#x2715;</button>
+  <label class="drawer-close" for="nav-toggle" aria-label="Close menu">&#x2715;</label>
   <a href="#services">Services</a>
   <a href="#about">About</a>
   <a href="blog/index.html">Writing</a>
@@ -814,7 +828,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <a href="#contact">Work with me</a>
   <a href="#contact" class="drawer-cta">Get a quote</a>
 </div>
-<div class="nav-overlay"></div>
+<label class="nav-overlay" for="nav-toggle" aria-hidden="true"></label>
 
 <header class="hero">
   <div class="hero-left">
@@ -1496,10 +1510,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   alignHeroRight();
   window.addEventListener('resize', alignHeroRight);
 
-  // Treat mobile like reduced-motion: skip the heavy hero canvas + destructive
-  // headline rebuild so a weak phone browser can't crash or blank the page.
+  // Treat every touch device like reduced-motion: skip the heavy hero canvas +
+  // destructive headline rebuild so a phone browser can't crash or blank the
+  // page. Pointer-based (not width-based) so "Request Desktop Site" is covered.
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    || window.matchMedia('(max-width: 720px)').matches;
+    || !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   // ── 1. Hero headline word stagger ──────────────────────────────────────────
   const heroH1 = document.querySelector('.hero h1');
@@ -2370,19 +2385,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </script>
 
 <script>
+/* The mobile menu is fully CSS-driven (checkbox + labels), so it works even if
+   this script never runs. This only adds nicety: lock body scroll while open,
+   close the drawer after tapping an in-page link, and close on Escape. */
 (function(){
-  var b=document.querySelector('.nav-burger');
-  var d=document.querySelector('.nav-drawer');
-  var o=document.querySelector('.nav-overlay');
-  if(!b||!d||!o)return;
-  function open(){d.classList.add('open');o.classList.add('open');b.setAttribute('aria-expanded','true');d.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
-  function close(){d.classList.remove('open');o.classList.remove('open');b.setAttribute('aria-expanded','false');d.setAttribute('aria-hidden','true');document.body.style.overflow='';}
-  b.addEventListener('click',open);
-  o.addEventListener('click',close);
-  var x=document.querySelector('.drawer-close');
-  if(x)x.addEventListener('click',close);
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
-  d.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});
+  var t=document.getElementById('nav-toggle');
+  if(!t)return;
+  function sync(){ document.body.style.overflow = t.checked ? 'hidden' : ''; }
+  t.addEventListener('change', sync);
+  document.querySelectorAll('.nav-drawer a').forEach(function(a){
+    a.addEventListener('click', function(){ t.checked=false; sync(); });
+  });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape'&&t.checked){ t.checked=false; sync(); } });
 })();
 </script>
 </body>
