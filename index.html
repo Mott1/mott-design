@@ -741,16 +741,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
        WebKit's max texture size, so it renders BLANK and can break the paint of
        the section right after it (Services). On touch devices, drop the animation
        and the giant width — show logos as a normal static wrapped grid. */
+    /* Pure-CSS marquee — NO JavaScript, so it can't cause the mobile hang we
+       just fixed. The track holds two identical logo sets, so animating the
+       transform to -50% loops seamlessly. Both sets stay visible (needed for the
+       seamless loop). */
     .logo-track,
     .logo-track.is-scrolling {
-      width: auto !important;
-      animation: none !important;
-      transform: none !important;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 26px 34px;
+      width: max-content;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 44px;
+      animation: logo-marquee 42s linear infinite;
     }
-    .logo-track .logo-item[aria-hidden="true"] { display: none; }
+    @keyframes logo-marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
     /* Also drop the 12 infinitely-animating icon layers on mobile. */
     .svc-icon.drawn { animation: none !important; }
   }
@@ -980,49 +986,49 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <p class="logo-bar-label">Trusted by</p>
   <div class="logo-track-wrap">
     <div class="logo-track">
-      <div class="logo-item logo-google"><img loading="lazy" src="logos/google_2.svg" alt="Google" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/23andme.svg" alt="23andMe" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/variphy.svg" alt="Variphy" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/genome_medical.svg" alt="Genome Medical" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/freenome.svg" alt="Freenome" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/aao_3.svg" alt="AAO" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/mdisrupt.svg" alt="mDisrupt" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/paradigm_health.svg" alt="Paradigm Health" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/getwell.svg" alt="GetWell" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/RhythmX.svg" alt="RhythmX" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/Zimperium.svg" alt="Zimperium" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/avant.svg" alt="Avant" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/Norlase.svg" alt="Norlase" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/biomodal.svg" alt="biomodal" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/judy_security.svg" alt="Judy Security" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/Nurture.svg" alt="Nurture" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/dnascript.svg" alt="DNA Script" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/progranulin.svg" alt="Progranulin" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/CureGRN.svg" alt="CureGRN" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/agendia.svg" alt="Agendia" height="22"></div>
-      <div class="logo-item"><img loading="lazy" src="logos/quokka.svg" alt="Quokka" height="22"></div>
+      <div class="logo-item logo-google"><img src="logos/google_2.svg" alt="Google" height="22"></div>
+      <div class="logo-item"><img src="logos/23andme.svg" alt="23andMe" height="22"></div>
+      <div class="logo-item"><img src="logos/variphy.svg" alt="Variphy" height="22"></div>
+      <div class="logo-item"><img src="logos/genome_medical.svg" alt="Genome Medical" height="22"></div>
+      <div class="logo-item"><img src="logos/freenome.svg" alt="Freenome" height="22"></div>
+      <div class="logo-item"><img src="logos/aao_3.svg" alt="AAO" height="22"></div>
+      <div class="logo-item"><img src="logos/mdisrupt.svg" alt="mDisrupt" height="22"></div>
+      <div class="logo-item"><img src="logos/paradigm_health.svg" alt="Paradigm Health" height="22"></div>
+      <div class="logo-item"><img src="logos/getwell.svg" alt="GetWell" height="22"></div>
+      <div class="logo-item"><img src="logos/RhythmX.svg" alt="RhythmX" height="22"></div>
+      <div class="logo-item"><img src="logos/Zimperium.svg" alt="Zimperium" height="22"></div>
+      <div class="logo-item"><img src="logos/avant.svg" alt="Avant" height="22"></div>
+      <div class="logo-item"><img src="logos/Norlase.svg" alt="Norlase" height="22"></div>
+      <div class="logo-item"><img src="logos/biomodal.svg" alt="biomodal" height="22"></div>
+      <div class="logo-item"><img src="logos/judy_security.svg" alt="Judy Security" height="22"></div>
+      <div class="logo-item"><img src="logos/Nurture.svg" alt="Nurture" height="22"></div>
+      <div class="logo-item"><img src="logos/dnascript.svg" alt="DNA Script" height="22"></div>
+      <div class="logo-item"><img src="logos/progranulin.svg" alt="Progranulin" height="22"></div>
+      <div class="logo-item"><img src="logos/CureGRN.svg" alt="CureGRN" height="22"></div>
+      <div class="logo-item"><img src="logos/agendia.svg" alt="Agendia" height="22"></div>
+      <div class="logo-item"><img src="logos/quokka.svg" alt="Quokka" height="22"></div>
       <!-- duplicate set for seamless scroll loop -->
-      <div class="logo-item logo-google" aria-hidden="true"><img loading="lazy" src="logos/google_2.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/23andme.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/variphy.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/genome_medical.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/freenome.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/aao_3.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/mdisrupt.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/paradigm_health.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/getwell.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/RhythmX.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/Zimperium.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/avant.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/Norlase.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/biomodal.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/judy_security.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/Nurture.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/dnascript.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/progranulin.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/CureGRN.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/agendia.svg" alt="" height="22"></div>
-      <div class="logo-item" aria-hidden="true"><img loading="lazy" src="logos/quokka.svg" alt="" height="22"></div>
+      <div class="logo-item logo-google" aria-hidden="true"><img src="logos/google_2.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/23andme.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/variphy.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/genome_medical.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/freenome.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/aao_3.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/mdisrupt.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/paradigm_health.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/getwell.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/RhythmX.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/Zimperium.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/avant.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/Norlase.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/biomodal.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/judy_security.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/Nurture.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/dnascript.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/progranulin.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/CureGRN.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/agendia.svg" alt="" height="22"></div>
+      <div class="logo-item" aria-hidden="true"><img src="logos/quokka.svg" alt="" height="22"></div>
     </div>
   </div>
 </section>
