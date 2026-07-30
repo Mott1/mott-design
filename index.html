@@ -736,6 +736,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     /* Fixed, negative-z-index, will-change layer — a known iOS Safari paint
        hazard. Not worth any risk on mobile; it's purely decorative. */
     .shimmer-bg { display: none; }
+    /* CRITICAL iOS WebKit fix: the scrolling logo track is a ~6000px-wide
+       element with a transform animation. A composited layer that wide exceeds
+       WebKit's max texture size, so it renders BLANK and can break the paint of
+       the section right after it (Services). On touch devices, drop the animation
+       and the giant width — show logos as a normal static wrapped grid. */
+    .logo-track,
+    .logo-track.is-scrolling {
+      width: auto !important;
+      animation: none !important;
+      transform: none !important;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 26px 34px;
+    }
+    .logo-track .logo-item[aria-hidden="true"] { display: none; }
+    /* Also drop the 12 infinitely-animating icon layers on mobile. */
+    .svc-icon.drawn { animation: none !important; }
   }
   @media (max-width: 480px) {
     .tools-grid { grid-template-columns: repeat(4, 1fr); }
