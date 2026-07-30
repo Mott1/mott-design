@@ -1492,6 +1492,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // All of the decorative animation JS below runs ONLY on a true mouse-driven
+  // desktop. On touch devices (phones/tablets) it is skipped entirely, because
+  // this code was hanging mobile WebKit and freezing the page mid-load. The page
+  // content is fully functional without any of it.
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+
   // ── hero-right: top aligned to h1, bottom to hero section ──────────────────
   function alignHeroRight() {
     const hero = document.querySelector('.hero');
@@ -2377,6 +2385,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     obs.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
     paintCkyIcon();
   })();
+
+  } // end desktop-only animation gate
 </script>
 
 <script>
