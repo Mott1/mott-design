@@ -724,6 +724,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .tools-label { padding-left: 24px; }
     .hero-right { min-height: 360px; }
     .sec-head { margin-bottom: 36px; }
+    /* Drop the 416KB grain overlay + fixed background-attachment on mobile —
+       background-attachment: fixed is a known rendering/perf killer on iOS Safari. */
+    .grain-bg { display: none; }
   }
   @media (max-width: 480px) {
     .tools-grid { grid-template-columns: repeat(4, 1fr); }
@@ -1426,6 +1429,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p>&copy; <span id="yr"></span> Mott Design LLC · Monterey, California</p>
   </div>
 </footer>
+
+<!-- Failsafe: guarantee content is visible even if animation JS errors or an
+     IntersectionObserver never fires on a given mobile browser. Registered
+     before the animation script so its error handler catches early throws. -->
+<script>
+(function(){
+  var h1html = (function(){ var h=document.querySelector('.hero h1'); return h?h.innerHTML:null; })();
+  function revealContent(){
+    try {
+      document.querySelectorAll('[data-animate]').forEach(function(e){e.classList.add('in-view');});
+      document.querySelectorAll('.hero-word').forEach(function(e){e.classList.add('in');});
+      document.querySelectorAll('.fact').forEach(function(e){e.classList.add('in-view');});
+      document.querySelectorAll('.logo-item').forEach(function(e){e.classList.add('reveal');});
+      var hp=document.querySelector('.hero p'), ha=document.querySelector('.hero-actions');
+      [hp,ha].forEach(function(e){ if(e){ e.style.opacity='1'; e.style.transform='none'; } });
+      var hh=document.querySelector('.hero h1');
+      if(hh && !hh.textContent.trim() && h1html){ hh.innerHTML=h1html; }
+    } catch(_){}
+  }
+  window.__revealContent = revealContent;
+  // On any uncaught error, reveal content immediately (incl. the decorative panel).
+  window.addEventListener('error', function(){
+    revealContent();
+    var wf=document.getElementById('webflow-panel'); if(wf) wf.classList.add('in-view');
+    var tc=document.getElementById('terminal-clean'); if(tc) tc.classList.add('in-view');
+  });
+  // Backstop: if animations never complete, force everything visible.
+  setTimeout(revealContent, 2500);
+})();
+</script>
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
