@@ -733,6 +733,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   @media (hover: none), (pointer: coarse) {
     .hero-right { display: none; }
     .grain-bg { display: none; }
+    /* Fixed, negative-z-index, will-change layer — a known iOS Safari paint
+       hazard. Not worth any risk on mobile; it's purely decorative. */
+    .shimmer-bg { display: none; }
   }
   @media (max-width: 480px) {
     .tools-grid { grid-template-columns: repeat(4, 1fr); }
