@@ -7,21 +7,6 @@
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mott Design — Web Design, GA4 & Martech | Monterey, CA</title>
-<!-- Enable JS-driven entrance animations ONLY on capable desktop browsers.
-     On mobile / reduced-motion / no-JS, content stays visible by default and
-     the heavy hero animation is skipped, so the page can never render blank. -->
-<script>
-  try {
-    var mq = window.matchMedia;
-    // Only a true mouse-driven desktop gets JS entrance animations. Any touch
-    // device (phone/tablet, ANY width, incl. "Request Desktop Site") stays on
-    // the always-visible, no-heavy-animation path.
-    if (mq && mq('(hover: hover) and (pointer: fine)').matches
-           && !mq('(prefers-reduced-motion: reduce)').matches) {
-      document.documentElement.className += ' anim';
-    }
-  } catch (e) {}
-</script>
 <meta name="description" content="Mott Design is a one-person freelance studio building, instrumenting, and measuring websites for medical device, genomics, and healthcare-tech companies. Webflow, WordPress, GA4, GTM, SEO, consent compliance, and HubSpot.">
 <meta name="robots" content="index, follow">
 <meta name="author" content="Michael Mott — Mott Design">
@@ -517,7 +502,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     100% { transform: translateX(var(--scroll-to, -50%)); }
   }
   .logo-item { flex-shrink: 0; color: var(--accent); display: flex; align-items: center; transition: opacity 0.55s ease; }
-  html.anim .logo-item { opacity: 0; }
   .logo-item.reveal { opacity: 1; }
   /* For inline SVG logos: set fill="currentColor" on each <svg>. The color: var(--accent)
      on .logo-item handles tinting. For <img> tags, add: filter: brightness(0) invert(0.85); */
@@ -541,9 +525,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .svc h3 { font-family: var(--display); font-weight: 600; font-size: 1.22rem; margin: 10px 0 10px; letter-spacing: -0.01em; }
   .svc p { color: var(--muted); font-size: 0.98rem; }
   .svc-icon { display: block; margin-bottom: 14px; }
+  /* Icons are visible by default (stroke-dashoffset:0). The scroll-triggered
+     "draw-in" is enhancement only — it must never leave an icon invisible if the
+     observer doesn't fire (as happened on mobile WebKit). */
   .svc-icon path, .svc-icon line, .svc-icon rect, .svc-icon circle, .svc-icon polyline {
     stroke-dasharray: 300;
-    stroke-dashoffset: 300;
+    stroke-dashoffset: 0;
     transition: stroke-dashoffset 0s;
   }
   .svc-icon.drawn path, .svc-icon.drawn line, .svc-icon.drawn rect,
@@ -679,26 +666,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     35%       { transform: translate(14%, 16%) scale(1.15); }
     68%       { transform: translate(4%, -8%) scale(1.1); }
   }
-  /* Hidden-until-animated states apply ONLY when <html class="anim"> is set
-     (capable, non-mobile, motion-OK browsers). Without it — mobile, reduced
-     motion, or no JS — content is fully visible by default, so a broken or
-     crashed animation script can never leave the page blank. */
+  /* All content is ALWAYS visible — no opacity:0 hiding that depends on JS to
+     reveal. The scroll-reveal was leaving sections invisible on mobile WebKit
+     when the IntersectionObserver didn't fire. Entrance fade is now a pure CSS
+     enhancement (see below) that starts from a visible state, so it can never
+     leave content blank. */
   .hero-word { display: inline-block; }
-  html.anim [data-animate] {
-    opacity: 0; transform: translateY(18px);
-    transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
-  }
-  html.anim [data-animate].in-view { opacity: 1; transform: none; }
-  html.anim .hero-word {
-    opacity: 0; transform: translateY(14px);
-    transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1);
-  }
-  html.anim .hero-word.in { opacity: 1; transform: none; }
-  html.anim .fact {
-    opacity: 0; transform: translateX(-10px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-  html.anim .fact.in-view { opacity: 1; transform: none; }
 
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   /* CookieYes banner */
