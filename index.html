@@ -740,7 +740,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .hero-left { padding: 56px 24px 40px; }
     .hero-tools { margin-left: -24px; margin-right: -24px; }
     .tools-label { padding-left: 24px; }
-    .hero-right { min-height: 360px; }
+    /* Hide the decorative animated design canvas on mobile entirely — it's the
+       heaviest/most fragile element and adds nothing to the mobile experience. */
+    .hero-right { display: none; }
     .sec-head { margin-bottom: 36px; }
     /* Drop the 416KB grain overlay + fixed background-attachment on mobile —
        background-attachment: fixed is a known rendering/perf killer on iOS Safari. */
